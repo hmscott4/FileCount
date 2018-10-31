@@ -1,0 +1,581 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <EntityTypes>
+      <ClassTypes>
+        <ClassType ID="FileCount.WatcherNode" Base="Windows!Microsoft.Windows.ComputerRole" Accessibility="Public" Abstract="false" Hosted="true" Singleton="false">
+          <Property ID="CSV" Type="string" Key="true" />
+        </ClassType>
+        <ClassType ID="FileCount.Share" Base="Windows!Microsoft.Windows.ApplicationComponent" Accessibility="Public" Abstract="false" Hosted="true" Singleton="false">
+          <Property ID="ID" Type="int" Key="true" />
+          <Property ID="Share" Type="string" Key="false" />
+          <Property ID="Extension" Type="string" Key="false" />
+          <Property ID="Count" Type="int" Key="false" />
+          <Property ID="Time" Type="int" Key="false" />
+          <Property ID="Recurse" Type="int" Key="false" />
+        </ClassType>
+      </ClassTypes>
+      <RelationshipTypes>
+        <RelationshipType ID="FileCountWatcherNodeContainsFileShare" Accessibility="Public" Base="System!System.Hosting">
+          <Source ID="src" Type="FileCount.WatcherNode" />
+          <Target ID="trgt" Type="FileCount.Share" />
+        </RelationshipType>
+      </RelationshipTypes>
+    </EntityTypes>
+    <SecureReferences>
+      <SecureReference ID="FileCount.RunasProfile" Accessibility="Public" />
+    </SecureReferences>
+    <ModuleTypes>
+      <DataSourceModuleType ID="FileCount.FileCount.DataSource" Accessibility="Public" Batching="false" RunAs="FileCount.RunasProfile">
+        <Configuration>
+          <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element minOccurs="0" name="SyncTime" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element minOccurs="1" name="ID" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element minOccurs="1" name="CSV" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="Interval" Selector="$Config/IntervalSeconds$" ParameterType="int" />
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string" />
+          <OverrideableParameter ID="ID" Selector="$Config/ID$" ParameterType="int" />
+          <OverrideableParameter ID="CSV" Selector="$Config/CSV$" ParameterType="string" />
+        </OverrideableParameters>
+        <ModuleImplementation Isolation="Any">
+          <Composite>
+            <MemberModules>
+              <DataSource ID="Schedule" TypeID="System!System.SimpleScheduler">
+                <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+                <SyncTime>$Config/SyncTime$</SyncTime>
+              </DataSource>
+              <ProbeAction ID="Probe" TypeID="FileCount.FileCount.DataSource.PSScript" />
+            </MemberModules>
+            <Composition>
+              <Node ID="Probe">
+                <Node ID="Schedule" />
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>System!System.PropertyBagData</OutputType>
+      </DataSourceModuleType>
+      <ProbeActionModuleType ID="FileCount.FileCount.DataSource.PSScript" Accessibility="Public" Batching="false" PassThrough="false" RunAs="FileCount.RunasProfile">
+        <Configuration>
+          <xsd:element minOccurs="0" name="ID" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element minOccurs="0" name="CSV" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+        </Configuration>
+        <ModuleImplementation Isolation="Any">
+          <Composite>
+            <MemberModules>
+              <ProbeAction ID="PSScript" TypeID="Windows!Microsoft.Windows.PowerShellPropertyBagTriggerOnlyProbe">
+                <ScriptName>GetFileCount.ps1</ScriptName>
+                <ScriptBody>
+                  param($ID,$CSV)
+
+                  $ScriptName = "GetFileCount.ps1"
+                  $EventID = 3521
+
+                  # Starting Script section - All scripts get this
+                  #=================================================================================
+                  # Gather the start time of the script
+                  $StartTime = Get-Date
+                  #Set variable to be used in logging events
+                  $whoami = whoami
+                  # Load MOMScript API
+                  $momapi = New-Object -comObject MOM.ScriptAPI
+                  # Load PropertyBag function
+                  $bag = $momapi.CreatePropertyBag()
+                  #Log script event that we are starting task
+                  $momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Script is starting. `n Running as ($whoami).")
+                  #=================================================================================
+
+                  $shares = Import-csv -path $csv
+                  #Filter Shares based on ID
+                  # $shares
+                  $share = $shares | where ID -EQ $ID
+
+
+                  #Declare variables containing extension to check and file age
+
+                  if($share.extension)
+                  {
+                  [string]$strExtension = "*"+$share.extension
+                  }
+                  else
+                  {
+                  [string]$strExtension = "*"
+                  }
+
+                  [string]$strAge = $share.time
+                  [string]$strShare = $share.Share
+                  [int]$intCount = $share.count
+                  [int]$intRecurse = $share.recurse
+
+                  # Test to see if Share is Accessible
+                  If(Test-Path -path "$strShare" -pathType Container -ErrorAction SilentlyContinue)
+                  {
+                  # Count all files with the specific extension and older then the given time
+                  if ($intRecurse -eq 1)
+                  {
+                  $count  = Get-ChildItem -Recurse $strShare\$strExtension | where{$_.LastWriteTime -le (Get-Date).AddMinutes($strAge)}|Measure-Object |%{$_.Count}
+
+                  if ($count -le $intCount)
+                  {
+                  $strStatus = 1
+                  $strMessage="Number of Files ($count) in $strShare is under threshold $intCount."
+                  $momapi.LogScriptEvent($ScriptName,$EventID,2,"`n Found $count file(s) with extension $strExtension in $strShare. `n Under threshold $intCount.")
+                  }
+                  else
+                  {
+                  $strMessage="Number of Files ($count) in $strShare exceeds threshold $intCount."
+                  $momapi.LogScriptEvent($ScriptName,$EventID,2,"`n Found $count file(s) with extension $strExtension in $strShare.`n Exceeds threshold $intCount.")
+                  $strStatus = 0
+                  }
+                  }
+                  else
+                  {
+                  $count  = Get-ChildItem $strShare\$strExtension | where{$_.LastWriteTime -le (Get-Date).AddMinutes($strAge)}|Measure-Object |%{$_.Count}
+
+                  if ($count -le $intCount)
+                  {
+                  $strMessage="Number of Files ($count) in $strShare is under threshold $intCount."
+                  $momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Found $count file(s) with extension $strExtension in $strShare. `n Under threshold $intCount.")
+                  $strStatus = 1
+                  }
+                  else
+                  {
+
+                  $strMessage="Number of Files ($count) in $strShare exceeds threshold $intCount."
+                  $momapi.LogScriptEvent($ScriptName,$EventID,2,"`n Found $count file(s) with extension $strExtension in $strShare.`n Exceeds threshold $intCount.")
+                  $strStatus = 0
+                  }
+                  }
+                  }
+
+                  Else
+                  {
+                  # Unable to access File Share
+                  $strMessage="Unable to access $strShare"
+                  $momapi.LogScriptEvent($ScriptName,$EventID,2,"`n Unable to access $strShare as $whoami.")
+                  $count = 0
+                  $strStatus = 0
+                  }
+
+                  # End of script section
+                  #=================================================================================
+                  #Log an event for script ending and total execution time.
+                  $EndTime = Get-Date
+                  $ScriptTime = ($EndTime - $StartTime).TotalSeconds
+                  $momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Script Completed. `n Script Runtime: ($ScriptTime) seconds.")
+
+
+                  #add the values to the bag
+                  $bag.AddValue('Message', $strMessage)
+                  $bag.AddValue('Status', $strStatus)
+                  $bag.AddValue('Files',$count)
+                  $bag
+                </ScriptBody>
+                <Parameters>
+                  <Parameter>
+                    <Name>ID</Name>
+                    <Value>$Config/ID$</Value>
+                  </Parameter>
+                  <Parameter>
+                    <Name>CSV</Name>
+                    <Value>$Config/CSV$</Value>
+                  </Parameter>
+                </Parameters>
+                <TimeoutSeconds>300</TimeoutSeconds>
+              </ProbeAction>
+            </MemberModules>
+            <Composition>
+              <Node ID="PSScript" />
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>System!System.PropertyBagData</OutputType>
+        <TriggerOnly>true</TriggerOnly>
+      </ProbeActionModuleType>
+    </ModuleTypes>
+    <MonitorTypes>
+      <UnitMonitorType ID="FileCount.Status.MonitorType" Accessibility="Public">
+        <MonitorTypeStates>
+          <MonitorTypeState ID="FileCountStatusOK" NoDetection="false" />
+          <MonitorTypeState ID="FileCountStatusNotOK" NoDetection="false" />
+        </MonitorTypeStates>
+        <Configuration>
+          <xsd:element name="IntervalSeconds" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element name="SyncTime" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element name="ID" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element name="CSV" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int" />
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string" />
+          <OverrideableParameter ID="ID" Selector="$Config/ID$" ParameterType="int" />
+          <OverrideableParameter ID="CSV" Selector="$Config/CSV$" ParameterType="string" />
+        </OverrideableParameters>
+        <MonitorImplementation>
+          <MemberModules>
+            <DataSource ID="DS" TypeID="FileCount.FileCount.DataSource">
+              <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+              <SyncTime>$Config/SyncTime$</SyncTime>
+              <ID>$Config/ID$</ID>
+              <CSV>$Config/CSV$</CSV>
+            </DataSource>
+            <ConditionDetection ID="FilterFileCountStatusOK" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="Integer">Property[@Name='Status']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="Integer">1</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="FilterFileCountStatusNotOK" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="Integer">Property[@Name='Status']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="Integer">0</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+          </MemberModules>
+          <RegularDetections>
+            <RegularDetection MonitorTypeStateID="FileCountStatusOK">
+              <Node ID="FilterFileCountStatusOK">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="FileCountStatusNotOK">
+              <Node ID="FilterFileCountStatusNotOK">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+          </RegularDetections>
+        </MonitorImplementation>
+      </UnitMonitorType>
+    </MonitorTypes>
+  </TypeDefinitions>
+  <Monitoring>
+    <Discoveries>
+      <Discovery ID="FileCount.WatcherNode.Discovery" Target="Windows!Microsoft.Windows.Computer" Enabled="true" ConfirmDelivery="false" Remotable="true" Priority="Normal">
+        <Category>Discovery</Category>
+        <DiscoveryTypes>
+          <DiscoveryClass TypeID="FileCount.WatcherNode" />
+        </DiscoveryTypes>
+        <DataSource ID="DS" TypeID="Windows!Microsoft.Windows.FilteredRegistryDiscoveryProvider">
+          <ComputerName>$Target/Property[Type="Windows!Microsoft.Windows.Computer"]/NetworkName$</ComputerName>
+          <RegistryAttributeDefinitions>
+            <RegistryAttributeDefinition>
+              <AttributeName>FileCountExists</AttributeName>
+              <Path>SOFTWARE\FileCount</Path>
+              <PathType>0</PathType>
+              <AttributeType>0</AttributeType>
+            </RegistryAttributeDefinition>
+            <RegistryAttributeDefinition>
+              <AttributeName>CSV</AttributeName>
+              <Path>SOFTWARE\FileCount\CSV</Path>
+              <PathType>1</PathType>
+              <AttributeType>1</AttributeType>
+            </RegistryAttributeDefinition>
+          </RegistryAttributeDefinitions>
+          <Frequency>86400</Frequency>
+          <ClassId>$MPElement[Name="FileCount.WatcherNode"]$</ClassId>
+          <InstanceSettings>
+            <Settings>
+              <Setting>
+                <Name>$MPElement[Name="System!System.Entity"]/DisplayName$</Name>
+                <Value>FileCount WatcherNode ($Target/Property[Type="Windows!Microsoft.Windows.Computer"]/NetbiosComputerName$)</Value>
+              </Setting>
+              <Setting>
+                <Name>$MPElement[Name="Windows!Microsoft.Windows.Computer"]/PrincipalName$</Name>
+                <Value>$Target/Property[Type="Windows!Microsoft.Windows.Computer"]/PrincipalName$</Value>
+              </Setting>
+              <Setting>
+                <Name>$MPElement[Name="FileCount.WatcherNode"]/CSV$</Name>
+                <Value>$Data/Values/CSV$</Value>
+              </Setting>
+            </Settings>
+          </InstanceSettings>
+          <Expression>
+            <SimpleExpression>
+              <ValueExpression>
+                <XPathQuery Type="Boolean">Values/FileCountExists</XPathQuery>
+              </ValueExpression>
+              <Operator>Equal</Operator>
+              <ValueExpression>
+                <Value Type="Boolean">true</Value>
+              </ValueExpression>
+            </SimpleExpression>
+          </Expression>
+        </DataSource>
+      </Discovery>
+      <Discovery ID="FileCount.FileCountShare.Discovery" Target="FileCount.WatcherNode" Enabled="true" ConfirmDelivery="false" Remotable="true" Priority="Normal">
+        <Category>Discovery</Category>
+        <DiscoveryTypes>
+          <DiscoveryClass TypeID="FileCount.Share" />
+        </DiscoveryTypes>
+        <DataSource ID="DS" TypeID="Windows!Microsoft.Windows.TimedPowerShell.DiscoveryProvider">
+          <IntervalSeconds>3600</IntervalSeconds>
+          <SyncTime />
+          <ScriptName>GetSharesFromCSV.ps1</ScriptName>
+          <ScriptBody>param($sourceId,$managedEntityId,$computerName,$csv)
+
+
+#Create Discovery Property Bag
+$api = new-object -comObject 'MOM.ScriptAPI'
+$discoveryData = $api.CreateDiscoveryData(0, $SourceId, $ManagedEntityId)
+$api.LogScriptEvent("GetSharesFromCSV.ps1", 3520, 0, "Discovery Started")
+
+#Read data from csv file specified in the registry
+
+$shares = Import-csv -path $csv
+
+#Loop through all listed shares and create appropriate SCOM objects
+
+foreach ($share in $shares)
+{
+    #Create Class Instance
+    $instance = $discoveryData.CreateClassInstance("$MPElement[Name='FileCount.Share']$")
+
+    #Fill up properties of class
+        $instance.AddProperty("$MPElement[Name='FileCount.Share']/ID$", $share.ID)
+        $instance.AddProperty("$MPElement[Name='FileCount.Share']/Share$", $share.Share)
+        if($share.extension){$instance.AddProperty("$MPElement[Name='FileCount.Share']/Extension$", $share.extension)}
+        if($share.count){$instance.AddProperty("$MPElement[Name='FileCount.Share']/Count$", $share.count)}
+        if($share.time){$instance.AddProperty("$MPElement[Name='FileCount.Share']/Time$", $share.time)}
+		$instance.AddProperty("$MPElement[Name='FileCount.Share']/Recurse$", $share.Recurse)
+
+    #Add the displayname, path of the server and key property of the parent class. (always recurring)
+        $instance.AddProperty("$MPElement[Name='System!System.Entity']/DisplayName$", $share.Share)
+        $instance.AddProperty("$MPElement[Name='FileCount.WatcherNode']/CSV$", $csv)
+        $instance.AddProperty("$MPElement[Name='Windows!Microsoft.Windows.Computer']/PrincipalName$", $computerName) 
+    #Add the instance to the discoverydate propertybag
+    
+    $discoveryData.AddInstance($instance) 
+    $api.LogScriptEvent("GetSharesFromCSV.ps1", 3520, 0, "Added instance $share.Share")  
+
+}
+
+$api.LogScriptEvent("GetSharesFromCSV.ps1", 3520, 0, "Discovery Ended")
+
+$discoveryData
+
+
+</ScriptBody>
+          <Parameters>
+            <Parameter>
+              <Name>sourceID</Name>
+              <Value>$MPElement$</Value>
+            </Parameter>
+            <Parameter>
+              <Name>managedEntityID</Name>
+              <Value>$Target/Id$</Value>
+            </Parameter>
+            <Parameter>
+              <Name>computerName</Name>
+              <Value>$Target/Host/Property[Type='Windows!Microsoft.Windows.Computer']/PrincipalName$</Value>
+            </Parameter>
+            <Parameter>
+              <Name>CSV</Name>
+              <Value>$Target/Property[Type='FileCount.WatcherNode']/CSV$</Value>
+            </Parameter>
+          </Parameters>
+          <TimeoutSeconds>300</TimeoutSeconds>
+          <StrictErrorHandling>true</StrictErrorHandling>
+        </DataSource>
+      </Discovery>
+    </Discoveries>
+    <Rules>
+      <Rule ID="FileCount.Share.Monitoring.PSScript.Rule.CollectFileCount" Enabled="true" Target="FileCount.Share" ConfirmDelivery="true" Remotable="true" Priority="Normal" DiscardLevel="100">
+        <Category>PerformanceCollection</Category>
+        <DataSources>
+          <DataSource ID="DataSource" TypeID="FileCount.FileCount.DataSource" RunAs="FileCount.RunasProfile">
+            <IntervalSeconds>900</IntervalSeconds>
+            <SyncTime></SyncTime>
+            <ID>$Target/Property[Type='FileCount.Share']/ID$</ID>
+            <CSV>$Target/Host/Property[Type='FileCount.WatcherNode']/CSV$</CSV>
+          </DataSource>
+        </DataSources>
+        <ConditionDetection ID="MapToPerf" TypeID="Perf!System.Performance.DataGenericMapper">
+          <ObjectName>$Target/Host/Host/Property[Type='Windows!Microsoft.Windows.Computer']/PrincipalName$</ObjectName>
+          <CounterName>File Count</CounterName>
+          <InstanceName>$Target/Property[Type='FileCount.Share']/Share$</InstanceName>
+          <Value>$Data/Property[@Name='Files']$</Value>
+        </ConditionDetection>
+        <WriteActions>
+          <WriteAction ID="WriteToDBLicenses" TypeID="SC!Microsoft.SystemCenter.CollectPerformanceData" />
+          <WriteAction ID="PublishLicenses" TypeID="MSDL!Microsoft.SystemCenter.DataWarehouse.PublishPerformanceData" />
+        </WriteActions>
+      </Rule>
+    </Rules>
+    <Monitors>
+      <UnitMonitor ID="FileCount.File.Share.File.Count.Monitor" Accessibility="Internal" Enabled="true" Target="FileCount.Share" ParentMonitorID="Health!System.Health.AvailabilityState" Remotable="true" Priority="Normal" TypeID="FileCount.Status.MonitorType" ConfirmDelivery="false" RunAs="FileCount.RunasProfile">
+        <Category>AvailabilityHealth</Category>
+        <AlertSettings AlertMessage="FileCount.File.Share.File.Count.Monitor.AlertMessage">
+          <AlertOnState>Error</AlertOnState>
+          <AutoResolve>true</AutoResolve>
+          <AlertPriority>Normal</AlertPriority>
+          <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+          <AlertParameters>
+            <AlertParameter1>$Target/Property[Type='FileCount.Share']/Share$</AlertParameter1>
+            <AlertParameter2>$Data/Context/Property[@Name='Files']$</AlertParameter2>
+            <AlertParameter3>$Target/Property[Type='FileCount.Share']/Extension$</AlertParameter3>
+          </AlertParameters>
+        </AlertSettings>
+        <OperationalStates>
+          <OperationalState ID="FileCountStatusOK" MonitorTypeStateID="FileCountStatusOK" HealthState="Success" />
+          <OperationalState ID="FileCountStatusNotOK" MonitorTypeStateID="FileCountStatusNotOK" HealthState="Error" />
+        </OperationalStates>
+        <Configuration>
+          <IntervalSeconds>300</IntervalSeconds>
+          <SyncTime>12:00</SyncTime>
+          <ID>$Target/Property[Type='FileCount.Share']/ID$</ID>
+          <CSV>$Target/Host/Property[Type='FileCount.WatcherNode']/CSV$</CSV>
+        </Configuration>
+      </UnitMonitor>
+    </Monitors>
+  </Monitoring>
+  <Presentation>
+    <Views>
+      <View ID="FileCount.Filecount.Alert.view" Accessibility="Public" Target="FileCount.Share" TypeID="SC!Microsoft.SystemCenter.AlertViewType" Visible="true">
+        <Category>Operations</Category>
+        <Criteria>
+          <ResolutionState>
+            <State>0</State>
+          </ResolutionState>
+        </Criteria>
+      </View>
+      <View ID="FileCount.Filecount.Share.State.view" Accessibility="Public" Target="FileCount.Share" TypeID="SC!Microsoft.SystemCenter.StateViewType" Visible="true">
+        <Category>Operations</Category>
+      </View>
+      <View ID="FileCount.Filecount.Watchernode.State.view" Accessibility="Public" Target="FileCount.WatcherNode" TypeID="SC!Microsoft.SystemCenter.StateViewType" Visible="true">
+        <Category>Operations</Category>
+      </View>
+    </Views>
+    <Folders>
+      <Folder ID="FileCount.Folder" Accessibility="Public" ParentFolder="SC!Microsoft.SystemCenter.Monitoring.ViewFolder.Root" />
+      <Folder ID="FileCount.State.Folder" Accessibility="Public" ParentFolder="FileCount.Folder" />
+    </Folders>
+    <FolderItems>
+      <FolderItem ElementID="FileCount.Filecount.Alert.view" Folder="FileCount.Folder" ID="FileCount.Filecount.Alert.view.FolderItem" />
+      <FolderItem ElementID="FileCount.Filecount.Share.State.view" Folder="FileCount.State.Folder" ID="FileCount.Filecount.Share.State.view.FolderItem" />
+      <FolderItem ElementID="FileCount.Filecount.Watchernode.State.view" Folder="FileCount.State.Folder" ID="FileCount.Filecount.Watchernode.State.view.FolderItem" />
+    </FolderItems>
+    <StringResources>
+      <StringResource ID="FileCount.File.Share.File.Count.Monitor.AlertMessage" />
+    </StringResources>
+  </Presentation>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+        <DisplayString ElementID="FileCount.WatcherNode.Discovery">
+          <Name>WatcherNode.Discovery</Name>
+          <Description>Description for the new discovery.</Description>
+        </DisplayString>
+        <DisplayString ElementID="FileCount.FileCountShare.Discovery">
+          <Name>FileCountShare.Discovery</Name>
+          <Description>Discovery for all shares that will be having file count monitoring</Description>
+        </DisplayString>
+        <DisplayString ElementID="FileCount.File.Share.File.Count.Monitor">
+          <Name>File Share File Count Monitor</Name>
+          <Description>Used to monitor the amount of files in the specific share matching the given extension</Description>
+        </DisplayString>
+        <DisplayString ElementID="FileCount.File.Share.File.Count.Monitor.AlertMessage">
+          <Name>File Count Exceeded</Name>
+          <Description>The fileshare  {0} has {1} unprocessed files with extension {2}</Description>
+        </DisplayString>
+        <DisplayString ElementID="FileCount.File.Share.File.Count.Monitor" SubElementID="FileCountStatusOK">
+          <Name>FileCountStatusOK</Name>
+          <Description>FileCountStatusOK</Description>
+        </DisplayString>
+        <DisplayString ElementID="FileCount.File.Share.File.Count.Monitor" SubElementID="FileCountStatusNotOK">
+          <Name>FileCountStatusNotOK</Name>
+          <Description>FileCountStatusNotOK</Description>
+        </DisplayString>
+        <DisplayString ElementID="FileCount.Share.Monitoring.PSScript.Rule.CollectFileCount">
+          <Name>Collect Filecount</Name>
+        </DisplayString>
+        <DisplayString ElementID="FileCount.WatcherNode">
+          <Name>FileCount WatcherNode</Name>
+          <Description>This is a Windows Computer that will initiate the file count monitors</Description>
+        </DisplayString>
+        <DisplayString ElementID="FileCount.Share">
+          <Name>FileCount Share</Name>
+          <Description>This is a Share where files will be counted based on the data provided in the CSV file</Description>
+        </DisplayString>
+        <DisplayString ElementID="FileCount.WatcherNode" SubElementID="CSV">
+          <Name>CSV Path</Name>
+        </DisplayString>
+        <DisplayString ElementID="FileCount.Share" SubElementID="ID">
+          <Name>ID</Name>
+        </DisplayString>
+        <DisplayString ElementID="FileCount.Share" SubElementID="Share">
+          <Name>Share</Name>
+        </DisplayString>
+        <DisplayString ElementID="FileCount.Share" SubElementID="Extension">
+          <Name>Extension</Name>
+        </DisplayString>
+        <DisplayString ElementID="FileCount.Share" SubElementID="Count">
+          <Name>Count</Name>
+        </DisplayString>
+        <DisplayString ElementID="FileCount.Share" SubElementID="Time">
+          <Name>Time</Name>
+        </DisplayString>
+        <DisplayString ElementID="FileCount.Share" SubElementID="Recurse">
+          <Name>Recurse</Name>
+        </DisplayString>
+        <DisplayString ElementID="FileCount.Folder">
+          <Name>File Count</Name>
+          <Description></Description>
+        </DisplayString>
+        <DisplayString ElementID="FileCount.State.Folder">
+          <Name>State Views</Name>
+          <Description></Description>
+        </DisplayString>
+        <DisplayString ElementID="FileCount.RunasProfile">
+          <Name>FileCount Runas Profile</Name>
+          <Description>Used to monitor the specified fileshares</Description>
+        </DisplayString>
+        <DisplayString ElementID="FileCount">
+          <Name>FileCount ManagementPack</Name>
+          <Description>Count files in an existing UNC path.  Discover UNC paths from CSV file located on server.  See MP Guide for additional configuration information.</Description>
+        </DisplayString>
+        <DisplayString ElementID="FileCount.Filecount.Alert.view">
+          <Name>File Count Share Alerts</Name>
+          <Description>Overview of all open alerts on File count folders</Description>
+        </DisplayString>
+        <DisplayString ElementID="FileCount.Filecount.Share.State.view">
+          <Name>File Count Share State</Name>
+          <Description>This view shows the state of all Filecount Shares</Description>
+        </DisplayString>
+        <DisplayString ElementID="FileCount.Filecount.Watchernode.State.view">
+          <Name>File Count Watchernode State</Name>
+          <Description>This view shows the state of all File Count Share Watchernode(s)</Description>
+        </DisplayString>
+      </DisplayStrings>
+      <KnowledgeArticles>
+        <KnowledgeArticle ElementID="FileCount.Status.MonitorType" Visible="true">
+          <MamlContent>
+            <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+              <maml:title>Summary</maml:title>
+              <maml:para>This monitor checks a UNC (shared folder) for a count of files.  The monitor can test for specific file extensions and can be recursive or non-recursive.  If the file count exceeds the threshold defined in the parameter file, then an error occurs.</maml:para>
+            </maml:section>
+            <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+              <maml:title>Error Conditions</maml:title>
+              <maml:para>If this monitor fails, check to be sure that the UNC path still exists and that the RunAs account is defined and has permissions to the share.  Also check to see that the count of files matching the conditions defined does not exceed the threshold value.</maml:para>
+            </maml:section>
+          </MamlContent>
+        </KnowledgeArticle>
+      </KnowledgeArticles>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>
