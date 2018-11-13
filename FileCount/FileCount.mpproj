@@ -63,6 +63,9 @@
     <Compile Include="FileCount.Accessible.mpx">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="WatcherNode.ConfigFile.mpx">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VSAC\Microsoft.SystemCenter.OperationsManager.targets" />
 </Project>
