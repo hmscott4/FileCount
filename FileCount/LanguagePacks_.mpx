@@ -19,40 +19,40 @@
           <Description>ID</Description>
         </DisplayString>
         <DisplayString ElementID="FileCount.FileCount.DataSource" SubElementID="CSV">
-          <Name>ID</Name>
-          <Description>ID</Description>
+          <Name>CSV</Name>
+          <Description>CSV</Description>
         </DisplayString>
         <DisplayString ElementID="FileCount.Accessible.Monitor.DataSource" SubElementID="IntervalSeconds">
-          <Name>ID</Name>
-          <Description>ID</Description>
+          <Name>IntervalSeconds</Name>
+          <Description>IntervalSeconds</Description>
         </DisplayString>
         <DisplayString ElementID="FileCount.Accessible.Monitor.DataSource" SubElementID="SyncTime">
-          <Name>ID</Name>
-          <Description>ID</Description>
+          <Name>SyncTime</Name>
+          <Description>SyncTime</Description>
         </DisplayString>
         <DisplayString ElementID="FileCount.Accessible.Monitor.DataSource" SubElementID="TimeoutSeconds">
-          <Name>ID</Name>
-          <Description>ID</Description>
+          <Name>TimeoutSeconds</Name>
+          <Description>TimeoutSeconds</Description>
         </DisplayString>
         <DisplayString ElementID="FileCount.Accessible.Monitor.DataSource" SubElementID="ID">
           <Name>ID</Name>
           <Description>ID</Description>
         </DisplayString>
         <DisplayString ElementID="FileCount.Accessible.Monitor.DataSource" SubElementID="CSV">
-          <Name>ID</Name>
-          <Description>ID</Description>
+          <Name>CSV</Name>
+          <Description>CSV</Description>
         </DisplayString>
         <DisplayString ElementID="FileCount.FileCount.WatcherNode.Accessible.Monitor.DataSource" SubElementID="IntervalSeconds">
           <Name>ID</Name>
           <Description>ID</Description>
         </DisplayString>
         <DisplayString ElementID="FileCount.FileCount.WatcherNode.Accessible.Monitor.DataSource" SubElementID="SyncTime">
-          <Name>ID</Name>
-          <Description>ID</Description>
+          <Name>SyncTime</Name>
+          <Description>SyncTime</Description>
         </DisplayString>
         <DisplayString ElementID="FileCount.FileCount.WatcherNode.Accessible.Monitor.DataSource" SubElementID="TimeoutSeconds">
-          <Name>ID</Name>
-          <Description>ID</Description>
+          <Name>TimeoutSeconds</Name>
+          <Description>TimeoutSeconds</Description>
         </DisplayString>
         <DisplayString ElementID="FileCount.Accessible.Monitor.DataSource">
           <Name>FileCount Accessible Monitor Data Source</Name>
@@ -67,52 +67,52 @@
           <Description>Name of CSV file</Description>
         </DisplayString>
         <DisplayString ElementID="FileCount.Status.MonitorType" SubElementID="IntervalSeconds">
-          <Name>CSV</Name>
-          <Description>Name of CSV file</Description>
+          <Name>IntervalSeconds</Name>
+          <Description>IntervalSeconds</Description>
         </DisplayString>
         <DisplayString ElementID="FileCount.Status.MonitorType" SubElementID="SyncTime">
-          <Name>CSV</Name>
+          <Name>SyncTime</Name>
           <Description>Name of CSV file</Description>
         </DisplayString>
         <DisplayString ElementID="FileCount.Status.MonitorType" SubElementID="ID">
-          <Name>CSV</Name>
-          <Description>Name of CSV file</Description>
+          <Name>ID</Name>
+          <Description>ID</Description>
         </DisplayString>
         <DisplayString ElementID="FileCount.Status.MonitorType" SubElementID="CSV">
           <Name>CSV</Name>
           <Description>Name of CSV file</Description>
         </DisplayString>
         <DisplayString ElementID="FileCount.Accessible.Monitor.MonitorType" SubElementID="IntervalSeconds">
-          <Name>CSV</Name>
-          <Description>Name of CSV file</Description>
+          <Name>IntervalSeconds</Name>
+          <Description>IntervalSeconds</Description>
         </DisplayString>
         <DisplayString ElementID="FileCount.Accessible.Monitor.MonitorType" SubElementID="SyncTime">
-          <Name>CSV</Name>
-          <Description>Name of CSV file</Description>
+          <Name>SyncTime</Name>
+          <Description>SyncTime</Description>
         </DisplayString>
         <DisplayString ElementID="FileCount.Accessible.Monitor.MonitorType" SubElementID="TimeoutSeconds">
-          <Name>CSV</Name>
-          <Description>Name of CSV file</Description>
+          <Name>TimeoutSeconds</Name>
+          <Description>TimeoutSeconds</Description>
         </DisplayString>
         <DisplayString ElementID="FileCount.Accessible.Monitor.MonitorType" SubElementID="ID">
-          <Name>CSV</Name>
-          <Description>Name of CSV file</Description>
+          <Name>ID</Name>
+          <Description>ID</Description>
         </DisplayString>
         <DisplayString ElementID="FileCount.Accessible.Monitor.MonitorType" SubElementID="CSV">
           <Name>CSV</Name>
           <Description>Name of CSV file</Description>
         </DisplayString>
         <DisplayString ElementID="FileCount.FileCount.WatcherNode.Accessible.Monitor.MonitorType" SubElementID="IntervalSeconds">
-          <Name>CSV</Name>
-          <Description>Name of CSV file</Description>
+          <Name>IntervalSeconds</Name>
+          <Description>IntervalSeconds</Description>
         </DisplayString>
         <DisplayString ElementID="FileCount.FileCount.WatcherNode.Accessible.Monitor.MonitorType" SubElementID="SyncTime">
-          <Name>CSV</Name>
-          <Description>Name of CSV file</Description>
+          <Name>SyncTime</Name>
+          <Description>SyncTime</Description>
         </DisplayString>
         <DisplayString ElementID="FileCount.FileCount.WatcherNode.Accessible.Monitor.MonitorType" SubElementID="TimeoutSeconds">
-          <Name>CSV</Name>
-          <Description>Name of CSV file</Description>
+          <Name>TimeoutSeconds</Name>
+          <Description>TimeoutSeconds</Description>
         </DisplayString>
         <DisplayString ElementID="FileCount.FileCount.WatcherNode.Accessible.Monitor.MonitorType" SubElementID="CSV">
           <Name>CSV</Name>
