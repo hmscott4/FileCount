@@ -435,7 +435,7 @@ $discoveryData
         </OperationalStates>
         <Configuration>
           <IntervalSeconds>300</IntervalSeconds>
-          <SyncTime>12:00</SyncTime>
+          <SyncTime></SyncTime>
           <ID>$Target/Property[Type='FileCount.Share']/ID$</ID>
           <CSV>$Target/Host/Property[Type='FileCount.WatcherNode']/CSV$</CSV>
         </Configuration>
