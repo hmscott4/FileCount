@@ -1,61 +1,33 @@
-﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <!--
-%%
-Description:
-  A MONITOR which runs a timed PowerShell script as the DataSource and outputs a propertybag as GOOD or BAD to drive Monitor state and ALERT
-  CompanyID - is a short abbreviation for your company with NO SPACES OR SPECIAL CHARACTERS ALLOWED
-  AppName - is a short name for your app with NO SPACES OR SPECIAL CHARACTERS ALLOWED  
-  ClassID - is the targeted class such as your custom class or Windows!Microsoft.Windows.Server.OperatingSystem
-  UniqueID - Is a unique short description of the monitor purpose (NO SPACES OR SPECIAL CHARACTERS ALLOWED) such as "MonitorFilesInFolder"  
-  
-Version: 1.3
-LastModified: 4-Nov-2017
-%%
-
-In this fragment you need to replace:
-  ABCD
-  FileCount
-  FileCount.WatcherNode
-  FileCount.WatcherNode.Accessible  
-
-
-This fragment depends on references:
-  RequiredReference: Alias="System", ID="System.Library"
-  RequiredReference: Alias="Windows", ID="Microsoft.Windows.Library"
-  RequiredReference: Alias="Health", ID="System.Health.Library"	
-  
-@@Author=Kevin Holman@@  
--->
-    <TypeDefinitions>
-      <ModuleTypes>
-        <DataSourceModuleType ID="FileCount.FileCount.WatcherNode.Accessible.Monitor.DataSource" Accessibility="Internal" Batching="false" RunAs="FileCount.RunasProfile">
-          <Configuration>
-            <xsd:element minOccurs="1" type="xsd:integer" name="IntervalSeconds" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
-            <xsd:element minOccurs="0" type="xsd:string" name="SyncTime" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
-            <xsd:element minOccurs="1" type="xsd:integer" name="TimeoutSeconds" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
-            <xsd:element minOccurs="1" type="xsd:string" name="CSV" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
-          </Configuration>
-          <OverrideableParameters>
-            <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int" />
-            <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string" />
-            <OverrideableParameter ID="TimeoutSeconds" Selector="$Config/TimeoutSeconds$" ParameterType="int" />
-            <OverrideableParameter ID="CSV" Selector="$Config/CSV$" ParameterType="string" />
-          </OverrideableParameters>
-          <ModuleImplementation Isolation="Any">
-            <Composite>
-              <MemberModules>
-                <DataSource ID="Scheduler" TypeID="System!System.Scheduler">
-                  <Scheduler>
-                    <SimpleReccuringSchedule>
-                      <Interval Unit="Seconds">$Config/IntervalSeconds$</Interval>
-                      <SyncTime>$Config/SyncTime$</SyncTime>
-                    </SimpleReccuringSchedule>
-                    <ExcludeDates />
-                  </Scheduler>
-                </DataSource>
-                <ProbeAction ID="PA" TypeID="Windows!Microsoft.Windows.PowerShellPropertyBagTriggerOnlyProbe">
-                  <ScriptName>FileCount.FileCount.WatcherNode.Accessible.Monitor.DataSource.ps1</ScriptName>
-                  <ScriptBody>
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><TypeDefinitions>
+    <ModuleTypes>
+      <DataSourceModuleType ID="FileCount.FileCount.WatcherNode.Accessible.Monitor.DataSource" Accessibility="Internal" Batching="false" RunAs="FileCount.RunasProfile">
+        <Configuration>
+          <xsd:element minOccurs="1" type="xsd:integer" name="IntervalSeconds" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element minOccurs="0" type="xsd:string" name="SyncTime" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element minOccurs="1" type="xsd:integer" name="TimeoutSeconds" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element minOccurs="1" type="xsd:string" name="CSV" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int" />
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string" />
+          <OverrideableParameter ID="TimeoutSeconds" Selector="$Config/TimeoutSeconds$" ParameterType="int" />
+          <OverrideableParameter ID="CSV" Selector="$Config/CSV$" ParameterType="string" />
+        </OverrideableParameters>
+        <ModuleImplementation Isolation="Any">
+          <Composite>
+            <MemberModules>
+              <DataSource ID="Scheduler" TypeID="System!System.Scheduler">
+                <Scheduler>
+                  <SimpleReccuringSchedule>
+                    <Interval Unit="Seconds">$Config/IntervalSeconds$</Interval>
+                    <SyncTime>$Config/SyncTime$</SyncTime>
+                  </SimpleReccuringSchedule>
+                  <ExcludeDates />
+                </Scheduler>
+              </DataSource>
+              <ProbeAction ID="PA" TypeID="Windows!Microsoft.Windows.PowerShellPropertyBagTriggerOnlyProbe">
+                <ScriptName>FileCount.FileCount.WatcherNode.Accessible.Monitor.DataSource.ps1</ScriptName>
+                <ScriptBody>
                     param($CSV)
                     #=================================================================================
                     #  Describe Script Here
@@ -119,155 +91,151 @@ This fragment depends on references:
                     #=================================================================================
                     # End of script
                   </ScriptBody>
-                  <Parameters>
-                    <Parameter>
-                      <Name>CSV</Name>
-                      <Value>$Config/CSV$</Value>
-                    </Parameter>
-                  </Parameters>
-                  <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
-                </ProbeAction>
-              </MemberModules>
-              <Composition>
-                <Node ID="PA">
-                  <Node ID="Scheduler" />
-                </Node>
-              </Composition>
-            </Composite>
-          </ModuleImplementation>
-          <OutputType>System!System.PropertyBagData</OutputType>
-        </DataSourceModuleType>
-      </ModuleTypes>
-      <MonitorTypes>
-        <UnitMonitorType ID="FileCount.FileCount.WatcherNode.Accessible.Monitor.MonitorType" Accessibility="Internal">
-          <MonitorTypeStates>
-            <MonitorTypeState ID="ConfigFileFound" NoDetection="false" />
-            <MonitorTypeState ID="ConfigFileNotFound" NoDetection="false" />
-          </MonitorTypeStates>
-          <Configuration>
-            <xsd:element minOccurs="1" type="xsd:integer" name="IntervalSeconds" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
-            <xsd:element minOccurs="0" type="xsd:string" name="SyncTime" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
-            <xsd:element minOccurs="1" type="xsd:integer" name="TimeoutSeconds" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
-            <xsd:element minOccurs="1" type="xsd:string" name="CSV" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
-          </Configuration>
-          <OverrideableParameters>
-            <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int" />
-            <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string" />
-            <OverrideableParameter ID="TimeoutSeconds" Selector="$Config/TimeoutSeconds$" ParameterType="int" />
-            <OverrideableParameter ID="CSV" Selector="$Config/CSV$" ParameterType="string" />
-          </OverrideableParameters>
-          <MonitorImplementation>
-            <MemberModules>
-              <DataSource ID="DS" TypeID="FileCount.FileCount.WatcherNode.Accessible.Monitor.DataSource">
-                <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
-                <SyncTime>$Config/SyncTime$</SyncTime>
+                <Parameters>
+                  <Parameter>
+                    <Name>CSV</Name>
+                    <Value>$Config/CSV$</Value>
+                  </Parameter>
+                </Parameters>
                 <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
-                <CSV>$Config/CSV$</CSV>
-              </DataSource>
-              <ConditionDetection ID="GoodConditionFilter" TypeID="System!System.ExpressionFilter">
-                <Expression>
-                  <SimpleExpression>
-                    <ValueExpression>
-                      <XPathQuery Type="String">Property[@Name='Result']</XPathQuery>
-                    </ValueExpression>
-                    <Operator>Equal</Operator>
-                    <ValueExpression>
-                      <Value Type="String">ConfigFileFound</Value>
-                    </ValueExpression>
-                  </SimpleExpression>
-                </Expression>
-              </ConditionDetection>
-              <ConditionDetection ID="BadConditionFilter" TypeID="System!System.ExpressionFilter">
-                <Expression>
-                  <SimpleExpression>
-                    <ValueExpression>
-                      <XPathQuery Type="String">Property[@Name='Result']</XPathQuery>
-                    </ValueExpression>
-                    <Operator>Equal</Operator>
-                    <ValueExpression>
-                      <Value Type="String">ConfigFileFound</Value>
-                    </ValueExpression>
-                  </SimpleExpression>
-                </Expression>
-              </ConditionDetection>
+              </ProbeAction>
             </MemberModules>
-            <RegularDetections>
-              <RegularDetection MonitorTypeStateID="ConfigFileFound">
-                <Node ID="GoodConditionFilter">
-                  <Node ID="DS" />
-                </Node>
-              </RegularDetection>
-              <RegularDetection MonitorTypeStateID="ConfigFileNotFound">
-                <Node ID="BadConditionFilter">
-                  <Node ID="DS" />
-                </Node>
-              </RegularDetection>
-            </RegularDetections>
-            <OnDemandDetections>
-              <OnDemandDetection MonitorTypeStateID="ConfigFileFound">
-                <Node ID="GoodConditionFilter">
-                  <Node ID="DS" />
-                </Node>
-              </OnDemandDetection>
-              <OnDemandDetection MonitorTypeStateID="ConfigFileNotFound">
-                <Node ID="BadConditionFilter">
-                  <Node ID="DS" />
-                </Node>
-              </OnDemandDetection>
-            </OnDemandDetections>
-          </MonitorImplementation>
-        </UnitMonitorType>
-      </MonitorTypes>
-    </TypeDefinitions>
-    <Monitoring>
-      <Monitors>
-        <UnitMonitor ID="FileCount.FileCount.WatcherNode.Accessible.Monitor" Accessibility="Public" Enabled="true" Target="FileCount.WatcherNode" ParentMonitorID="Health!System.Health.AvailabilityState" Remotable="true" Priority="Normal" TypeID="FileCount.FileCount.WatcherNode.Accessible.Monitor.MonitorType" ConfirmDelivery="true">
-          <Category>AvailabilityHealth</Category>
-          <AlertSettings AlertMessage="FileCount.FileCount.WatcherNode.Accessible.Monitor.AlertMessage">
-            <AlertOnState>Warning</AlertOnState>
-            <!-- Warning or Error should match OperationalStates below  -->
-            <AutoResolve>true</AutoResolve>
-            <AlertPriority>Normal</AlertPriority>
-            <AlertSeverity>MatchMonitorHealth</AlertSeverity>
-            <!-- Common options for AlertSeverity are MatchMonitorHealth, Information, Warning, Error -->
-          </AlertSettings>
-          <OperationalStates>
-            <OperationalState ID="ConfigFileFound" MonitorTypeStateID="ConfigFileFound" HealthState="Success" />
-            <OperationalState ID="ConfigFileNotFound" MonitorTypeStateID="ConfigFileNotFound" HealthState="Warning" />
-            <!-- HealthState = Warning or Error -->
-          </OperationalStates>
-          <Configuration>
-            <IntervalSeconds>3600</IntervalSeconds>
-            <SyncTime></SyncTime>
-            <TimeoutSeconds>120</TimeoutSeconds>
-            <CSV>$Target/Property[Type='FileCount.WatcherNode']/CSV$</CSV>
-          </Configuration>
-        </UnitMonitor>
-      </Monitors>
-    </Monitoring>
-    <Presentation>
-      <StringResources>
-        <StringResource ID="FileCount.FileCount.WatcherNode.Accessible.Monitor.AlertMessage" />
-      </StringResources>
-    </Presentation>
-    <LanguagePacks>
-      <LanguagePack ID="ENU" IsDefault="true">
-        <DisplayStrings>
-          <DisplayString ElementID="FileCount.FileCount.WatcherNode.Accessible.Monitor">
-            <Name>FileCount FileCount.WatcherNode.Accessible Monitor</Name>
-            <Description></Description>
-          </DisplayString>
-          <DisplayString ElementID="FileCount.FileCount.WatcherNode.Accessible.Monitor" SubElementID="ConfigFileFound">
-            <Name>Configuration file Accessible</Name>
-          </DisplayString>
-          <DisplayString ElementID="FileCount.FileCount.WatcherNode.Accessible.Monitor" SubElementID="ConfigFileNotFound">
-            <Name>Configuration file not accessible</Name>
-          </DisplayString>
-          <DisplayString ElementID="FileCount.FileCount.WatcherNode.Accessible.Monitor.AlertMessage">
-            <Name>FileCount FileCount.WatcherNode.Accessible Monitor: Failure</Name>
-            <Description>Configuration file not accessible for FileCount Watcher Node.</Description>
-          </DisplayString>
-        </DisplayStrings>
-      </LanguagePack>
-    </LanguagePacks>
-  </ManagementPackFragment>
+            <Composition>
+              <Node ID="PA">
+                <Node ID="Scheduler" />
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>System!System.PropertyBagData</OutputType>
+      </DataSourceModuleType>
+    </ModuleTypes>
+    <MonitorTypes>
+      <UnitMonitorType ID="FileCount.FileCount.WatcherNode.Accessible.Monitor.MonitorType" Accessibility="Internal">
+        <MonitorTypeStates>
+          <MonitorTypeState ID="ConfigFileFound" NoDetection="false" />
+          <MonitorTypeState ID="ConfigFileNotFound" NoDetection="false" />
+        </MonitorTypeStates>
+        <Configuration>
+          <xsd:element minOccurs="1" type="xsd:integer" name="IntervalSeconds" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element minOccurs="0" type="xsd:string" name="SyncTime" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element minOccurs="1" type="xsd:integer" name="TimeoutSeconds" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element minOccurs="1" type="xsd:string" name="CSV" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int" />
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string" />
+          <OverrideableParameter ID="TimeoutSeconds" Selector="$Config/TimeoutSeconds$" ParameterType="int" />
+          <OverrideableParameter ID="CSV" Selector="$Config/CSV$" ParameterType="string" />
+        </OverrideableParameters>
+        <MonitorImplementation>
+          <MemberModules>
+            <DataSource ID="DS" TypeID="FileCount.FileCount.WatcherNode.Accessible.Monitor.DataSource">
+              <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+              <SyncTime>$Config/SyncTime$</SyncTime>
+              <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+              <CSV>$Config/CSV$</CSV>
+            </DataSource>
+            <ConditionDetection ID="GoodConditionFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">Property[@Name='Result']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="String">ConfigFileFound</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="BadConditionFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">Property[@Name='Result']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="String">ConfigFileNotFound</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+          </MemberModules>
+          <RegularDetections>
+            <RegularDetection MonitorTypeStateID="ConfigFileFound">
+              <Node ID="GoodConditionFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="ConfigFileNotFound">
+              <Node ID="BadConditionFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+          </RegularDetections>
+          <OnDemandDetections>
+            <OnDemandDetection MonitorTypeStateID="ConfigFileFound">
+              <Node ID="GoodConditionFilter">
+                <Node ID="DS" />
+              </Node>
+            </OnDemandDetection>
+            <OnDemandDetection MonitorTypeStateID="ConfigFileNotFound">
+              <Node ID="BadConditionFilter">
+                <Node ID="DS" />
+              </Node>
+            </OnDemandDetection>
+          </OnDemandDetections>
+        </MonitorImplementation>
+      </UnitMonitorType>
+    </MonitorTypes>
+  </TypeDefinitions><Monitoring>
+    <Monitors>
+      <UnitMonitor ID="FileCount.FileCount.WatcherNode.Accessible.Monitor" Accessibility="Public" Enabled="true" Target="FileCount.WatcherNode" ParentMonitorID="Health!System.Health.AvailabilityState" Remotable="true" Priority="Normal" TypeID="FileCount.FileCount.WatcherNode.Accessible.Monitor.MonitorType" ConfirmDelivery="true">
+        <Category>AvailabilityHealth</Category>
+        <AlertSettings AlertMessage="FileCount.FileCount.WatcherNode.Accessible.Monitor.AlertMessage">
+          <AlertOnState>Warning</AlertOnState>
+          <!-- Warning or Error should match OperationalStates below  -->
+          <AutoResolve>true</AutoResolve>
+          <AlertPriority>Normal</AlertPriority>
+          <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+          <!-- Common options for AlertSeverity are MatchMonitorHealth, Information, Warning, Error -->
+        </AlertSettings>
+        <OperationalStates>
+          <OperationalState ID="ConfigFileFound" MonitorTypeStateID="ConfigFileFound" HealthState="Success" />
+          <OperationalState ID="ConfigFileNotFound" MonitorTypeStateID="ConfigFileNotFound" HealthState="Warning" />
+          <!-- HealthState = Warning or Error -->
+        </OperationalStates>
+        <Configuration>
+          <IntervalSeconds>3600</IntervalSeconds>
+          <SyncTime></SyncTime>
+          <TimeoutSeconds>120</TimeoutSeconds>
+          <CSV>$Target/Property[Type='FileCount.WatcherNode']/CSV$</CSV>
+        </Configuration>
+      </UnitMonitor>
+    </Monitors>
+  </Monitoring><Presentation>
+    <StringResources>
+      <StringResource ID="FileCount.FileCount.WatcherNode.Accessible.Monitor.AlertMessage" />
+    </StringResources>
+  </Presentation><LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+        <DisplayString ElementID="FileCount.FileCount.WatcherNode.Accessible.Monitor">
+          <Name>FileCount FileCount.WatcherNode.Accessible Monitor</Name>
+          <Description>Verifies that the configuration file for the Watcher node is accessible.</Description>
+        </DisplayString>
+        <DisplayString ElementID="FileCount.FileCount.WatcherNode.Accessible.Monitor" SubElementID="ConfigFileFound">
+          <Name>Configuration file Accessible</Name>
+        </DisplayString>
+        <DisplayString ElementID="FileCount.FileCount.WatcherNode.Accessible.Monitor" SubElementID="ConfigFileNotFound">
+          <Name>Configuration file not accessible</Name>
+        </DisplayString>
+        <DisplayString ElementID="FileCount.FileCount.WatcherNode.Accessible.Monitor.AlertMessage">
+          <Name>FileCount FileCount.WatcherNode.Accessible Monitor: Failure</Name>
+          <Description>Configuration file not accessible for FileCount Watcher Node.</Description>
+        </DisplayString>
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks></ManagementPackFragment>

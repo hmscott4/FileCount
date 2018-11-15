@@ -1,24 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <TypeDefinitions>
+<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><TypeDefinitions>
     <EntityTypes>
       <ClassTypes>
-        <ClassType ID="FileCount.WatcherNode" Base="Windows!Microsoft.Windows.ComputerRole" Accessibility="Public" Abstract="false" Hosted="true" Singleton="false">
-          <Property ID="CSV" Type="string" Key="true" />
+        <ClassType ID="FileCount.WatcherNode" Accessibility="Public" Abstract="false" Base="Windows!Microsoft.Windows.ComputerRole" Hosted="true" Singleton="false" Extension="false">
+          <Property ID="CSV" Type="string" AutoIncrement="false" Key="true" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
         </ClassType>
-        <ClassType ID="FileCount.Share" Base="Windows!Microsoft.Windows.ApplicationComponent" Accessibility="Public" Abstract="false" Hosted="true" Singleton="false">
-          <Property ID="ID" Type="int" Key="true" />
-          <Property ID="Share" Type="string" Key="false" />
-          <Property ID="Extension" Type="string" Key="false" />
-          <Property ID="Count" Type="int" Key="false" />
-          <Property ID="Time" Type="int" Key="false" />
-          <Property ID="Recurse" Type="int" Key="false" />
+        <ClassType ID="FileCount.Share" Accessibility="Public" Abstract="false" Base="Windows!Microsoft.Windows.ApplicationComponent" Hosted="true" Singleton="false" Extension="false">
+          <Property ID="ID" Type="int" AutoIncrement="false" Key="true" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
+          <Property ID="Share" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
+          <Property ID="Extension" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
+          <Property ID="Count" Type="int" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
+          <Property ID="Time" Type="int" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
+          <Property ID="Recurse" Type="int" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
         </ClassType>
       </ClassTypes>
       <RelationshipTypes>
-        <RelationshipType ID="FileCountWatcherNodeContainsFileShare" Accessibility="Public" Base="System!System.Hosting">
-          <Source ID="src" Type="FileCount.WatcherNode" />
-          <Target ID="trgt" Type="FileCount.Share" />
+        <RelationshipType ID="FileCountWatcherNodeContainsFileShare" Accessibility="Public" Abstract="false" Base="System!System.Hosting">
+          <Source ID="src" MinCardinality="0" MaxCardinality="2147483647" Type="FileCount.WatcherNode" />
+          <Target ID="trgt" MinCardinality="0" MaxCardinality="2147483647" Type="FileCount.Share" />
         </RelationshipType>
       </RelationshipTypes>
     </EntityTypes>
@@ -263,8 +262,7 @@
         </MonitorImplementation>
       </UnitMonitorType>
     </MonitorTypes>
-  </TypeDefinitions>
-  <Monitoring>
+  </TypeDefinitions><Monitoring>
     <Discoveries>
       <Discovery ID="FileCount.WatcherNode.Discovery" Target="Windows!Microsoft.Windows.Computer" Enabled="true" ConfirmDelivery="false" Remotable="true" Priority="Normal">
         <Category>Discovery</Category>
@@ -418,7 +416,7 @@ $discoveryData
       </Rule>
     </Rules>
     <Monitors>
-      <UnitMonitor ID="FileCount.File.Share.File.Count.Monitor" Accessibility="Internal" Enabled="true" Target="FileCount.Share" ParentMonitorID="Health!System.Health.AvailabilityState" Remotable="true" Priority="Normal" TypeID="FileCount.Status.MonitorType" ConfirmDelivery="false" RunAs="FileCount.RunasProfile">
+      <UnitMonitor ID="FileCount.File.Share.File.Count.Monitor" Accessibility="Public" Enabled="true" Target="FileCount.Share" ParentMonitorID="Health!System.Health.AvailabilityState" Remotable="true" Priority="Normal" RunAs="FileCount.RunasProfile" TypeID="FileCount.Status.MonitorType" ConfirmDelivery="false">
         <Category>AvailabilityHealth</Category>
         <AlertSettings AlertMessage="FileCount.File.Share.File.Count.Monitor.AlertMessage">
           <AlertOnState>Error</AlertOnState>
@@ -443,10 +441,9 @@ $discoveryData
         </Configuration>
       </UnitMonitor>
     </Monitors>
-  </Monitoring>
-  <Presentation>
+  </Monitoring><Presentation>
     <Views>
-      <View ID="FileCount.Filecount.Alert.view" Accessibility="Public" Target="FileCount.Share" TypeID="SC!Microsoft.SystemCenter.AlertViewType" Visible="true">
+      <View ID="FileCount.Filecount.Alert.view" Accessibility="Public" Enabled="true" Target="FileCount.Share" TypeID="SC!Microsoft.SystemCenter.AlertViewType" Visible="true">
         <Category>Operations</Category>
         <Criteria>
           <ResolutionState>
@@ -454,10 +451,10 @@ $discoveryData
           </ResolutionState>
         </Criteria>
       </View>
-      <View ID="FileCount.Filecount.Share.State.view" Accessibility="Public" Target="FileCount.Share" TypeID="SC!Microsoft.SystemCenter.StateViewType" Visible="true">
+      <View ID="FileCount.Filecount.Share.State.view" Accessibility="Public" Enabled="true" Target="FileCount.Share" TypeID="SC!Microsoft.SystemCenter.StateViewType" Visible="true">
         <Category>Operations</Category>
       </View>
-      <View ID="FileCount.Filecount.Watchernode.State.view" Accessibility="Public" Target="FileCount.WatcherNode" TypeID="SC!Microsoft.SystemCenter.StateViewType" Visible="true">
+      <View ID="FileCount.Filecount.Watchernode.State.view" Accessibility="Public" Enabled="true" Target="FileCount.WatcherNode" TypeID="SC!Microsoft.SystemCenter.StateViewType" Visible="true">
         <Category>Operations</Category>
       </View>
     </Views>
@@ -473,8 +470,7 @@ $discoveryData
     <StringResources>
       <StringResource ID="FileCount.File.Share.File.Count.Monitor.AlertMessage" />
     </StringResources>
-  </Presentation>
-  <LanguagePacks>
+  </Presentation><LanguagePacks>
     <LanguagePack ID="ENU" IsDefault="true">
       <DisplayStrings>
         <DisplayString ElementID="FileCount.WatcherNode.Discovery">
@@ -577,5 +573,4 @@ $discoveryData
         </KnowledgeArticle>
       </KnowledgeArticles>
     </LanguagePack>
-  </LanguagePacks>
-</ManagementPackFragment>
+  </LanguagePacks></ManagementPackFragment>
