@@ -1,6 +1,6 @@
 ﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><TypeDefinitions>
     <ModuleTypes>
-      <DataSourceModuleType ID="FileCount.FileCount.WatcherNode.Accessible.Monitor.DataSource" Accessibility="Internal" Batching="false" RunAs="FileCount.RunasProfile">
+      <DataSourceModuleType ID="Network.FileCount.WatcherNode.Accessible.Monitor.DataSource" Accessibility="Internal" Batching="false" RunAs="Network.FileCount.RunasProfile">
         <Configuration>
           <xsd:element minOccurs="1" type="xsd:integer" name="IntervalSeconds" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
           <xsd:element minOccurs="0" type="xsd:string" name="SyncTime" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
@@ -26,7 +26,7 @@
                 </Scheduler>
               </DataSource>
               <ProbeAction ID="PA" TypeID="Windows!Microsoft.Windows.PowerShellPropertyBagTriggerOnlyProbe">
-                <ScriptName>FileCount.FileCount.WatcherNode.Accessible.Monitor.DataSource.ps1</ScriptName>
+                <ScriptName>Network.FileCount.WatcherNode.Accessible.Monitor.DataSource.ps1</ScriptName>
                 <ScriptBody>
                     param($CSV)
                     #=================================================================================
@@ -41,7 +41,7 @@
                     # Constants section - modify stuff here:
                     #=================================================================================
                     # Assign script name variable for use in event logging.
-                    $ScriptName = "FileCount.FileCount.WatcherNode.Accessible.Monitor.DataSource.ps1"
+                    $ScriptName = "Network.FileCount.WatcherNode.Accessible.Monitor.DataSource.ps1"
                     $EventID = "3523"
                     #=================================================================================
 
@@ -111,7 +111,7 @@
       </DataSourceModuleType>
     </ModuleTypes>
     <MonitorTypes>
-      <UnitMonitorType ID="FileCount.FileCount.WatcherNode.Accessible.Monitor.MonitorType" Accessibility="Internal">
+      <UnitMonitorType ID="Network.FileCount.WatcherNode.Accessible.Monitor.MonitorType" Accessibility="Internal">
         <MonitorTypeStates>
           <MonitorTypeState ID="ConfigFileFound" NoDetection="false" />
           <MonitorTypeState ID="ConfigFileNotFound" NoDetection="false" />
@@ -130,7 +130,7 @@
         </OverrideableParameters>
         <MonitorImplementation>
           <MemberModules>
-            <DataSource ID="DS" TypeID="FileCount.FileCount.WatcherNode.Accessible.Monitor.DataSource">
+            <DataSource ID="DS" TypeID="Network.FileCount.WatcherNode.Accessible.Monitor.DataSource">
               <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
               <SyncTime>$Config/SyncTime$</SyncTime>
               <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
@@ -192,9 +192,9 @@
     </MonitorTypes>
   </TypeDefinitions><Monitoring>
     <Monitors>
-      <UnitMonitor ID="FileCount.FileCount.WatcherNode.Accessible.Monitor" Accessibility="Public" Enabled="true" Target="FileCount.WatcherNode" ParentMonitorID="Health!System.Health.AvailabilityState" Remotable="true" Priority="Normal" TypeID="FileCount.FileCount.WatcherNode.Accessible.Monitor.MonitorType" ConfirmDelivery="true">
+      <UnitMonitor ID="Network.FileCount.WatcherNode.Accessible.Monitor" Accessibility="Public" Enabled="true" Target="Network.FileCount.WatcherNode" ParentMonitorID="Health!System.Health.AvailabilityState" Remotable="true" Priority="Normal" TypeID="Network.FileCount.WatcherNode.Accessible.Monitor.MonitorType" ConfirmDelivery="true">
         <Category>AvailabilityHealth</Category>
-        <AlertSettings AlertMessage="FileCount.FileCount.WatcherNode.Accessible.Monitor.AlertMessage">
+        <AlertSettings AlertMessage="Network.FileCount.WatcherNode.Accessible.Monitor.AlertMessage">
           <AlertOnState>Warning</AlertOnState>
           <!-- Warning or Error should match OperationalStates below  -->
           <AutoResolve>true</AutoResolve>
@@ -211,28 +211,28 @@
           <IntervalSeconds>3600</IntervalSeconds>
           <SyncTime></SyncTime>
           <TimeoutSeconds>120</TimeoutSeconds>
-          <CSV>$Target/Property[Type='FileCount.WatcherNode']/CSV$</CSV>
+          <CSV>$Target/Property[Type='Network.FileCount.WatcherNode']/CSV$</CSV>
         </Configuration>
       </UnitMonitor>
     </Monitors>
   </Monitoring><Presentation>
     <StringResources>
-      <StringResource ID="FileCount.FileCount.WatcherNode.Accessible.Monitor.AlertMessage" />
+      <StringResource ID="Network.FileCount.WatcherNode.Accessible.Monitor.AlertMessage" />
     </StringResources>
   </Presentation><LanguagePacks>
     <LanguagePack ID="ENU" IsDefault="true">
       <DisplayStrings>
-        <DisplayString ElementID="FileCount.FileCount.WatcherNode.Accessible.Monitor">
+        <DisplayString ElementID="Network.FileCount.WatcherNode.Accessible.Monitor">
           <Name>FileCount FileCount.WatcherNode.Accessible Monitor</Name>
           <Description>Verifies that the configuration file for the Watcher node is accessible.</Description>
         </DisplayString>
-        <DisplayString ElementID="FileCount.FileCount.WatcherNode.Accessible.Monitor" SubElementID="ConfigFileFound">
+        <DisplayString ElementID="Network.FileCount.WatcherNode.Accessible.Monitor" SubElementID="ConfigFileFound">
           <Name>Configuration file Accessible</Name>
         </DisplayString>
-        <DisplayString ElementID="FileCount.FileCount.WatcherNode.Accessible.Monitor" SubElementID="ConfigFileNotFound">
+        <DisplayString ElementID="Network.FileCount.WatcherNode.Accessible.Monitor" SubElementID="ConfigFileNotFound">
           <Name>Configuration file not accessible</Name>
         </DisplayString>
-        <DisplayString ElementID="FileCount.FileCount.WatcherNode.Accessible.Monitor.AlertMessage">
+        <DisplayString ElementID="Network.FileCount.WatcherNode.Accessible.Monitor.AlertMessage">
           <Name>FileCount FileCount.WatcherNode.Accessible Monitor: Failure</Name>
           <Description>Configuration file not accessible for FileCount Watcher Node.</Description>
         </DisplayString>

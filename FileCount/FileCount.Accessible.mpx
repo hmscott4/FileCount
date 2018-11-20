@@ -28,7 +28,7 @@ This fragment depends on references:
 -->
     <TypeDefinitions>
       <ModuleTypes>
-        <DataSourceModuleType ID="FileCount.Accessible.Monitor.DataSource" Accessibility="Internal" Batching="false" RunAs="FileCount.RunasProfile">
+        <DataSourceModuleType ID="Network.FileCount.Accessible.Monitor.DataSource" Accessibility="Internal" Batching="false" RunAs="Network.FileCount.RunasProfile">
           <Configuration>
             <xsd:element minOccurs="1" type="xsd:integer" name="IntervalSeconds" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
             <xsd:element minOccurs="0" type="xsd:string" name="SyncTime" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
@@ -70,7 +70,7 @@ This fragment depends on references:
                     # Constants section - modify stuff here:
                     #=================================================================================
                     # Assign script name variable for use in event logging.
-                    $ScriptName = "FileCount.Accessible.Monitor.DataSource.ps1"
+                    $ScriptName = "Network.FileCount.Accessible.Monitor.DataSource.ps1"
                     $EventID = "3522"
                     #=================================================================================
 
@@ -159,7 +159,7 @@ This fragment depends on references:
         </DataSourceModuleType>
       </ModuleTypes>
       <MonitorTypes>
-        <UnitMonitorType ID="FileCount.Accessible.Monitor.MonitorType" Accessibility="Internal">
+        <UnitMonitorType ID="Network.FileCount.Accessible.Monitor.MonitorType" Accessibility="Internal">
           <MonitorTypeStates>
             <MonitorTypeState ID="GoodCondition" NoDetection="false" />
             <MonitorTypeState ID="BadCondition" NoDetection="false" />
@@ -180,7 +180,7 @@ This fragment depends on references:
           </OverrideableParameters>
           <MonitorImplementation>
             <MemberModules>
-              <DataSource ID="DS" TypeID="FileCount.Accessible.Monitor.DataSource">
+              <DataSource ID="DS" TypeID="Network.FileCount.Accessible.Monitor.DataSource">
                 <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
                 <SyncTime>$Config/SyncTime$</SyncTime>
                 <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
@@ -244,9 +244,9 @@ This fragment depends on references:
     </TypeDefinitions>
     <Monitoring>
       <Monitors>
-        <UnitMonitor ID="FileCount.Accessible.Monitor" Accessibility="Public" Enabled="true" Target="FileCount.Share" ParentMonitorID="Health!System.Health.AvailabilityState" Remotable="true" Priority="Normal" TypeID="FileCount.Accessible.Monitor.MonitorType" ConfirmDelivery="true">
+        <UnitMonitor ID="Network.FileCount.Accessible.Monitor" Accessibility="Public" Enabled="true" Target="Network.FileCount.Share" ParentMonitorID="Health!System.Health.AvailabilityState" Remotable="true" Priority="Normal" TypeID="Network.FileCount.Accessible.Monitor.MonitorType" ConfirmDelivery="true">
           <Category>AvailabilityHealth</Category>
-          <AlertSettings AlertMessage="FileCount.Accessible.Monitor.AlertMessage">
+          <AlertSettings AlertMessage="Network.FileCount.Accessible.Monitor.AlertMessage">
             <AlertOnState>Error</AlertOnState>
             <!-- Warning or Error should match OperationalStates below  -->
             <AutoResolve>true</AutoResolve>
@@ -263,37 +263,37 @@ This fragment depends on references:
             <IntervalSeconds>900</IntervalSeconds>
             <SyncTime></SyncTime>
             <TimeoutSeconds>300</TimeoutSeconds>
-            <ID>$Target/Property[Type='FileCount.Share']/ID$</ID>
-            <CSV>$Target/Host/Property[Type='FileCount.WatcherNode']/CSV$</CSV>
+            <ID>$Target/Property[Type='Network.FileCount.Share']/ID$</ID>
+            <CSV>$Target/Host/Property[Type='Network.FileCount.WatcherNode']/CSV$</CSV>
           </Configuration>
         </UnitMonitor>
       </Monitors>
     </Monitoring>
     <Presentation>
       <StringResources>
-        <StringResource ID="FileCount.Accessible.Monitor.AlertMessage" />
+        <StringResource ID="Network.FileCount.Accessible.Monitor.AlertMessage" />
       </StringResources>
     </Presentation>
     <LanguagePacks>
       <LanguagePack ID="ENU" IsDefault="true">
         <DisplayStrings>
-          <DisplayString ElementID="FileCount.Accessible.Monitor">
+          <DisplayString ElementID="Network.FileCount.Accessible.Monitor">
             <Name>File Share Accessible Monitor</Name>
             <Description>Used to monitor the accessibility of a file share</Description>
           </DisplayString>
-          <DisplayString ElementID="FileCount.Accessible.Monitor" SubElementID="GoodCondition">
+          <DisplayString ElementID="Network.FileCount.Accessible.Monitor" SubElementID="GoodCondition">
             <Name>File share accessible</Name>
           </DisplayString>
-          <DisplayString ElementID="FileCount.Accessible.Monitor" SubElementID="BadCondition">
+          <DisplayString ElementID="Network.FileCount.Accessible.Monitor" SubElementID="BadCondition">
             <Name>File share not accessible</Name>
           </DisplayString>         
-          <DisplayString ElementID="FileCount.Accessible.Monitor.AlertMessage">
+          <DisplayString ElementID="Network.FileCount.Accessible.Monitor.AlertMessage">
             <Name>File Share Accessible Monitor: Failure</Name>
             <Description>File Share Accessible Monitor: detected a bad condition</Description>
           </DisplayString>
         </DisplayStrings>
         <KnowledgeArticles>
-          <KnowledgeArticle ElementID="FileCount.Accessible.Monitor.MonitorType" Visible="true">
+          <KnowledgeArticle ElementID="Network.FileCount.Accessible.Monitor.MonitorType" Visible="true">
             <MamlContent>
               <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
                 <maml:title>Summary</maml:title>

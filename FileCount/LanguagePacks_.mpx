@@ -2,141 +2,141 @@
 <ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><LanguagePacks>
     <LanguagePack ID="ENU" IsDefault="true">
       <DisplayStrings>
-        <DisplayString ElementID="FileCount.FileCount.DataSource">
+        <DisplayString ElementID="Network.FileCount.DataSource">
           <Name>FileCount Data Source</Name>
           <Description>Script to enumerate UNC paths and counter files.</Description>
         </DisplayString>
-        <DisplayString ElementID="FileCount.FileCount.DataSource" SubElementID="Interval">
+        <DisplayString ElementID="Network.FileCount.DataSource" SubElementID="Interval">
           <Name>Interval</Name>
           <Description>Interval (seconds)</Description>
         </DisplayString>
-        <DisplayString ElementID="FileCount.FileCount.DataSource" SubElementID="SyncTime">
+        <DisplayString ElementID="Network.FileCount.DataSource" SubElementID="SyncTime">
           <Name>SyncTime</Name>
           <Description>Sync Time</Description>
         </DisplayString>
-        <DisplayString ElementID="FileCount.FileCount.DataSource" SubElementID="ID">
+        <DisplayString ElementID="Network.FileCount.DataSource" SubElementID="ID">
           <Name>ID</Name>
           <Description>ID</Description>
         </DisplayString>
-        <DisplayString ElementID="FileCount.FileCount.DataSource" SubElementID="CSV">
+        <DisplayString ElementID="Network.FileCount.DataSource" SubElementID="CSV">
           <Name>CSV</Name>
           <Description>CSV</Description>
         </DisplayString>
-        <DisplayString ElementID="FileCount.Accessible.Monitor.DataSource" SubElementID="IntervalSeconds">
+        <DisplayString ElementID="Network.FileCount.Accessible.Monitor.DataSource" SubElementID="IntervalSeconds">
           <Name>IntervalSeconds</Name>
           <Description>IntervalSeconds</Description>
         </DisplayString>
-        <DisplayString ElementID="FileCount.Accessible.Monitor.DataSource" SubElementID="SyncTime">
+        <DisplayString ElementID="Network.FileCount.Accessible.Monitor.DataSource" SubElementID="SyncTime">
           <Name>SyncTime</Name>
           <Description>SyncTime</Description>
         </DisplayString>
-        <DisplayString ElementID="FileCount.Accessible.Monitor.DataSource" SubElementID="TimeoutSeconds">
+        <DisplayString ElementID="Network.FileCount.Accessible.Monitor.DataSource" SubElementID="TimeoutSeconds">
           <Name>TimeoutSeconds</Name>
           <Description>TimeoutSeconds</Description>
         </DisplayString>
-        <DisplayString ElementID="FileCount.Accessible.Monitor.DataSource" SubElementID="ID">
+        <DisplayString ElementID="Network.FileCount.Accessible.Monitor.DataSource" SubElementID="ID">
           <Name>ID</Name>
           <Description>ID</Description>
         </DisplayString>
-        <DisplayString ElementID="FileCount.Accessible.Monitor.DataSource" SubElementID="CSV">
+        <DisplayString ElementID="Network.FileCount.Accessible.Monitor.DataSource" SubElementID="CSV">
           <Name>CSV</Name>
           <Description>CSV</Description>
         </DisplayString>
-        <DisplayString ElementID="FileCount.FileCount.WatcherNode.Accessible.Monitor.DataSource" SubElementID="IntervalSeconds">
+        <DisplayString ElementID="Network.FileCount.WatcherNode.Accessible.Monitor.DataSource" SubElementID="IntervalSeconds">
           <Name>ID</Name>
           <Description>ID</Description>
         </DisplayString>
-        <DisplayString ElementID="FileCount.FileCount.WatcherNode.Accessible.Monitor.DataSource" SubElementID="SyncTime">
+        <DisplayString ElementID="Network.FileCount.WatcherNode.Accessible.Monitor.DataSource" SubElementID="SyncTime">
           <Name>SyncTime</Name>
           <Description>SyncTime</Description>
         </DisplayString>
-        <DisplayString ElementID="FileCount.FileCount.WatcherNode.Accessible.Monitor.DataSource" SubElementID="TimeoutSeconds">
+        <DisplayString ElementID="Network.FileCount.WatcherNode.Accessible.Monitor.DataSource" SubElementID="TimeoutSeconds">
           <Name>TimeoutSeconds</Name>
           <Description>TimeoutSeconds</Description>
         </DisplayString>
-        <DisplayString ElementID="FileCount.Accessible.Monitor.DataSource">
+        <DisplayString ElementID="Network.FileCount.Accessible.Monitor.DataSource">
           <Name>FileCount Accessible Monitor Data Source</Name>
           <Description>Script to monitor UNC accessibility.  Does not count files.</Description>
         </DisplayString>
-        <DisplayString ElementID="FileCount.FileCount.WatcherNode.Accessible.Monitor.DataSource">
+        <DisplayString ElementID="Network.FileCount.WatcherNode.Accessible.Monitor.DataSource">
           <Name>FileCount Watcher Node configuration file accessibility script</Name>
           <Description>Checks to see that the configuration file used by the FileCount Watcher node is accessible.</Description>
         </DisplayString>
-        <DisplayString ElementID="FileCount.FileCount.WatcherNode.Accessible.Monitor.DataSource" SubElementID="CSV">
+        <DisplayString ElementID="Network.FileCount.WatcherNode.Accessible.Monitor.DataSource" SubElementID="CSV">
           <Name>CSV</Name>
           <Description>Name of CSV file</Description>
         </DisplayString>
-        <DisplayString ElementID="FileCount.Status.MonitorType" SubElementID="IntervalSeconds">
+        <DisplayString ElementID="Network.FileCount.Status.MonitorType" SubElementID="IntervalSeconds">
           <Name>IntervalSeconds</Name>
           <Description>IntervalSeconds</Description>
         </DisplayString>
-        <DisplayString ElementID="FileCount.Status.MonitorType" SubElementID="SyncTime">
+        <DisplayString ElementID="Network.FileCount.Status.MonitorType" SubElementID="SyncTime">
           <Name>SyncTime</Name>
           <Description>Name of CSV file</Description>
         </DisplayString>
-        <DisplayString ElementID="FileCount.Status.MonitorType" SubElementID="ID">
+        <DisplayString ElementID="Network.FileCount.Status.MonitorType" SubElementID="ID">
           <Name>ID</Name>
           <Description>ID</Description>
         </DisplayString>
-        <DisplayString ElementID="FileCount.Status.MonitorType" SubElementID="CSV">
+        <DisplayString ElementID="Network.FileCount.Status.MonitorType" SubElementID="CSV">
           <Name>CSV</Name>
           <Description>Name of CSV file</Description>
         </DisplayString>
-        <DisplayString ElementID="FileCount.Accessible.Monitor.MonitorType" SubElementID="IntervalSeconds">
+        <DisplayString ElementID="Network.FileCount.Accessible.Monitor.MonitorType" SubElementID="IntervalSeconds">
           <Name>IntervalSeconds</Name>
           <Description>IntervalSeconds</Description>
         </DisplayString>
-        <DisplayString ElementID="FileCount.Accessible.Monitor.MonitorType" SubElementID="SyncTime">
+        <DisplayString ElementID="Network.FileCount.Accessible.Monitor.MonitorType" SubElementID="SyncTime">
           <Name>SyncTime</Name>
           <Description>SyncTime</Description>
         </DisplayString>
-        <DisplayString ElementID="FileCount.Accessible.Monitor.MonitorType" SubElementID="TimeoutSeconds">
+        <DisplayString ElementID="Network.FileCount.Accessible.Monitor.MonitorType" SubElementID="TimeoutSeconds">
           <Name>TimeoutSeconds</Name>
           <Description>TimeoutSeconds</Description>
         </DisplayString>
-        <DisplayString ElementID="FileCount.Accessible.Monitor.MonitorType" SubElementID="ID">
+        <DisplayString ElementID="Network.FileCount.Accessible.Monitor.MonitorType" SubElementID="ID">
           <Name>ID</Name>
           <Description>ID</Description>
         </DisplayString>
-        <DisplayString ElementID="FileCount.Accessible.Monitor.MonitorType" SubElementID="CSV">
+        <DisplayString ElementID="Network.FileCount.Accessible.Monitor.MonitorType" SubElementID="CSV">
           <Name>CSV</Name>
           <Description>Name of CSV file</Description>
         </DisplayString>
-        <DisplayString ElementID="FileCount.FileCount.WatcherNode.Accessible.Monitor.MonitorType" SubElementID="IntervalSeconds">
+        <DisplayString ElementID="Network.FileCount.WatcherNode.Accessible.Monitor.MonitorType" SubElementID="IntervalSeconds">
           <Name>IntervalSeconds</Name>
           <Description>IntervalSeconds</Description>
         </DisplayString>
-        <DisplayString ElementID="FileCount.FileCount.WatcherNode.Accessible.Monitor.MonitorType" SubElementID="SyncTime">
+        <DisplayString ElementID="Network.FileCount.WatcherNode.Accessible.Monitor.MonitorType" SubElementID="SyncTime">
           <Name>SyncTime</Name>
           <Description>SyncTime</Description>
         </DisplayString>
-        <DisplayString ElementID="FileCount.FileCount.WatcherNode.Accessible.Monitor.MonitorType" SubElementID="TimeoutSeconds">
+        <DisplayString ElementID="Network.FileCount.WatcherNode.Accessible.Monitor.MonitorType" SubElementID="TimeoutSeconds">
           <Name>TimeoutSeconds</Name>
           <Description>TimeoutSeconds</Description>
         </DisplayString>
-        <DisplayString ElementID="FileCount.FileCount.WatcherNode.Accessible.Monitor.MonitorType" SubElementID="CSV">
+        <DisplayString ElementID="Network.FileCount.WatcherNode.Accessible.Monitor.MonitorType" SubElementID="CSV">
           <Name>CSV</Name>
           <Description>Name of CSV file</Description>
         </DisplayString>
-        <DisplayString ElementID="FileCount.FileCount.DataSource.PSScript">
+        <DisplayString ElementID="Network.FileCount.DataSource.PSScript">
           <Name>File Count Data Source Script</Name>
           <Description>Script to count the files in UNC path</Description>
         </DisplayString>
-        <DisplayString ElementID="FileCount.Status.MonitorType">
-          <Name>FileCount Status Monitor Type</Name>
+        <DisplayString ElementID="Network.FileCount.Status.MonitorType">
+          <Name>File Count Status Monitor Type</Name>
           <Description>File Count Status Monitor Type</Description>
         </DisplayString>
-        <DisplayString ElementID="FileCount.Accessible.Monitor.MonitorType">
-          <Name>FileCount Accessible Monitor Type</Name>
-          <Description>FileCount Accessible Monitor Type</Description>
+        <DisplayString ElementID="Network.FileCount.Accessible.Monitor.MonitorType">
+          <Name>File Count Accessible Monitor Type</Name>
+          <Description>File Count Accessible Monitor Type</Description>
         </DisplayString>
-        <DisplayString ElementID="FileCount.FileCount.WatcherNode.Accessible.Monitor.MonitorType">
-          <Name>FileCount Watcher Node Accessible Monitor Type</Name>
-          <Description>FileCount Watcher Node Accessible Monitor Type</Description>
+        <DisplayString ElementID="Network.FileCount.WatcherNode.Accessible.Monitor.MonitorType">
+          <Name>File Count Watcher Node Accessible Monitor Type</Name>
+          <Description>File Count Watcher Node Accessible Monitor Type</Description>
         </DisplayString>
-        <DisplayString ElementID="FileCountWatcherNodeContainsFileShare">
-          <Name>File Count Watcher Node Contains File Share Relationship</Name>
-          <Description>File Count Watcher Node Contains File Share Relationship</Description>
+        <DisplayString ElementID="NetworkFileCountWatcherNodeContainsFileShare">
+          <Name>Network File Count Watcher Node Contains File Share Relationship</Name>
+          <Description>Network File Count Watcher Node Contains File Share Relationship</Description>
         </DisplayString>
       </DisplayStrings>
     </LanguagePack>
