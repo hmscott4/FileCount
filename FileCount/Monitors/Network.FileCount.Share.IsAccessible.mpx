@@ -91,7 +91,7 @@ This fragment depends on references:
                     # Begin MAIN script section
                     #=================================================================================
                     #Set the condition = bad.  This represents your script finding something wrong
-                    $strResult = "BadCondition"
+                    $strResult = "FileShareNotAccessible"
 
                     #Declare variables
 
@@ -101,13 +101,13 @@ This fragment depends on references:
                     If(Test-Path -path "$sShare" -pathType Container -ErrorAction SilentlyContinue)
                     {
                     $momapi.LogScriptEvent($ScriptName,$EventID,0,"Share $sShare is accessible as user $whoami.")
-                    $strResult = "GoodCondition"
+                    $strResult = "FileShareAccessible"
                     $strMessage = "Share $sShare is accessible as user $whoami."
                     }
                     Else
                     {
                     $momapi.LogScriptEvent($ScriptName,$EventID,2,"Share $sShare is NOT accessible as user $whoami.")
-                    $strResult = "BadCondition"
+                    $strResult = "FileShareNotAccessible"
                     $strMessage = "Share $sShare is NOT accessible as user $whoami."
                     }
 
@@ -150,8 +150,8 @@ This fragment depends on references:
       <MonitorTypes>
         <UnitMonitorType ID="Network.FileCount.Accessible.Monitor.MonitorType" Accessibility="Internal">
           <MonitorTypeStates>
-            <MonitorTypeState ID="GoodCondition" NoDetection="false" />
-            <MonitorTypeState ID="BadCondition" NoDetection="false" />
+            <MonitorTypeState ID="FileShareAccessible" NoDetection="false" />
+            <MonitorTypeState ID="FileShareNotAccessible" NoDetection="false" />
           </MonitorTypeStates>
           <Configuration>
             <xsd:element minOccurs="1" type="xsd:integer" name="IntervalSeconds" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
@@ -181,7 +181,7 @@ This fragment depends on references:
                     </ValueExpression>
                     <Operator>Equal</Operator>
                     <ValueExpression>
-                      <Value Type="String">GoodCondition</Value>
+                      <Value Type="String">FileShareAccessible</Value>
                     </ValueExpression>
                   </SimpleExpression>
                 </Expression>
@@ -194,31 +194,31 @@ This fragment depends on references:
                     </ValueExpression>
                     <Operator>Equal</Operator>
                     <ValueExpression>
-                      <Value Type="String">BadCondition</Value>
+                      <Value Type="String">FileShareNotAccessible</Value>
                     </ValueExpression>
                   </SimpleExpression>
                 </Expression>
               </ConditionDetection>
             </MemberModules>
             <RegularDetections>
-              <RegularDetection MonitorTypeStateID="GoodCondition">
+              <RegularDetection MonitorTypeStateID="FileShareAccessible">
                 <Node ID="GoodConditionFilter">
                   <Node ID="DS" />
                 </Node>
               </RegularDetection>
-              <RegularDetection MonitorTypeStateID="BadCondition">
+              <RegularDetection MonitorTypeStateID="FileShareNotAccessible">
                 <Node ID="BadConditionFilter">
                   <Node ID="DS" />
                 </Node>
               </RegularDetection>
             </RegularDetections>
             <OnDemandDetections>
-              <OnDemandDetection MonitorTypeStateID="GoodCondition">
+              <OnDemandDetection MonitorTypeStateID="FileShareAccessible">
                 <Node ID="GoodConditionFilter">
                   <Node ID="DS" />
                 </Node>
               </OnDemandDetection>
-              <OnDemandDetection MonitorTypeStateID="BadCondition">
+              <OnDemandDetection MonitorTypeStateID="FileShareNotAccessible">
                 <Node ID="BadConditionFilter">
                   <Node ID="DS" />
                 </Node>
@@ -241,8 +241,8 @@ This fragment depends on references:
             <!-- Common options for AlertSeverity are MatchMonitorHealth, Information, Warning, Error -->
           </AlertSettings>
           <OperationalStates>
-            <OperationalState ID="GoodCondition" MonitorTypeStateID="GoodCondition" HealthState="Success" />
-            <OperationalState ID="BadCondition" MonitorTypeStateID="BadCondition" HealthState="Error" />
+            <OperationalState ID="FileShareAccessible" MonitorTypeStateID="FileShareAccessible" HealthState="Success" />
+            <OperationalState ID="FileShareNotAccessible" MonitorTypeStateID="FileShareNotAccessible" HealthState="Error" />
             <!-- HealthState = Warning or Error -->
           </OperationalStates>
           <Configuration>
@@ -266,15 +266,15 @@ This fragment depends on references:
             <Name>File Share Accessible Monitor</Name>
             <Description>Used to monitor the accessibility of a file share</Description>
           </DisplayString>
-          <DisplayString ElementID="Network.FileCount.Accessible.Monitor" SubElementID="GoodCondition">
+          <DisplayString ElementID="Network.FileCount.Accessible.Monitor" SubElementID="FileShareAccessible">
             <Name>File share accessible</Name>
           </DisplayString>
-          <DisplayString ElementID="Network.FileCount.Accessible.Monitor" SubElementID="BadCondition">
+          <DisplayString ElementID="Network.FileCount.Accessible.Monitor" SubElementID="FileShareNotAccessible">
             <Name>File share not accessible</Name>
           </DisplayString>         
           <DisplayString ElementID="Network.FileCount.Accessible.Monitor.AlertMessage">
             <Name>File Share Accessible Monitor: Failure</Name>
-            <Description>File Share Accessible Monitor: detected a bad condition</Description>
+            <Description>File Share Accessible Monitor: Unable to access the network file share.  Check that the share is avialable and that the RunAs account is configured correctly.</Description>
           </DisplayString>
         </DisplayStrings>
         <KnowledgeArticles>

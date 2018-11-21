@@ -300,6 +300,19 @@
               </maml:section>
             </MamlContent>
           </KnowledgeArticle>
+
+          <KnowledgeArticle ElementID="Network.FileCount.File.Share.File.Count.Monitor" Visible="true">
+            <MamlContent>
+              <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+                <maml:title>Summary</maml:title>
+                <maml:para>This monitor checks a UNC (shared folder) for a count of files.  The monitor can test for specific file extensions and can be recursive or non-recursive.  If the file count exceeds the threshold defined in the parameter file, then an error occurs.</maml:para>
+              </maml:section>
+              <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+                <maml:title>Error Conditions</maml:title>
+                <maml:para>If this monitor fails, check to be sure that the UNC path still exists and that the RunAs account is defined and has permissions to the share.  Also check to see that the count of files matching the conditions defined does not exceed the threshold value.</maml:para>
+              </maml:section>
+            </MamlContent>
+          </KnowledgeArticle>          
         </KnowledgeArticles>  
     </LanguagePack>
   </LanguagePacks></ManagementPackFragment>

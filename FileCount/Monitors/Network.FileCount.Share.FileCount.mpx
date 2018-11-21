@@ -104,7 +104,7 @@
                     }
                     else
                     {
-                    $strMessage="Number of Files ($count) in $sShare exceeds threshold $intCount."
+                    $strMessage="Number of Files ($count) in $sShare exceeds threshold $iCount."
                     $momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Found $fileCount file(s) with extension $sExtension in $sShare.`n Exceeds threshold $iCount.")
                     $strStatus = 0
                     }
