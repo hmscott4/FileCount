@@ -264,7 +264,7 @@
     </MonitorTypes>
   </TypeDefinitions><Monitoring>
     <Discoveries>
-      <Discovery ID="Network.FileCount.WatcherNode.Discovery" Target="Windows!Microsoft.Windows.OperatingSystem" Enabled="true" ConfirmDelivery="false" Remotable="true" Priority="Normal">
+      <Discovery ID="Network.FileCount.WatcherNode.Discovery" Target="Windows!Microsoft.Windows.OperatingSystem" Enabled="true" ConfirmDelivery="false" Remotable="false" Priority="Normal">
         <Category>Discovery</Category>
         <DiscoveryTypes>
           <DiscoveryClass TypeID="Network.FileCount.WatcherNode" />
@@ -316,7 +316,7 @@
           </Expression>
         </DataSource>
       </Discovery>
-      <Discovery ID="Network.FileCountShare.Discovery" Target="Network.FileCount.WatcherNode" Enabled="true" ConfirmDelivery="false" Remotable="true" Priority="Normal">
+      <Discovery ID="Network.FileCount.Share.Discovery" Target="Network.FileCount.WatcherNode" Enabled="true" ConfirmDelivery="false" Remotable="false" Priority="Normal">
         <Category>Discovery</Category>
         <DiscoveryTypes>
           <DiscoveryClass TypeID="Network.FileCount.Share" />
@@ -393,7 +393,7 @@ $discoveryData
       </Discovery>
     </Discoveries>
     <Rules>
-      <Rule ID="Network.FileCount.Share.Monitoring.PSScript.Rule.CollectFileCount" Enabled="true" Target="Network.FileCount.Share" ConfirmDelivery="true" Remotable="true" Priority="Normal" DiscardLevel="100">
+      <Rule ID="Network.FileCount.Share.Monitoring.PSScript.Rule.CollectFileCount" Enabled="true" Target="Network.FileCount.Share" ConfirmDelivery="true" Remotable="false" Priority="Normal" DiscardLevel="100">
         <Category>PerformanceCollection</Category>
         <DataSources>
           <DataSource ID="DataSource" TypeID="Network.FileCount.DataSource" RunAs="Network.FileCount.RunasProfile">
@@ -416,7 +416,7 @@ $discoveryData
       </Rule>
     </Rules>
     <Monitors>
-      <UnitMonitor ID="Network.FileCount.File.Share.File.Count.Monitor" Accessibility="Public" Enabled="true" Target="Network.FileCount.Share" ParentMonitorID="Health!System.Health.AvailabilityState" Remotable="true" Priority="Normal" RunAs="Network.FileCount.RunasProfile" TypeID="Network.FileCount.Status.MonitorType" ConfirmDelivery="false">
+      <UnitMonitor ID="Network.FileCount.File.Share.File.Count.Monitor" Accessibility="Public" Enabled="true" Target="Network.FileCount.Share" ParentMonitorID="Health!System.Health.AvailabilityState" Remotable="false" Priority="Normal" RunAs="Network.FileCount.RunasProfile" TypeID="Network.FileCount.Status.MonitorType" ConfirmDelivery="false">
         <Category>AvailabilityHealth</Category>
         <AlertSettings AlertMessage="Network.FileCount.File.Share.File.Count.Monitor.AlertMessage">
           <AlertOnState>Error</AlertOnState>
@@ -477,7 +477,7 @@ $discoveryData
           <Name>WatcherNode.Discovery</Name>
           <Description>Description for the new discovery.</Description>
         </DisplayString>
-        <DisplayString ElementID="Network.FileCountShare.Discovery">
+        <DisplayString ElementID="Network.FileCount.Share.Discovery">
           <Name>FileCountShare.Discovery</Name>
           <Description>Discovery for all shares that will be having file count monitoring</Description>
         </DisplayString>

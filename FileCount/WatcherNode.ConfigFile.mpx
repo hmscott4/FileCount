@@ -192,7 +192,7 @@
     </MonitorTypes>
   </TypeDefinitions><Monitoring>
     <Monitors>
-      <UnitMonitor ID="Network.FileCount.WatcherNode.Accessible.Monitor" Accessibility="Public" Enabled="true" Target="Network.FileCount.WatcherNode" ParentMonitorID="Health!System.Health.AvailabilityState" Remotable="true" Priority="Normal" TypeID="Network.FileCount.WatcherNode.Accessible.Monitor.MonitorType" ConfirmDelivery="true">
+      <UnitMonitor ID="Network.FileCount.WatcherNode.Accessible.Monitor" Accessibility="Public" Enabled="true" Target="Network.FileCount.WatcherNode" ParentMonitorID="Health!System.Health.AvailabilityState" Remotable="false" Priority="Normal" TypeID="Network.FileCount.WatcherNode.Accessible.Monitor.MonitorType" ConfirmDelivery="true">
         <Category>AvailabilityHealth</Category>
         <AlertSettings AlertMessage="Network.FileCount.WatcherNode.Accessible.Monitor.AlertMessage">
           <AlertOnState>Warning</AlertOnState>
