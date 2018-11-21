@@ -95,20 +95,20 @@ This fragment depends on references:
 
                     #Declare variables
 
-                    [string]$strShare = $share
+                    [string]$sShare = $share
 
                     # Test to see if Share is Accessible
-                    If(Test-Path -path "$strShare" -pathType Container -ErrorAction SilentlyContinue)
+                    If(Test-Path -path "$sShare" -pathType Container -ErrorAction SilentlyContinue)
                     {
-                    $momapi.LogScriptEvent($ScriptName,$EventID,0,"Share $strShare is accessible as user $whoami.")
+                    $momapi.LogScriptEvent($ScriptName,$EventID,0,"Share $sShare is accessible as user $whoami.")
                     $strResult = "GoodCondition"
-                    $strMessage = "Share $strShare is accessible as user $whoami."
+                    $strMessage = "Share $sShare is accessible as user $whoami."
                     }
                     Else
                     {
-                    $momapi.LogScriptEvent($ScriptName,$EventID,2,"Share $strShare is NOT accessible as user $whoami.")
+                    $momapi.LogScriptEvent($ScriptName,$EventID,2,"Share $sShare is NOT accessible as user $whoami.")
                     $strResult = "BadCondition"
-                    $strMessage = "Share $strShare is NOT accessible as user $whoami."
+                    $strMessage = "Share $sShare is NOT accessible as user $whoami."
                     }
 
                     # Return results

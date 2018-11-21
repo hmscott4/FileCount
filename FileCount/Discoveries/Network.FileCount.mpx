@@ -99,16 +99,16 @@
 
                   if($Extension.length -gt 0)
                   {
-                  [string]$strExtension = "*"+$Extension
+                  [string]$sExtension = "*"+$Extension
                   }
                   else
                   {
-                  [string]$strExtension = "*"
+                  [string]$sExtension = "*"
                   }
 
                   [int]$iAge = $Age
                   [string]$sShare = $Share
-                  [int]$iiCount = $Count
+                  [int]$iCount = $Count
                   [int]$iRecurse = $Recurse
 
                   # Test to see if Share is Accessible
@@ -119,27 +119,27 @@
                   {
                   $fileCount  = Get-ChildItem -Recurse "$sShare\$sExtension" | where{$_.LastWriteTime -le (Get-Date).AddMinutes($iAge)}|Measure-Object |%{$_.Count}
 
-                  if ($count -le $iCount)
+                  if ($fileCount -le $iCount)
                   {
                   $strStatus = 1
-                  $strMessage="Number of Files ($fileCount) in $strShare is under threshold $iCount."
-                  $momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Found $count file(s) with extension $sExtension in $sShare. `n Under threshold $iCount.")
+                  $strMessage="Number of Files ($fileCount) in $sShare is under threshold $iCount."
+                  $momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Found $fileCount file(s) with extension $sExtension in $sShare. `n Under threshold $iCount.")
                   }
                   else
                   {
-                  $strMessage="Number of Files ($count) in $strShare exceeds threshold $intCount."
+                  $strMessage="Number of Files ($count) in $sShare exceeds threshold $intCount."
                   $momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Found $fileCount file(s) with extension $sExtension in $sShare.`n Exceeds threshold $iCount.")
                   $strStatus = 0
                   }
                   }
                   else
                   {
-                  $fileCount  = Get-ChildItem "$strShare\$sExtension" | where{$_.LastWriteTime -le (Get-Date).AddMinutes($iAge)}|Measure-Object |%{$_.Count}
+                  $fileCount  = Get-ChildItem "$sShare\$sExtension" | where{$_.LastWriteTime -le (Get-Date).AddMinutes($iAge)}|Measure-Object |%{$_.Count}
 
                   if ($fileCount -le $iCount)
                   {
-                  $strMessage="Number of Files ($fileCount) in $strShare is under threshold $iCount."
-                  $momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Found $count file(s) with extension $strExtension in $sShare. `n Under threshold $iCount.")
+                  $strMessage="Number of Files ($fileCount) in $sShare is under threshold $iCount."
+                  $momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Found $fileCount file(s) with extension $sExtension in $sShare. `n Under threshold $iCount.")
                   $strStatus = 1
                   }
                   else
@@ -155,7 +155,7 @@
                   Else
                   {
                   # Unable to access File Share
-                  $strMessage="Unable to access $strShare"
+                  $strMessage="Unable to access $sShare"
                   $momapi.LogScriptEvent($ScriptName,$EventID,2,"`n Unable to access $sShare as $whoami.")
                   $count = 0
                   $strStatus = 0
@@ -372,10 +372,10 @@ foreach ($share in $shares)
     #Fill up properties of class
         $instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/ID$", $share.ID)
         $instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/Share$", $share.Share)
-        if($share.Extension){$instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/Extension$", $share.extension)}
-        if($share.Count){$instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/Count$", $share.count)}
-        if($share.Age){$instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/Age$", $share.time)}
-		$instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/Recurse$", $share.Recurse)
+        if($share.Extension){$instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/Extension$", $Share.extension)}
+        if($share.Count){$instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/Count$", $share.Count)}
+        if($share.Age){$instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/Age$", $share.Age)}
+		$instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/Recurse$", $Share.Recurse)
 
     #Add the displayname, path of the server and key property of the parent class. (always recurring)
         $instance.AddProperty("$MPElement[Name='System!System.Entity']/DisplayName$", $share.Share)
@@ -532,11 +532,11 @@ $discoveryData
           <Name>Collect Filecount</Name>
         </DisplayString>
         <DisplayString ElementID="Network.FileCount.WatcherNode">
-          <Name>FileCount WatcherNode</Name>
+          <Name>Network File Count Watcher Node</Name>
           <Description>This is a Windows Computer that will initiate the file count monitors</Description>
         </DisplayString>
         <DisplayString ElementID="Network.FileCount.Share">
-          <Name>FileCount Share</Name>
+          <Name>Network File Count Share</Name>
           <Description>This is a Share where files will be counted based on the data provided in the CSV file</Description>
         </DisplayString>
         <DisplayString ElementID="Network.FileCount.WatcherNode" SubElementID="CSV">
@@ -585,7 +585,7 @@ $discoveryData
           <Description>This view shows the state of all Filecount Shares</Description>
         </DisplayString>
         <DisplayString ElementID="Network.FileCount.Watchernode.State.view">
-          <Name>File Count Watchernode State</Name>
+          <Name>File Count Watcher Node State</Name>
           <Description>This view shows the state of all File Count Share Watchernode(s)</Description>
         </DisplayString>
       </DisplayStrings>
