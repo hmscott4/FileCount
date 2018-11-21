@@ -5,7 +5,7 @@
     <RootNamespace>Network.Filecount</RootNamespace>
     <Name>Network.FileCount</Name>
     <ManagementPackName>Network.FileCount</ManagementPackName>
-    <Version>1.0.0.0</Version>
+    <Version>1.0.1.0</Version>
     <MpFrameworkVersion>v7.0.2</MpFrameworkVersion>
     <MpFrameworkProfile>OM</MpFrameworkProfile>
     <ProductVersion>1.1.0.0</ProductVersion>
@@ -63,16 +63,25 @@
     <Compile Include="LanguagePacks_.mpx">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Monitors\Network.FileCount.Share.FileCount.mpx">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Monitors\Network.FileCount.Share.IsAccessible.mpx">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Monitors\Network.FileCount.WatcherNode.ConfigFile.mpx">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Rules\Network.FileCount.CollectionRule.mpx">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Tasks\Network.FileCount.Task.Disable.mpx">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Tasks\Network.FileCount.Task.Enable.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Views\Network.FileCount.Views.mpx">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

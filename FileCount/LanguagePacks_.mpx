@@ -173,7 +173,133 @@
         <DisplayString ElementID="Network.FileCount.Enable.WatcherNode.Task.WA" SubElementID="TimeoutSeconds">
           <Name>Timeout</Name>
           <Description>Timeout</Description>
-        </DisplayString>        
-      </DisplayStrings>
+        </DisplayString>
+        <DisplayString ElementID="Network.FileCount.Share.Monitoring.PSScript.Rule.CollectFileCount">
+          <Name>Collect Filecount</Name>
+        </DisplayString>  
+          <DisplayString ElementID="Network.FileCount.WatcherNode.Discovery">
+            <Name>WatcherNode.Discovery</Name>
+            <Description>Description for the new discovery.</Description>
+          </DisplayString>
+          <DisplayString ElementID="Network.FileCount.Share.Discovery">
+            <Name>FileCountShare.Discovery</Name>
+            <Description>Discovery for all shares that will be having file count monitoring</Description>
+          </DisplayString>
+          <DisplayString ElementID="Network.FileCount.File.Share.File.Count.Monitor">
+            <Name>File Share File Count Monitor</Name>
+            <Description>Used to monitor the amount of files in the specific share matching the given extension</Description>
+          </DisplayString>
+          <DisplayString ElementID="Network.FileCount.File.Share.File.Count.Monitor.AlertMessage">
+            <Name>File Count Exceeded</Name>
+            <Description>The fileshare  {0} has {1} unprocessed files with extension {2}</Description>
+          </DisplayString>
+          <DisplayString ElementID="Network.FileCount.File.Share.File.Count.Monitor" SubElementID="FileCountStatusOK">
+            <Name>FileCountStatusOK</Name>
+            <Description>FileCountStatusOK</Description>
+          </DisplayString>
+          <DisplayString ElementID="Network.FileCount.File.Share.File.Count.Monitor" SubElementID="FileCountStatusNotOK">
+            <Name>FileCountStatusNotOK</Name>
+            <Description>FileCountStatusNotOK</Description>
+          </DisplayString>
+          <DisplayString ElementID="Network.FileCount.WatcherNode">
+            <Name>Network File Count Watcher Node</Name>
+            <Description>This is a Windows Computer that will initiate the file count monitors</Description>
+          </DisplayString>
+          <DisplayString ElementID="Network.FileCount.Share">
+            <Name>Network File Count Share</Name>
+            <Description>This is a Share where files will be counted based on the data provided in the CSV file</Description>
+          </DisplayString>
+          <DisplayString ElementID="Network.FileCount.WatcherNode" SubElementID="CSV">
+            <Name>CSV Path</Name>
+          </DisplayString>
+          <DisplayString ElementID="Network.FileCount.Share" SubElementID="ID">
+            <Name>ID</Name>
+          </DisplayString>
+          <DisplayString ElementID="Network.FileCount.Share" SubElementID="Share">
+            <Name>Share</Name>
+          </DisplayString>
+          <DisplayString ElementID="Network.FileCount.Share" SubElementID="Extension">
+            <Name>Extension</Name>
+          </DisplayString>
+          <DisplayString ElementID="Network.FileCount.Share" SubElementID="Count">
+            <Name>Count</Name>
+          </DisplayString>
+          <DisplayString ElementID="Network.FileCount.Share" SubElementID="Age">
+            <Name>Age</Name>
+          </DisplayString>
+          <DisplayString ElementID="Network.FileCount.Share" SubElementID="Recurse">
+            <Name>Recurse</Name>
+          </DisplayString>
+          <DisplayString ElementID="Network.FileCount.Folder">
+            <Name>Network File Count</Name>
+            <Description></Description>
+          </DisplayString>
+          <DisplayString ElementID="Network.FileCount.State.Folder">
+            <Name>State Views</Name>
+            <Description></Description>
+          </DisplayString>
+          <DisplayString ElementID="Network.FileCount.RunasProfile">
+            <Name>Network File Count Runas Profile</Name>
+            <Description>Used to monitor the specified fileshares</Description>
+          </DisplayString>
+          <DisplayString ElementID="Network.FileCount">
+            <Name>Network FileCount ManagementPack</Name>
+            <Description>Count files in an existing UNC path.  Discover UNC paths from CSV file located on server.  See MP Guide for additional configuration information.</Description>
+          </DisplayString>
+          <DisplayString ElementID="Network.FileCount.Alert.view">
+            <Name>Network File Count Share Alerts</Name>
+            <Description>Overview of all open alerts on File count folders</Description>
+          </DisplayString>
+          <DisplayString ElementID="Network.FileCount.Share.State.view">
+            <Name>File Count Share State</Name>
+            <Description>This view shows the state of all Filecount Shares</Description>
+          </DisplayString>
+          <DisplayString ElementID="Network.FileCount.Watchernode.State.view">
+            <Name>File Count Watcher Node State</Name>
+            <Description>This view shows the state of all File Count Share Watchernode(s)</Description>
+          </DisplayString>
+        </DisplayStrings>
+        <KnowledgeArticles>
+          <KnowledgeArticle ElementID="Network.FileCount.Status.MonitorType" Visible="true">
+            <MamlContent>
+              <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+                <maml:title>Summary</maml:title>
+                <maml:para>This monitor checks a UNC (shared folder) for a count of files.  The monitor can test for specific file extensions and can be recursive or non-recursive.  If the file count exceeds the threshold defined in the parameter file, then an error occurs.</maml:para>
+              </maml:section>
+              <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+                <maml:title>Error Conditions</maml:title>
+                <maml:para>If this monitor fails, check to be sure that the UNC path still exists and that the RunAs account is defined and has permissions to the share.  Also check to see that the count of files matching the conditions defined does not exceed the threshold value.</maml:para>
+              </maml:section>
+            </MamlContent>
+          </KnowledgeArticle>
+          <KnowledgeArticle ElementID="Network.FileCount" Visible="true">
+            <MamlContent>
+              <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+                <maml:title>Summary</maml:title>
+                <maml:para>This management pack allows administrators to configure monitoring of remote UNC file shares that are not hosted on agent-managed servers (ie, a Windows Server).</maml:para>
+              </maml:section>
+              <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+                <maml:title>Configuration</maml:title>
+                <maml:para>To configure this management pack, admins need to designate a Watcher Node (an agent-managed Windows Server) and create a CSV file with a list of the network shares to be monitored.  In addition, this management pack requires the use of a RunAs account (a Windows Active Directory Account) with access to the remote file share.</maml:para>
+              </maml:section>
+              <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+                <maml:title>Monitored Items</maml:title>
+                <maml:para>This management pack monitors the count of files (by file type) in a remote file share.  In addition, it can be used to validate remote network share access for the RunAs account.</maml:para>
+              </maml:section>
+            </MamlContent>
+          </KnowledgeArticle>
+          <KnowledgeArticle ElementID="Network.FileCount.Accessible.Monitor" Visible="true">
+            <MamlContent>
+              <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+                <maml:title>Summary</maml:title>
+                <maml:para>This monitor verifies that a remote network share is accessible using the Network File Count RunAs Profile.</maml:para>
+              </maml:section>
+              <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+                <maml:title>Monitored Items</maml:title>
+                <maml:para>This monitor is enabled by default. It will return healthy if the remote share exists and is accessible by the Run As Account profile.</maml:para>
+              </maml:section>
+            </MamlContent>
+          </KnowledgeArticle>
+        </KnowledgeArticles>  
     </LanguagePack>
   </LanguagePacks></ManagementPackFragment>
