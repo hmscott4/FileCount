@@ -33,15 +33,13 @@ This fragment depends on references:
             <xsd:element minOccurs="1" type="xsd:integer" name="IntervalSeconds" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
             <xsd:element minOccurs="0" type="xsd:string" name="SyncTime" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
             <xsd:element minOccurs="1" type="xsd:integer" name="TimeoutSeconds" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
-            <xsd:element minOccurs="1" name="ID" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
-            <xsd:element minOccurs="1" name="CSV" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+            <xsd:element minOccurs="1" type="xsd:string" name="Share" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
           </Configuration>
           <OverrideableParameters>
             <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int" />
             <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string" />
             <OverrideableParameter ID="TimeoutSeconds" Selector="$Config/TimeoutSeconds$" ParameterType="int" />
-            <OverrideableParameter ID="ID" Selector="$Config/ID$" ParameterType="int" />
-            <OverrideableParameter ID="CSV" Selector="$Config/CSV$" ParameterType="string" />
+            <OverrideableParameter ID="Share" Selector="$Config/Share$" ParameterType="string" />
           </OverrideableParameters>
           <ModuleImplementation Isolation="Any">
             <Composite>
@@ -58,7 +56,7 @@ This fragment depends on references:
                 <ProbeAction ID="PA" TypeID="Windows!Microsoft.Windows.PowerShellPropertyBagTriggerOnlyProbe">
                   <ScriptName>FileCount.Accessible.Monitor.DataSource.ps1</ScriptName>
                   <ScriptBody>
-                    param($ID,$CSV)
+                    param([string]$Share)
                     #=================================================================================
                     #  Describe Script Here
                     #
@@ -95,14 +93,9 @@ This fragment depends on references:
                     #Set the condition = bad.  This represents your script finding something wrong
                     $strResult = "BadCondition"
 
-                    $shares = Import-csv -path $csv
-                    #Filter Shares based on ID
-                    # $shares
-                    $share = $shares | where ID -EQ $ID
-
                     #Declare variables
 
-                    [string]$strShare = $share.Share
+                    [string]$strShare = $share
 
                     # Test to see if Share is Accessible
                     If(Test-Path -path "$strShare" -pathType Container -ErrorAction SilentlyContinue)
@@ -137,12 +130,8 @@ This fragment depends on references:
                   </ScriptBody>
                   <Parameters>
                     <Parameter>
-                      <Name>ID</Name>
-                      <Value>$Config/ID$</Value>
-                    </Parameter>
-                    <Parameter>
-                      <Name>CSV</Name>
-                      <Value>$Config/CSV$</Value>
+                      <Name>Share</Name>
+                      <Value>$Config/Share$</Value>
                     </Parameter>
                   </Parameters>
                   <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
@@ -168,15 +157,13 @@ This fragment depends on references:
             <xsd:element minOccurs="1" type="xsd:integer" name="IntervalSeconds" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
             <xsd:element minOccurs="0" type="xsd:string" name="SyncTime" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
             <xsd:element minOccurs="1" type="xsd:integer" name="TimeoutSeconds" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
-            <xsd:element minOccurs="1" type="xsd:integer" name="ID" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
-            <xsd:element minOccurs="1" type="xsd:string" name="CSV" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+            <xsd:element minOccurs="1" type="xsd:string" name="Share" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
           </Configuration>
           <OverrideableParameters>
             <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int" />
             <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string" />
             <OverrideableParameter ID="TimeoutSeconds" Selector="$Config/TimeoutSeconds$" ParameterType="int" />
-            <OverrideableParameter ID="ID" Selector="$Config/ID$" ParameterType="int" />
-            <OverrideableParameter ID="CSV" Selector="$Config/CSV$" ParameterType="string" />
+            <OverrideableParameter ID="Share" Selector="$Config/Share$" ParameterType="string" />
           </OverrideableParameters>
           <MonitorImplementation>
             <MemberModules>
@@ -184,8 +171,7 @@ This fragment depends on references:
                 <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
                 <SyncTime>$Config/SyncTime$</SyncTime>
                 <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
-                <ID>$Config/ID$</ID>
-                <CSV>$Config/CSV$</CSV>
+                <Share>$Config/Share$</Share>
               </DataSource>
               <ConditionDetection ID="GoodConditionFilter" TypeID="System!System.ExpressionFilter">
                 <Expression>
@@ -263,8 +249,7 @@ This fragment depends on references:
             <IntervalSeconds>900</IntervalSeconds>
             <SyncTime></SyncTime>
             <TimeoutSeconds>300</TimeoutSeconds>
-            <ID>$Target/Property[Type='Network.FileCount.Share']/ID$</ID>
-            <CSV>$Target/Host/Property[Type='Network.FileCount.WatcherNode']/CSV$</CSV>
+            <Share>$Target/Property[Type='Network.FileCount.Share']/Share$</Share>
           </Configuration>
         </UnitMonitor>
       </Monitors>

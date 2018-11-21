@@ -57,18 +57,31 @@
     </ManagementPackReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Network.FileCount.mpx">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FileCount.Accessible.mpx">
+    <Compile Include="Discoveries\Network.FileCount.mpx">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="LanguagePacks_.mpx">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="WatcherNode.ConfigFile.mpx">
+    <Compile Include="Monitors\Network.FileCount.Share.IsAccessible.mpx">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Monitors\Network.FileCount.WatcherNode.ConfigFile.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\Network.FileCount.Task.Disable.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\Network.FileCount.Task.Enable.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Discoveries" />
+    <Folder Include="Monitors" />
+    <Folder Include="Tasks" />
+    <Folder Include="Views" />
+    <Folder Include="Rules" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VSAC\Microsoft.SystemCenter.OperationsManager.targets" />
 </Project>

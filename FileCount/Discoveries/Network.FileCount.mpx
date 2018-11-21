@@ -6,12 +6,12 @@
           <Property ID="CSV" Type="string" AutoIncrement="false" Key="true" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
         </ClassType>
         <ClassType ID="Network.FileCount.Share" Accessibility="Public" Abstract="false" Base="Windows!Microsoft.Windows.ApplicationComponent" Hosted="true" Singleton="false" Extension="false">
-          <Property ID="ID" Type="int" AutoIncrement="false" Key="true" CaseSensitive="false" Required="false" Scale="0" />
+          <Property ID="ID" Type="int" AutoIncrement="false" Key="true" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
           <Property ID="Share" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="1024" MinLength="0" Required="false" Scale="0" />
           <Property ID="Extension" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
-          <Property ID="Count" Type="int" AutoIncrement="false" Key="false" CaseSensitive="false" Required="false" Scale="0" />
-          <Property ID="Time" Type="int" AutoIncrement="false" Key="false" CaseSensitive="false" Required="false" Scale="0" />
-          <Property ID="Recurse" Type="int" AutoIncrement="false" Key="false" CaseSensitive="false" Required="false" Scale="0" />
+          <Property ID="Count" Type="int" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
+          <Property ID="Age" Type="int" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
+          <Property ID="Recurse" Type="int" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
         </ClassType>
       </ClassTypes>
       <RelationshipTypes>
@@ -29,14 +29,20 @@
         <Configuration>
           <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
           <xsd:element minOccurs="0" name="SyncTime" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
-          <xsd:element minOccurs="1" name="ID" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
-          <xsd:element minOccurs="1" name="CSV" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element minOccurs="1" name="Share" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element minOccurs="1" name="Extension" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element minOccurs="1" name="Count" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element minOccurs="1" name="Age" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element minOccurs="1" name="Recurse" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
         </Configuration>
         <OverrideableParameters>
           <OverrideableParameter ID="Interval" Selector="$Config/IntervalSeconds$" ParameterType="int" />
           <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string" />
-          <OverrideableParameter ID="ID" Selector="$Config/ID$" ParameterType="int" />
-          <OverrideableParameter ID="CSV" Selector="$Config/CSV$" ParameterType="string" />
+          <OverrideableParameter ID="Share" Selector="$Config/Share$" ParameterType="string" />
+          <OverrideableParameter ID="Extension" Selector="$Config/Extension$" ParameterType="string" />
+          <OverrideableParameter ID="Count" Selector="$Config/Count$" ParameterType="int" />
+          <OverrideableParameter ID="Age" Selector="$Config/Age$" ParameterType="int" />
+          <OverrideableParameter ID="Recurse" Selector="$Config/Recurse$" ParameterType="int" />
         </OverrideableParameters>
         <ModuleImplementation Isolation="Any">
           <Composite>
@@ -58,8 +64,11 @@
       </DataSourceModuleType>
       <ProbeActionModuleType ID="Network.FileCount.DataSource.PSScript" Accessibility="Public" Batching="false" PassThrough="false" RunAs="Network.FileCount.RunasProfile">
         <Configuration>
-          <xsd:element minOccurs="0" name="ID" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
-          <xsd:element minOccurs="0" name="CSV" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element minOccurs="0" name="Share" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element minOccurs="0" name="Extension" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element minOccurs="0" name="Count" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element minOccurs="0" name="Age" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element minOccurs="0" name="Recurse" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
         </Configuration>
         <ModuleImplementation Isolation="Any">
           <Composite>
@@ -67,7 +76,7 @@
               <ProbeAction ID="PSScript" TypeID="Windows!Microsoft.Windows.PowerShellPropertyBagTriggerOnlyProbe">
                 <ScriptName>GetFileCount.ps1</ScriptName>
                 <ScriptBody>
-                  param($ID,$CSV)
+                  param([string]$Share, [string]$Extension, [int]$Count, [int]$Age, [int]$Recurse)
 
                   $ScriptName = "GetFileCount.ps1"
                   $EventID = 3521
@@ -86,64 +95,58 @@
                   $momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Script is starting. `n Running as ($whoami).")
                   #=================================================================================
 
-                  $shares = Import-csv -path $csv
-                  #Filter Shares based on ID
-                  # $shares
-                  $share = $shares | where ID -EQ $ID
-
-
                   #Declare variables containing extension to check and file age
 
-                  if($share.extension)
+                  if($Extension.length -gt 0)
                   {
-                  [string]$strExtension = "*"+$share.extension
+                  [string]$strExtension = "*"+$Extension
                   }
                   else
                   {
                   [string]$strExtension = "*"
                   }
 
-                  [string]$strAge = $share.time
-                  [string]$strShare = $share.Share
-                  [int]$intCount = $share.count
-                  [int]$intRecurse = $share.recurse
+                  [int]$iAge = $Age
+                  [string]$sShare = $Share
+                  [int]$iiCount = $Count
+                  [int]$iRecurse = $Recurse
 
                   # Test to see if Share is Accessible
-                  If(Test-Path -path "$strShare" -pathType Container -ErrorAction SilentlyContinue)
+                  If(Test-Path -path "$sShare" -pathType Container -ErrorAction SilentlyContinue)
                   {
                   # Count all files with the specific extension and older then the given time
-                  if ($intRecurse -eq 1)
+                  if ($iRecurse -eq 1)
                   {
-                  $count  = Get-ChildItem -Recurse $strShare\$strExtension | where{$_.LastWriteTime -le (Get-Date).AddMinutes($strAge)}|Measure-Object |%{$_.Count}
+                  $fileCount  = Get-ChildItem -Recurse "$sShare\$sExtension" | where{$_.LastWriteTime -le (Get-Date).AddMinutes($iAge)}|Measure-Object |%{$_.Count}
 
-                  if ($count -le $intCount)
+                  if ($count -le $iCount)
                   {
                   $strStatus = 1
-                  $strMessage="Number of Files ($count) in $strShare is under threshold $intCount."
-                  $momapi.LogScriptEvent($ScriptName,$EventID,2,"`n Found $count file(s) with extension $strExtension in $strShare. `n Under threshold $intCount.")
+                  $strMessage="Number of Files ($fileCount) in $strShare is under threshold $iCount."
+                  $momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Found $count file(s) with extension $sExtension in $sShare. `n Under threshold $iCount.")
                   }
                   else
                   {
                   $strMessage="Number of Files ($count) in $strShare exceeds threshold $intCount."
-                  $momapi.LogScriptEvent($ScriptName,$EventID,2,"`n Found $count file(s) with extension $strExtension in $strShare.`n Exceeds threshold $intCount.")
+                  $momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Found $fileCount file(s) with extension $sExtension in $sShare.`n Exceeds threshold $iCount.")
                   $strStatus = 0
                   }
                   }
                   else
                   {
-                  $count  = Get-ChildItem $strShare\$strExtension | where{$_.LastWriteTime -le (Get-Date).AddMinutes($strAge)}|Measure-Object |%{$_.Count}
+                  $fileCount  = Get-ChildItem "$strShare\$sExtension" | where{$_.LastWriteTime -le (Get-Date).AddMinutes($iAge)}|Measure-Object |%{$_.Count}
 
-                  if ($count -le $intCount)
+                  if ($fileCount -le $iCount)
                   {
-                  $strMessage="Number of Files ($count) in $strShare is under threshold $intCount."
-                  $momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Found $count file(s) with extension $strExtension in $strShare. `n Under threshold $intCount.")
+                  $strMessage="Number of Files ($fileCount) in $strShare is under threshold $iCount."
+                  $momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Found $count file(s) with extension $strExtension in $sShare. `n Under threshold $iCount.")
                   $strStatus = 1
                   }
                   else
                   {
 
-                  $strMessage="Number of Files ($count) in $strShare exceeds threshold $intCount."
-                  $momapi.LogScriptEvent($ScriptName,$EventID,2,"`n Found $count file(s) with extension $strExtension in $strShare.`n Exceeds threshold $intCount.")
+                  $strMessage="Number of Files ($fileCount) in $sShare exceeds threshold $iCount."
+                  $momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Found $fileCount file(s) with extension $sExtension in $sShare.`n Exceeds threshold $iCount.")
                   $strStatus = 0
                   }
                   }
@@ -153,7 +156,7 @@
                   {
                   # Unable to access File Share
                   $strMessage="Unable to access $strShare"
-                  $momapi.LogScriptEvent($ScriptName,$EventID,2,"`n Unable to access $strShare as $whoami.")
+                  $momapi.LogScriptEvent($ScriptName,$EventID,2,"`n Unable to access $sShare as $whoami.")
                   $count = 0
                   $strStatus = 0
                   }
@@ -169,17 +172,29 @@
                   #add the values to the bag
                   $bag.AddValue('Message', $strMessage)
                   $bag.AddValue('Status', $strStatus)
-                  $bag.AddValue('Files',$count)
+                  $bag.AddValue('Files',$fileCount)
                   $bag
                 </ScriptBody>
                 <Parameters>
                   <Parameter>
-                    <Name>ID</Name>
-                    <Value>$Config/ID$</Value>
+                    <Name>Share</Name>
+                    <Value>$Config/Share$</Value>
                   </Parameter>
                   <Parameter>
-                    <Name>CSV</Name>
-                    <Value>$Config/CSV$</Value>
+                    <Name>Extension</Name>
+                    <Value>$Config/Extension$</Value>
+                  </Parameter>
+                  <Parameter>
+                    <Name>Count</Name>
+                    <Value>$Config/Count$</Value>
+                  </Parameter>
+                  <Parameter>
+                    <Name>Age</Name>
+                    <Value>$Config/Age$</Value>
+                  </Parameter>
+                  <Parameter>
+                    <Name>Recurse</Name>
+                    <Value>$Config/Recurse$</Value>
                   </Parameter>
                 </Parameters>
                 <TimeoutSeconds>300</TimeoutSeconds>
@@ -203,22 +218,31 @@
         <Configuration>
           <xsd:element name="IntervalSeconds" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
           <xsd:element name="SyncTime" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
-          <xsd:element name="ID" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
-          <xsd:element name="CSV" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element name="Share" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element name="Extension" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element name="Count" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element name="Age" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element name="Recurse" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
         </Configuration>
         <OverrideableParameters>
           <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int" />
           <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string" />
-          <OverrideableParameter ID="ID" Selector="$Config/ID$" ParameterType="int" />
-          <OverrideableParameter ID="CSV" Selector="$Config/CSV$" ParameterType="string" />
+          <OverrideableParameter ID="Share" Selector="$Config/Share$" ParameterType="string" />
+          <OverrideableParameter ID="Extension" Selector="$Config/Extension$" ParameterType="string" />
+          <OverrideableParameter ID="Count" Selector="$Config/Count$" ParameterType="int" />
+          <OverrideableParameter ID="Age" Selector="$Config/Age$" ParameterType="int" />
+          <OverrideableParameter ID="Recurse" Selector="$Config/Recurse$" ParameterType="int" />
         </OverrideableParameters>
         <MonitorImplementation>
           <MemberModules>
             <DataSource ID="DS" TypeID="Network.FileCount.DataSource">
               <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
               <SyncTime>$Config/SyncTime$</SyncTime>
-              <ID>$Config/ID$</ID>
-              <CSV>$Config/CSV$</CSV>
+              <Share>$Config/Share$</Share>
+              <Extension>$Config/Extension$</Extension>
+              <Count>$Config/Count$</Count>
+              <Age>$Config/Age$</Age>
+              <Recurse>$Config/Recurse$</Recurse>
             </DataSource>
             <ConditionDetection ID="FilterFileCountStatusOK" TypeID="System!System.ExpressionFilter">
               <Expression>
@@ -262,7 +286,8 @@
         </MonitorImplementation>
       </UnitMonitorType>
     </MonitorTypes>
-  </TypeDefinitions><Monitoring>
+  </TypeDefinitions>
+<Monitoring>
     <Discoveries>
       <Discovery ID="Network.FileCount.WatcherNode.Discovery" Target="Windows!Microsoft.Windows.OperatingSystem" Enabled="true" ConfirmDelivery="false" Remotable="false" Priority="Normal">
         <Category>Discovery</Category>
@@ -347,9 +372,9 @@ foreach ($share in $shares)
     #Fill up properties of class
         $instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/ID$", $share.ID)
         $instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/Share$", $share.Share)
-        if($share.extension){$instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/Extension$", $share.extension)}
-        if($share.count){$instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/Count$", $share.count)}
-        if($share.time){$instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/Time$", $share.time)}
+        if($share.Extension){$instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/Extension$", $share.extension)}
+        if($share.Count){$instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/Count$", $share.count)}
+        if($share.Age){$instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/Age$", $share.time)}
 		$instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/Recurse$", $share.Recurse)
 
     #Add the displayname, path of the server and key property of the parent class. (always recurring)
@@ -399,8 +424,11 @@ $discoveryData
           <DataSource ID="DataSource" TypeID="Network.FileCount.DataSource" RunAs="Network.FileCount.RunasProfile">
             <IntervalSeconds>900</IntervalSeconds>
             <SyncTime></SyncTime>
-            <ID>$Target/Property[Type='Network.FileCount.Share']/ID$</ID>
-            <CSV>$Target/Host/Property[Type='Network.FileCount.WatcherNode']/CSV$</CSV>
+            <Share>$Target/Property[Type='Network.FileCount.Share']/Share$</Share>
+            <Extension>$Target/Property[Type='Network.FileCount.Share']/Extension$</Extension>
+            <Count>$Target/Property[Type='Network.FileCount.Share']/Count$</Count>
+            <Age>$Target/Property[Type='Network.FileCount.Share']/Age$</Age>
+            <Recurse>$Target/Property[Type='Network.FileCount.Share']/Recurse$</Recurse>
           </DataSource>
         </DataSources>
         <ConditionDetection ID="MapToPerf" TypeID="Perf!System.Performance.DataGenericMapper">
@@ -436,8 +464,11 @@ $discoveryData
         <Configuration>
           <IntervalSeconds>300</IntervalSeconds>
           <SyncTime></SyncTime>
-          <ID>$Target/Property[Type='Network.FileCount.Share']/ID$</ID>
-          <CSV>$Target/Host/Property[Type='Network.FileCount.WatcherNode']/CSV$</CSV>
+          <Share>$Target/Property[Type='Network.FileCount.Share']/Share$</Share>
+          <Extension>$Target/Property[Type='Network.FileCount.Share']/Extension$</Extension>
+          <Count>$Target/Property[Type='Network.FileCount.Share']/Count$</Count>
+          <Age>$Target/Property[Type='Network.FileCount.Share']/Age$</Age>
+          <Recurse>$Target/Property[Type='Network.FileCount.Share']/Recurse$</Recurse>
         </Configuration>
       </UnitMonitor>
     </Monitors>
@@ -523,8 +554,8 @@ $discoveryData
         <DisplayString ElementID="Network.FileCount.Share" SubElementID="Count">
           <Name>Count</Name>
         </DisplayString>
-        <DisplayString ElementID="Network.FileCount.Share" SubElementID="Time">
-          <Name>Time</Name>
+        <DisplayString ElementID="Network.FileCount.Share" SubElementID="Age">
+          <Name>Age</Name>
         </DisplayString>
         <DisplayString ElementID="Network.FileCount.Share" SubElementID="Recurse">
           <Name>Recurse</Name>

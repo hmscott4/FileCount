@@ -14,13 +14,25 @@
           <Name>SyncTime</Name>
           <Description>Sync Time</Description>
         </DisplayString>
-        <DisplayString ElementID="Network.FileCount.DataSource" SubElementID="ID">
-          <Name>ID</Name>
-          <Description>ID</Description>
+        <DisplayString ElementID="Network.FileCount.DataSource" SubElementID="Share">
+          <Name>Share</Name>
+          <Description>Share</Description>
         </DisplayString>
-        <DisplayString ElementID="Network.FileCount.DataSource" SubElementID="CSV">
-          <Name>CSV</Name>
-          <Description>CSV</Description>
+        <DisplayString ElementID="Network.FileCount.DataSource" SubElementID="Extension">
+          <Name>Extension</Name>
+          <Description>Extension</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.FileCount.DataSource" SubElementID="Count">
+          <Name>Count</Name>
+          <Description>Count</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.FileCount.DataSource" SubElementID="Age">
+          <Name>Age</Name>
+          <Description>Age (in Minutes)</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.FileCount.DataSource" SubElementID="Recurse">
+          <Name>Recurse</Name>
+          <Description>Recurse</Description>
         </DisplayString>
         <DisplayString ElementID="Network.FileCount.Accessible.Monitor.DataSource" SubElementID="IntervalSeconds">
           <Name>IntervalSeconds</Name>
@@ -34,13 +46,9 @@
           <Name>TimeoutSeconds</Name>
           <Description>TimeoutSeconds</Description>
         </DisplayString>
-        <DisplayString ElementID="Network.FileCount.Accessible.Monitor.DataSource" SubElementID="ID">
-          <Name>ID</Name>
-          <Description>ID</Description>
-        </DisplayString>
-        <DisplayString ElementID="Network.FileCount.Accessible.Monitor.DataSource" SubElementID="CSV">
-          <Name>CSV</Name>
-          <Description>CSV</Description>
+        <DisplayString ElementID="Network.FileCount.Accessible.Monitor.DataSource" SubElementID="Share">
+          <Name>Share</Name>
+          <Description>UNC Path to Share</Description>
         </DisplayString>
         <DisplayString ElementID="Network.FileCount.WatcherNode.Accessible.Monitor.DataSource" SubElementID="IntervalSeconds">
           <Name>ID</Name>
@@ -72,15 +80,27 @@
         </DisplayString>
         <DisplayString ElementID="Network.FileCount.Status.MonitorType" SubElementID="SyncTime">
           <Name>SyncTime</Name>
-          <Description>Name of CSV file</Description>
+          <Description>SyncTime</Description>
         </DisplayString>
-        <DisplayString ElementID="Network.FileCount.Status.MonitorType" SubElementID="ID">
-          <Name>ID</Name>
-          <Description>ID</Description>
+        <DisplayString ElementID="Network.FileCount.Status.MonitorType" SubElementID="Share">
+          <Name>Share</Name>
+          <Description>Share</Description>
         </DisplayString>
-        <DisplayString ElementID="Network.FileCount.Status.MonitorType" SubElementID="CSV">
-          <Name>CSV</Name>
-          <Description>Name of CSV file</Description>
+        <DisplayString ElementID="Network.FileCount.Status.MonitorType" SubElementID="Extension">
+          <Name>Extension</Name>
+          <Description>File Extension</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.FileCount.Status.MonitorType" SubElementID="Count">
+          <Name>Count</Name>
+          <Description>Count</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.FileCount.Status.MonitorType" SubElementID="Age">
+          <Name>Age</Name>
+          <Description>Age</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.FileCount.Status.MonitorType" SubElementID="Recurse">
+          <Name>Recurse</Name>
+          <Description>Recurse</Description>
         </DisplayString>
         <DisplayString ElementID="Network.FileCount.Accessible.Monitor.MonitorType" SubElementID="IntervalSeconds">
           <Name>IntervalSeconds</Name>
@@ -94,13 +114,9 @@
           <Name>TimeoutSeconds</Name>
           <Description>TimeoutSeconds</Description>
         </DisplayString>
-        <DisplayString ElementID="Network.FileCount.Accessible.Monitor.MonitorType" SubElementID="ID">
-          <Name>ID</Name>
-          <Description>ID</Description>
-        </DisplayString>
-        <DisplayString ElementID="Network.FileCount.Accessible.Monitor.MonitorType" SubElementID="CSV">
-          <Name>CSV</Name>
-          <Description>Name of CSV file</Description>
+        <DisplayString ElementID="Network.FileCount.Accessible.Monitor.MonitorType" SubElementID="Share">
+          <Name>Share</Name>
+          <Description>UNC Path to Share</Description>
         </DisplayString>
         <DisplayString ElementID="Network.FileCount.WatcherNode.Accessible.Monitor.MonitorType" SubElementID="IntervalSeconds">
           <Name>IntervalSeconds</Name>
@@ -138,6 +154,26 @@
           <Name>Network File Count Watcher Node Contains File Share Relationship</Name>
           <Description>Network File Count Watcher Node Contains File Share Relationship</Description>
         </DisplayString>
+        <DisplayString ElementID="Network.FileCount.Disable.WatcherNode.Task.WA">
+          <Name>Disable Network FileCount Watcher Node</Name>
+          <Description>Disable Network FileCount Watcher Node</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.FileCount.Disable.WatcherNode.Task.WA" SubElementID="TimeoutSeconds">
+          <Name>Timeout</Name>
+          <Description>Timeout</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.FileCount.Enable.WatcherNode.Task.WA">
+          <Name>Enable Network FileCount Watcher Node</Name>
+          <Description>Enable Network FileCount Watcher Node</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.FileCount.Enable.WatcherNode.Task.WA" SubElementID="ConfigFileName">
+          <Name>Configuration file path</Name>
+          <Description>Path to configuration file</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.FileCount.Enable.WatcherNode.Task.WA" SubElementID="TimeoutSeconds">
+          <Name>Timeout</Name>
+          <Description>Timeout</Description>
+        </DisplayString>        
       </DisplayStrings>
     </LanguagePack>
   </LanguagePacks></ManagementPackFragment>
