@@ -137,7 +137,7 @@
 
           }
 
-          If($LoggingLevel -ge 2{
+          If($LoggingLevel -ge 2) {
             $api.LogScriptEvent("GetSharesFromCSV.ps1", 3520, 0, "Discovery Ended")
           }
 
