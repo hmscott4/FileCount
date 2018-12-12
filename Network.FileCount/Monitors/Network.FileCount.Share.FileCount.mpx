@@ -11,6 +11,7 @@
             <xsd:element minOccurs="1" name="Count" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
             <xsd:element minOccurs="1" name="Age" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
             <xsd:element minOccurs="1" name="Recurse" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+            <xsd:element minOccurs="1" name="LoggingLevel" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
           </Configuration>
           <OverrideableParameters>
             <OverrideableParameter ID="Interval" Selector="$Config/IntervalSeconds$" ParameterType="int" />
@@ -20,6 +21,7 @@
             <OverrideableParameter ID="Count" Selector="$Config/Count$" ParameterType="int" />
             <OverrideableParameter ID="Age" Selector="$Config/Age$" ParameterType="int" />
             <OverrideableParameter ID="Recurse" Selector="$Config/Recurse$" ParameterType="int" />
+            <OverrideableParameter ID="LoggingLevel" Selector="$Config/Recurse$" ParameterType="int" />
           </OverrideableParameters>
           <ModuleImplementation Isolation="Any">
             <Composite>
@@ -46,6 +48,7 @@
             <xsd:element minOccurs="0" name="Count" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
             <xsd:element minOccurs="0" name="Age" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
             <xsd:element minOccurs="0" name="Recurse" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+            <xsd:element minOccurs="0" name="LoggingLevel" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
           </Configuration>
           <ModuleImplementation Isolation="Any">
             <Composite>
@@ -53,10 +56,16 @@
                 <ProbeAction ID="PSScript" TypeID="Windows!Microsoft.Windows.PowerShellPropertyBagTriggerOnlyProbe">
                   <ScriptName>GetFileCount.ps1</ScriptName>
                   <ScriptBody>
-                    param([string]$Share, [string]$Extension, [int]$Count, [int]$Age, [int]$Recurse)
+                    param([string]$Share, [string]$Extension, [int]$Count, [int]$Age, [int]$Recurse, [int]$LoggingLevel)
 
                     $ScriptName = "GetFileCount.ps1"
                     $EventID = 3521
+
+                    # LoggingLevel
+                    # ================================================================================
+                    # 0 = None
+                    # 1 = Errors/Warnings
+                    # 2 = Verbose
 
                     # Starting Script section - All scripts get this
                     #=================================================================================
@@ -69,7 +78,9 @@
                     # Load PropertyBag function
                     $bag = $momapi.CreatePropertyBag()
                     #Log script event that we are starting task
+                    If($LoggingLevel -ge 2) {
                     $momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Script is starting. `n Running as ($whoami).")
+                    }
                     #=================================================================================
 
                     #Declare variables containing extension to check and file age
@@ -94,36 +105,59 @@
                     # Count all files with the specific extension and older then the given time
                     if ($iRecurse -eq 1)
                     {
-                    $fileCount  = Get-ChildItem -Recurse "$sShare\$sExtension" | where{$_.LastWriteTime -le (Get-Date).AddMinutes($iAge)}|Measure-Object |%{$_.Count}
+                    # $fileCount = Get-ChildItem -Recurse "$sShare\$sExtension" | where{$_.LastWriteTime -le (Get-Date).AddMinutes($iAge)}|Measure-Object |%{$_.Count}
+                    $allFiles = Get-ChildItem -Recurse "$sShare\$sExtension" | where{$_.LastWriteTime -le (Get-Date).AddMinutes(-$iAge)}
+                    $fileCount = $allFiles.Count
+                    If($fileCount -gt 0) {
+                    $fileSize = ($files | Measure-Object -Sum Length).Sum / 1MB
+                    $fileSize = [Math]::Round($fileSize, 2)
+                    } Else {
+                    $fileSize = 0
+                    }
 
                     if ($fileCount -le $iCount)
                     {
                     $strStatus = 1
                     $strMessage="Number of Files ($fileCount) in $sShare is under threshold $iCount."
+                    If($LoggingLevel -ge 2) {
                     $momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Found $fileCount file(s) with extension $sExtension in $sShare. `n Under threshold $iCount.")
+                    }
                     }
                     else
                     {
-                    $strMessage="Number of Files ($count) in $sShare exceeds threshold $iCount."
+                    $strMessage="Number of Files ($fileCount) in $sShare exceeds threshold $iCount."
+                    If($LoggingLevel -ge 1){
                     $momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Found $fileCount file(s) with extension $sExtension in $sShare.`n Exceeds threshold $iCount.")
+                    }
                     $strStatus = 0
                     }
                     }
                     else
                     {
-                    $fileCount  = Get-ChildItem "$sShare\$sExtension" | where{$_.LastWriteTime -le (Get-Date).AddMinutes($iAge)}|Measure-Object |%{$_.Count}
-
+                    # $fileCount  = Get-ChildItem "$sShare\$sExtension" | where{$_.LastWriteTime -le (Get-Date).AddMinutes($iAge)}|Measure-Object |%{$_.Count}
+                    $allFiles = Get-ChildItem -Recurse "$sShare\$sExtension" | where{$_.LastWriteTime -le (Get-Date).AddMinutes(-$iAge)}
+                    $fileCount = $allFiles.Count
+                    If($fileCount -gt 0) {
+                    $fileSize = ($files | Measure-Object -Sum Length).Sum / 1MB
+                    $fileSize = [Math]::Round($fileSize, 2)
+                    } Else {
+                    $fileSize = 0
+                    }
                     if ($fileCount -le $iCount)
                     {
                     $strMessage="Number of Files ($fileCount) in $sShare is under threshold $iCount."
+                    If($LoggingLevel -ge 2) {
                     $momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Found $fileCount file(s) with extension $sExtension in $sShare. `n Under threshold $iCount.")
+                    }
                     $strStatus = 1
                     }
                     else
                     {
 
                     $strMessage="Number of Files ($fileCount) in $sShare exceeds threshold $iCount."
+                    If($LoggingLevel -ge 1) {
                     $momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Found $fileCount file(s) with extension $sExtension in $sShare.`n Exceeds threshold $iCount.")
+                    }
                     $strStatus = 0
                     }
                     }
@@ -133,8 +167,12 @@
                     {
                     # Unable to access File Share
                     $strMessage="Unable to access $sShare"
+                    If($LoggingLevel -ge 1) {
                     $momapi.LogScriptEvent($ScriptName,$EventID,2,"`n Unable to access $sShare as $whoami.")
-                    $count = 0
+                    }
+                    # $count = 0
+                    $fileCount = 0
+                    $fileSize = 0
                     $strStatus = 0
                     }
 
@@ -143,13 +181,16 @@
                     #Log an event for script ending and total execution time.
                     $EndTime = Get-Date
                     $ScriptTime = ($EndTime - $StartTime).TotalSeconds
+                    If($LoggingLevel -ge 2) {
                     $momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Script Completed. `n Script Runtime: ($ScriptTime) seconds.")
+                    }
 
 
                     #add the values to the bag
                     $bag.AddValue('Message', $strMessage)
                     $bag.AddValue('Status', $strStatus)
                     $bag.AddValue('Files',$fileCount)
+                    $bag.AddValue('SizeMB',$fileSize)
                     $bag
                   </ScriptBody>
                   <Parameters>
@@ -172,6 +213,10 @@
                     <Parameter>
                       <Name>Recurse</Name>
                       <Value>$Config/Recurse$</Value>
+                    </Parameter>
+                    <Parameter>
+                      <Name>LoggingLevel</Name>
+                      <Value>$Config/LoggingLevel$</Value>
                     </Parameter>
                   </Parameters>
                   <TimeoutSeconds>300</TimeoutSeconds>
@@ -200,6 +245,7 @@
           <xsd:element name="Count" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
           <xsd:element name="Age" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
           <xsd:element name="Recurse" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element name="LoggingLevel" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
         </Configuration>
         <OverrideableParameters>
           <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int" />
@@ -209,6 +255,7 @@
           <OverrideableParameter ID="Count" Selector="$Config/Count$" ParameterType="int" />
           <OverrideableParameter ID="Age" Selector="$Config/Age$" ParameterType="int" />
           <OverrideableParameter ID="Recurse" Selector="$Config/Recurse$" ParameterType="int" />
+          <OverrideableParameter ID="LoggingLevel" Selector="$Config/LoggingLevel$" ParameterType="int" />
         </OverrideableParameters>
         <MonitorImplementation>
           <MemberModules>
@@ -220,6 +267,7 @@
               <Count>$Config/Count$</Count>
               <Age>$Config/Age$</Age>
               <Recurse>$Config/Recurse$</Recurse>
+              <LoggingLevel>$Config/LoggingLevel$</LoggingLevel>
             </DataSource>
             <ConditionDetection ID="FilterFileCountStatusOK" TypeID="System!System.ExpressionFilter">
               <Expression>
@@ -284,13 +332,14 @@
           <OperationalState ID="FileCountStatusNotOK" MonitorTypeStateID="FileCountStatusNotOK" HealthState="Error" />
         </OperationalStates>
         <Configuration>
-          <IntervalSeconds>300</IntervalSeconds>
+          <IntervalSeconds>900</IntervalSeconds>
           <SyncTime></SyncTime>
           <Share>$Target/Property[Type='Network.FileCount.Share']/Share$</Share>
           <Extension>$Target/Property[Type='Network.FileCount.Share']/Extension$</Extension>
           <Count>$Target/Property[Type='Network.FileCount.Share']/Count$</Count>
           <Age>$Target/Property[Type='Network.FileCount.Share']/Age$</Age>
           <Recurse>$Target/Property[Type='Network.FileCount.Share']/Recurse$</Recurse>
+          <LoggingLevel>0</LoggingLevel>
         </Configuration>
       </UnitMonitor>
     </Monitors>    

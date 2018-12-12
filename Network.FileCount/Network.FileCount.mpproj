@@ -72,6 +72,9 @@
     <Compile Include="Monitors\Network.FileCount.WatcherNode.ConfigFile.mpx">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Rules\Network.FileCount.AggregateSize.CollectionRule.mpx">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Rules\Network.FileCount.CollectionRule.mpx">
       <SubType>Code</SubType>
     </Compile>

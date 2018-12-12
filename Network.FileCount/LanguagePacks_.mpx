@@ -258,6 +258,18 @@
             <Name>File Count Watcher Node State</Name>
             <Description>This view shows the state of all File Count Share Watchernode(s)</Description>
           </DisplayString>
+        <DisplayString ElementID="Network.FileCount.DataSource" SubElementID="LoggingLevel">
+          <Name>LoggingLevel</Name>
+          <Description>LoggingLevel (0=None, 1=Error, 2=Verbose)</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.FileCount.Share.Monitoring.PSScript.Rule.CollectAggregateSize">
+          <Name>Network File Count Aggregate Size (MB) Collection Rule</Name>
+          <Description>Network File Count Aggregate Size (MB) Collection Rule</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.FileCount.Status.MonitorType" SubElementID="LoggingLevel">
+          <Name>LoggingLevel</Name>
+          <Description>LoggingLevel (0=None, 1=Error, 2=Verbose)</Description>
+        </DisplayString>
         </DisplayStrings>
         <KnowledgeArticles>
           <KnowledgeArticle ElementID="Network.FileCount.Status.MonitorType" Visible="true">
@@ -312,7 +324,44 @@
                 <maml:para>If this monitor fails, check to be sure that the UNC path still exists and that the RunAs account is defined and has permissions to the share.  Also check to see that the count of files matching the conditions defined does not exceed the threshold value.</maml:para>
               </maml:section>
             </MamlContent>
-          </KnowledgeArticle>          
+          </KnowledgeArticle>
+          <KnowledgeArticle ElementID="Network.FileCount.WatcherNode.Discovery" Visible="true">
+            <MamlContent>
+              <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+                <maml:title>Summary</maml:title>
+                <maml:para>This discovery checks for the presence of the registry key HKLM:\Software\FileCount and the associated STRING attribure CSV. If present, the target is assumed to be a Network File Count Watcher node.</maml:para>
+              </maml:section>
+              <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+                <maml:title>Error Conditions</maml:title>
+                <maml:para>If the registry key exists, but the managed computer is not detected as a Network File Count Watcher node, check permissions on the registry key. </maml:para>
+              </maml:section>
+            </MamlContent>
+          </KnowledgeArticle>
+          <KnowledgeArticle ElementID="Network.FileCount.WatcherNode.Accessible.Monitor" Visible="true">
+            <MamlContent>
+              <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+                <maml:title>Summary</maml:title>
+                <maml:para>This monitor checks the value of the CSV attribute in the HKLM:\Software\FileCount registry key.  This attribute should contain a string value pointing to the configuration file.  If present and accessible under the Run As account, this monitor returns a healthy state.</maml:para>
+              </maml:section>
+              <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+                <maml:title>Error Conditions</maml:title>
+                <maml:para>If the file specified in the CSV attribute does not exist, or the RunAs account does have permissions to access the file, then the monitor will return an error. </maml:para>
+              </maml:section>
+            </MamlContent>
+          </KnowledgeArticle>
+
+          <KnowledgeArticle ElementID="Network.FileCount.Share.Discovery" Visible="true">
+            <MamlContent>
+              <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+                <maml:title>Summary</maml:title>
+                <maml:para>This discovery iterates through the share locations specified in the File Count configuration file.</maml:para>
+              </maml:section>
+              <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+                <maml:title>Error Conditions</maml:title>
+                <maml:para>If the share location is not accessible or the RunAs account specified does not have access, then the share will not be discovered.</maml:para>
+              </maml:section>
+            </MamlContent>
+          </KnowledgeArticle>
         </KnowledgeArticles>  
     </LanguagePack>
   </LanguagePacks></ManagementPackFragment>
