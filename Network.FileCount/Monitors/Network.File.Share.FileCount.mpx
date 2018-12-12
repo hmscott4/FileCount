@@ -340,7 +340,7 @@
           <Count>$Target/Property[Type='Network.FileCount.Share']/Count$</Count>
           <Age>$Target/Property[Type='Network.FileCount.Share']/Age$</Age>
           <Recurse>$Target/Property[Type='Network.FileCount.Share']/Recurse$</Recurse>
-          <LoggingLevel>0</LoggingLevel>
+          <LoggingLevel>$Target/Host/Property[Type='Network.FileCount.WatcherNode']/LoggingLevel$</LoggingLevel>
         </Configuration>
       </UnitMonitor>
     </Monitors>    

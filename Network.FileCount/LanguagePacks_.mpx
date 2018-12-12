@@ -156,7 +156,7 @@
         </DisplayString>
         <DisplayString ElementID="NetworkFileCountWatcherNodeContainsFileShare">
           <Name>Network File Share Watcher Node Contains File Share Relationship</Name>
-          <Description>Network Share Count Watcher Node Contains File Share Relationship</Description>
+          <Description>Network File Share Watcher Node Contains Network File Share Relationship</Description>
         </DisplayString>
         <DisplayString ElementID="Network.FileCount.Disable.WatcherNode.Task.WA">
           <Name>Disable Network File Share Watcher Node</Name>
@@ -235,7 +235,7 @@
             <Name>Recurse</Name>
           </DisplayString>
           <DisplayString ElementID="Network.FileCount.Folder">
-            <Name>Network Share Monitoring</Name>
+            <Name>Network File Share Monitoring</Name>
             <Description></Description>
           </DisplayString>
           <DisplayString ElementID="Network.FileCount.State.Folder">

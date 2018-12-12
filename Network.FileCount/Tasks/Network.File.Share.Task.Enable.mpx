@@ -59,7 +59,7 @@
                   {
                   New-Item -Path $registryKey -Force | Out-Null
                   New-ItemProperty -Path $registryKey -Name $registryAttribute -Value $registryValue -PropertyType String -Force | Out-Null
-                  New-ItemProperty -Path $registryKey -Name "LoggingLevel" -Value $newLoggingLevel -PropertyType Dword -Force | Out-Null
+                  New-ItemProperty -Path $registryKey -Name "LoggingLevel" -Value $newLoggingLevel -PropertyType String -Force | Out-Null
                   }
 
                   If(Test-Path $$configFileName)

@@ -17,8 +17,8 @@
         </DataSources>
         <ConditionDetection ID="MapToPerf" TypeID="Perf!System.Performance.DataGenericMapper">
           <ObjectName>$Target/Host/Host/Property[Type='Windows!Microsoft.Windows.Computer']/PrincipalName$</ObjectName>
-          <CounterName>File Count</CounterName>
-          <InstanceName>$Target/Property[Type='Network.FileCount.Share']/Share$</InstanceName>
+          <CounterName>Aggregate Size (MB)</CounterName>
+          <InstanceName>$Target/Property[Type='Network.FileCount.Share']/Share$ ($Target/Property[Type='Network.FileCount.Share']/Extension$)</InstanceName>
           <Value>$Data/Property[@Name='SizeMB']$</Value>
         </ConditionDetection>
         <WriteActions>

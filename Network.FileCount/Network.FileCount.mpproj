@@ -69,7 +69,7 @@
     <Compile Include="Monitors\Network.File.Share.IsAccessible.mpx">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Monitors\Network.File.Share..WatcherNode.ConfigFile.mpx">
+    <Compile Include="Monitors\Network.File.Share.WatcherNode.ConfigFile.mpx">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Rules\Network.File.Share.AggregateSize.CollectionRule.mpx">
