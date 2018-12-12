@@ -61,7 +61,7 @@
             <Settings>
               <Setting>
                 <Name>$MPElement[Name="System!System.Entity"]/DisplayName$</Name>
-                <Value>FileCount WatcherNode ($Target/Host/Property[Type="Windows!Microsoft.Windows.Computer"]/NetbiosComputerName$)</Value>
+                <Value>Network File Share WatcherNode ($Target/Host/Property[Type="Windows!Microsoft.Windows.Computer"]/NetbiosComputerName$)</Value>
               </Setting>
               <Setting>
                 <Name>$MPElement[Name="Windows!Microsoft.Windows.Computer"]/PrincipalName$</Name>

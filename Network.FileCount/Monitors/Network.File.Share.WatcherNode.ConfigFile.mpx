@@ -233,8 +233,8 @@
           <Name>Configuration file not accessible</Name>
         </DisplayString>
         <DisplayString ElementID="Network.FileCount.WatcherNode.Accessible.Monitor.AlertMessage">
-          <Name>FileCount FileCount.WatcherNode.Accessible Monitor: Failure</Name>
-          <Description>Configuration file not accessible for FileCount Watcher Node.</Description>
+          <Name>Network File Share Watcher Node Config File is accessible: Failure</Name>
+          <Description>Configuration file not accessible for Network File Share Watcher Node.</Description>
         </DisplayString>
       </DisplayStrings>
     </LanguagePack>

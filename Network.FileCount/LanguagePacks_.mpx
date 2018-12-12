@@ -71,8 +71,8 @@
           <Description>Script to monitor UNC accessibility.  Does not count files.</Description>
         </DisplayString>
         <DisplayString ElementID="Network.FileCount.WatcherNode.Accessible.Monitor.DataSource">
-          <Name>FileCount Watcher Node configuration file accessibility script</Name>
-          <Description>Checks to see that the configuration file used by the FileCount Watcher node is accessible.</Description>
+          <Name>Network File Share Watcher Node configuration file accessibility script</Name>
+          <Description>Checks to see that the configuration file used by the Network File Share Watcher node is accessible.</Description>
         </DisplayString>
         <DisplayString ElementID="Network.FileCount.WatcherNode.Accessible.Monitor.DataSource" SubElementID="CSV">
           <Name>CSV</Name>
@@ -308,7 +308,7 @@
             <MamlContent>
               <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
                 <maml:title>Summary</maml:title>
-                <maml:para>This monitor verifies that a remote network share is accessible using the Network File Count RunAs Profile.</maml:para>
+                <maml:para>This monitor verifies that a remote network share is accessible using the Network File Share RunAs Profile.</maml:para>
               </maml:section>
               <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
                 <maml:title>Monitored Items</maml:title>
