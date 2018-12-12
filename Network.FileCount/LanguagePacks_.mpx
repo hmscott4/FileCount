@@ -362,6 +362,22 @@
               </maml:section>
             </MamlContent>
           </KnowledgeArticle>
+          <KnowledgeArticle ElementID="Network.FileCount.Share.Monitoring.PSScript.Rule.CollectAggregateSize" Visible="true">
+            <MamlContent>
+              <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+                <maml:title>Summary</maml:title>
+                <maml:para>This collection rule collects the aggregate size (in MB) for all files matching the criteria in the File Share configuration file.  By default, this monitor is disabled.</maml:para>
+              </maml:section>
+            </MamlContent>
+          </KnowledgeArticle>
+          <KnowledgeArticle ElementID="Network.FileCount.Share.Monitoring.PSScript.Rule.CollectFileCount" Visible="true">
+            <MamlContent>
+              <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+                <maml:title>Summary</maml:title>
+                <maml:para>This collection rule collects the aggregate number of files matching the criteria in the File Share configuration file.</maml:para>
+              </maml:section>
+            </MamlContent>
+          </KnowledgeArticle>
         </KnowledgeArticles>  
     </LanguagePack>
   </LanguagePacks></ManagementPackFragment>

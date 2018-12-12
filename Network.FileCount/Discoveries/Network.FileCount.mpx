@@ -88,47 +88,60 @@
           <IntervalSeconds>3600</IntervalSeconds>
           <SyncTime />
           <ScriptName>GetSharesFromCSV.ps1</ScriptName>
-          <ScriptBody>param($sourceId,$managedEntityId,$computerName,$csv)
+          <ScriptBody>param($sourceId,$managedEntityId,$computerName,$csv,$LoggingLevel)
+          
+          # LoggingLevel
+          # ================================================================================
+          # 0 = None
+          # 1 = Errors/Warnings
+          # 2 = Verbose
+          # ================================================================================          
 
 
-#Create Discovery Property Bag
-$api = new-object -comObject 'MOM.ScriptAPI'
-$discoveryData = $api.CreateDiscoveryData(0, $SourceId, $ManagedEntityId)
-$api.LogScriptEvent("GetSharesFromCSV.ps1", 3520, 0, "Discovery Started")
+          #Create Discovery Property Bag
+          $api = new-object -comObject 'MOM.ScriptAPI'
+          $discoveryData = $api.CreateDiscoveryData(0, $SourceId, $ManagedEntityId)
+          If($LoggingLevel -ge 2) {
+            $api.LogScriptEvent("GetSharesFromCSV.ps1", 3520, 0, "Discovery Started")
+          }
 
-#Read data from csv file specified in the registry
+          # BEGIN MAIN SCRIPT
+          # ===============================================================================
+          # Read data from csv file specified in the registry
+          $shares = Import-csv -path $csv
 
-$shares = Import-csv -path $csv
+          #Loop through all listed shares and create appropriate SCOM objects
+          foreach ($share in $shares)
+          {
+              #Create Class Instance
+              $instance = $discoveryData.CreateClassInstance("$MPElement[Name='Network.FileCount.Share']$")
 
-#Loop through all listed shares and create appropriate SCOM objects
+              #Fill up properties of class
+                  $instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/ID$", $share.ID)
+                  $instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/Share$", $share.Share)
+                  if($share.Extension){$instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/Extension$", $Share.extension)}
+                  if($share.Count){$instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/Count$", $share.Count)}
+                  if($share.Age){$instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/Age$", $share.Age)}
+		          $instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/Recurse$", $Share.Recurse)
 
-foreach ($share in $shares)
-{
-    #Create Class Instance
-    $instance = $discoveryData.CreateClassInstance("$MPElement[Name='Network.FileCount.Share']$")
-
-    #Fill up properties of class
-        $instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/ID$", $share.ID)
-        $instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/Share$", $share.Share)
-        if($share.Extension){$instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/Extension$", $Share.extension)}
-        if($share.Count){$instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/Count$", $share.Count)}
-        if($share.Age){$instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/Age$", $share.Age)}
-		$instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/Recurse$", $Share.Recurse)
-
-    #Add the displayname, path of the server and key property of the parent class. (always recurring)
-        $instance.AddProperty("$MPElement[Name='System!System.Entity']/DisplayName$", $share.Share)
-        $instance.AddProperty("$MPElement[Name='Network.FileCount.WatcherNode']/CSV$", $csv)
-        $instance.AddProperty("$MPElement[Name='Windows!Microsoft.Windows.Computer']/PrincipalName$", $computerName) 
-    #Add the instance to the discoverydate propertybag
+              #Add the displayname, path of the server and key property of the parent class. (always recurring)
+                  $instance.AddProperty("$MPElement[Name='System!System.Entity']/DisplayName$", $share.Share)
+                  $instance.AddProperty("$MPElement[Name='Network.FileCount.WatcherNode']/CSV$", $csv)
+                  $instance.AddProperty("$MPElement[Name='Windows!Microsoft.Windows.Computer']/PrincipalName$", $computerName) 
+              #Add the instance to the discoverydate propertybag
     
-    $discoveryData.AddInstance($instance) 
-    $api.LogScriptEvent("GetSharesFromCSV.ps1", 3520, 0, "Added instance $share.Share")  
+              $discoveryData.AddInstance($instance) 
+              If($LoggingLevel -ge 2) {
+                $api.LogScriptEvent("GetSharesFromCSV.ps1", 3520, 0, "Added instance $share.Share")  
+              }
 
-}
+          }
 
-$api.LogScriptEvent("GetSharesFromCSV.ps1", 3520, 0, "Discovery Ended")
+          If($LoggingLevel -ge 2{
+            $api.LogScriptEvent("GetSharesFromCSV.ps1", 3520, 0, "Discovery Ended")
+          }
 
-$discoveryData
+          $discoveryData
 
 
 </ScriptBody>
@@ -148,6 +161,10 @@ $discoveryData
             <Parameter>
               <Name>CSV</Name>
               <Value>$Target/Property[Type='Network.FileCount.WatcherNode']/CSV$</Value>
+            </Parameter>
+            <Parameter>
+              <Name>LoggingLevel</Name>
+              <Value>0</Value>
             </Parameter>
           </Parameters>
           <TimeoutSeconds>300</TimeoutSeconds>
