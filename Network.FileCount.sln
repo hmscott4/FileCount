@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2043
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{D4B43EB3-688B-4EEE-86BD-088F0B28ABB3}") = "Network.FileCount", "FileCount\Network.FileCount.mpproj", "{D8F20025-2954-436B-82F2-E9E99BEBA6F3}"
+Project("{D4B43EB3-688B-4EEE-86BD-088F0B28ABB3}") = "Network.FileCount", "Network.FileCount\Network.FileCount.mpproj", "{D8F20025-2954-436B-82F2-E9E99BEBA6F3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
