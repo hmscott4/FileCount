@@ -2,6 +2,10 @@
 <ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><LanguagePacks>
     <LanguagePack ID="ENU" IsDefault="true">
       <DisplayStrings>
+        <DisplayString ElementID="Network.FileCount.WatcherNode" SubElementID="LoggingLevel">
+          <Name>LoggingLevel</Name>
+          <Description>LoggingLevel (0=None; 1=Error; 2=Verbose)</Description>
+        </DisplayString>
         <DisplayString ElementID="Network.FileCount.DataSource">
           <Name>FileCount Data Source</Name>
           <Description>Script to enumerate UNC paths and counter files.</Description>
@@ -147,24 +151,24 @@
           <Description>File Count Accessible Monitor Type</Description>
         </DisplayString>
         <DisplayString ElementID="Network.FileCount.WatcherNode.Accessible.Monitor.MonitorType">
-          <Name>File Count Watcher Node Accessible Monitor Type</Name>
-          <Description>File Count Watcher Node Accessible Monitor Type</Description>
+          <Name>Network File Share Watcher Node Accessible Monitor Type</Name>
+          <Description>Network File Share Watcher Node Accessible Monitor Type</Description>
         </DisplayString>
         <DisplayString ElementID="NetworkFileCountWatcherNodeContainsFileShare">
-          <Name>Network File Count Watcher Node Contains File Share Relationship</Name>
-          <Description>Network File Count Watcher Node Contains File Share Relationship</Description>
+          <Name>Network File Share Watcher Node Contains File Share Relationship</Name>
+          <Description>Network Share Count Watcher Node Contains File Share Relationship</Description>
         </DisplayString>
         <DisplayString ElementID="Network.FileCount.Disable.WatcherNode.Task.WA">
-          <Name>Disable Network FileCount Watcher Node</Name>
-          <Description>Disable Network FileCount Watcher Node</Description>
+          <Name>Disable Network File Share Watcher Node</Name>
+          <Description>Disable Network File Share Watcher Node</Description>
         </DisplayString>
         <DisplayString ElementID="Network.FileCount.Disable.WatcherNode.Task.WA" SubElementID="TimeoutSeconds">
           <Name>Timeout</Name>
           <Description>Timeout</Description>
         </DisplayString>
         <DisplayString ElementID="Network.FileCount.Enable.WatcherNode.Task.WA">
-          <Name>Enable Network FileCount Watcher Node</Name>
-          <Description>Enable Network FileCount Watcher Node</Description>
+          <Name>Enable Network File Share Watcher Node</Name>
+          <Description>Enable Network File Share Watcher Node</Description>
         </DisplayString>
         <DisplayString ElementID="Network.FileCount.Enable.WatcherNode.Task.WA" SubElementID="ConfigFileName">
           <Name>Configuration file path</Name>
@@ -175,23 +179,23 @@
           <Description>Timeout</Description>
         </DisplayString>
         <DisplayString ElementID="Network.FileCount.Share.Monitoring.PSScript.Rule.CollectFileCount">
-          <Name>Collect Filecount</Name>
+          <Name>Network File Share File Count Collection Rule</Name>
         </DisplayString>  
           <DisplayString ElementID="Network.FileCount.WatcherNode.Discovery">
-            <Name>WatcherNode.Discovery</Name>
-            <Description>Description for the new discovery.</Description>
+            <Name>Network File Share Watcher Node Discovery</Name>
+            <Description>Network File Share Watcher Node Discovery</Description>
           </DisplayString>
           <DisplayString ElementID="Network.FileCount.Share.Discovery">
-            <Name>FileCountShare.Discovery</Name>
-            <Description>Discovery for all shares that will be having file count monitoring</Description>
+            <Name>Network File Share Discovery</Name>
+            <Description>Network File Share Discovery</Description>
           </DisplayString>
           <DisplayString ElementID="Network.FileCount.File.Share.File.Count.Monitor">
             <Name>File Share File Count Monitor</Name>
-            <Description>Used to monitor the amount of files in the specific share matching the given extension</Description>
+            <Description>Used to monitor the number of files in the specific share matching the given extension</Description>
           </DisplayString>
           <DisplayString ElementID="Network.FileCount.File.Share.File.Count.Monitor.AlertMessage">
             <Name>File Count Exceeded</Name>
-            <Description>The fileshare  {0} has {1} unprocessed files with extension {2}</Description>
+            <Description>The fileshare {0} has {1} unprocessed files with extension {2}</Description>
           </DisplayString>
           <DisplayString ElementID="Network.FileCount.File.Share.File.Count.Monitor" SubElementID="FileCountStatusOK">
             <Name>FileCountStatusOK</Name>
@@ -202,12 +206,12 @@
             <Description>FileCountStatusNotOK</Description>
           </DisplayString>
           <DisplayString ElementID="Network.FileCount.WatcherNode">
-            <Name>Network File Count Watcher Node</Name>
+            <Name>Network File Share Watcher Node</Name>
             <Description>This is a Windows Computer that will initiate the file count monitors</Description>
           </DisplayString>
           <DisplayString ElementID="Network.FileCount.Share">
-            <Name>Network File Count Share</Name>
-            <Description>This is a Share where files will be counted based on the data provided in the CSV file</Description>
+            <Name>Network File Share</Name>
+            <Description>Network File Share where files will be counted based on the data provided in the CSV file</Description>
           </DisplayString>
           <DisplayString ElementID="Network.FileCount.WatcherNode" SubElementID="CSV">
             <Name>CSV Path</Name>
@@ -231,7 +235,7 @@
             <Name>Recurse</Name>
           </DisplayString>
           <DisplayString ElementID="Network.FileCount.Folder">
-            <Name>Network File Count</Name>
+            <Name>Network Share Monitoring</Name>
             <Description></Description>
           </DisplayString>
           <DisplayString ElementID="Network.FileCount.State.Folder">
@@ -239,32 +243,32 @@
             <Description></Description>
           </DisplayString>
           <DisplayString ElementID="Network.FileCount.RunasProfile">
-            <Name>Network File Count Runas Profile</Name>
+            <Name>Network File Share Runas Profile</Name>
             <Description>Used to monitor the specified fileshares</Description>
           </DisplayString>
           <DisplayString ElementID="Network.FileCount">
-            <Name>Network FileCount ManagementPack</Name>
+            <Name>Network File Share Management Pack</Name>
             <Description>Count files in an existing UNC path.  Discover UNC paths from CSV file located on server.  See MP Guide for additional configuration information.</Description>
           </DisplayString>
           <DisplayString ElementID="Network.FileCount.Alert.view">
-            <Name>Network File Count Share Alerts</Name>
+            <Name>Network File Share Alerts</Name>
             <Description>Overview of all open alerts on File count folders</Description>
           </DisplayString>
           <DisplayString ElementID="Network.FileCount.Share.State.view">
-            <Name>File Count Share State</Name>
-            <Description>This view shows the state of all Filecount Shares</Description>
+            <Name>Network File Share State</Name>
+            <Description>This view shows the state of discovered Network File Shares</Description>
           </DisplayString>
           <DisplayString ElementID="Network.FileCount.Watchernode.State.view">
-            <Name>File Count Watcher Node State</Name>
-            <Description>This view shows the state of all File Count Share Watchernode(s)</Description>
+            <Name>Network File Share Watcher Node State</Name>
+            <Description>This view shows the state of all Network File  Share Watcher Node(s)</Description>
           </DisplayString>
         <DisplayString ElementID="Network.FileCount.DataSource" SubElementID="LoggingLevel">
           <Name>LoggingLevel</Name>
           <Description>LoggingLevel (0=None, 1=Error, 2=Verbose)</Description>
         </DisplayString>
         <DisplayString ElementID="Network.FileCount.Share.Monitoring.PSScript.Rule.CollectAggregateSize">
-          <Name>Network File Count Aggregate Size (MB) Collection Rule</Name>
-          <Description>Network File Count Aggregate Size (MB) Collection Rule</Description>
+          <Name>Network File Share Aggregate Size (MB) Collection Rule</Name>
+          <Description>Network File Share Aggregate Size (MB) Collection Rule</Description>
         </DisplayString>
         <DisplayString ElementID="Network.FileCount.Status.MonitorType" SubElementID="LoggingLevel">
           <Name>LoggingLevel</Name>

@@ -65,7 +65,7 @@
     </ModuleTypes>
   </TypeDefinitions><Monitoring>
     <Tasks>
-      <Task ID="Network.FileCount.Disable.WatcherNode.Task" Accessibility="Public" Enabled="true" Target="Windows!Microsoft.Windows.Server.OperatingSystem" Timeout="120" Remotable="true">
+      <Task ID="Network.FileCount.Disable.WatcherNode.Task" Accessibility="Public" Enabled="true" Target="Windows!Microsoft.Windows.Computer" Timeout="120" Remotable="true">
         <Category>Custom</Category>
         <WriteAction ID="PSWA" TypeID="Network.FileCount.Disable.WatcherNode.Task.WA">
           <TimeoutSeconds>60</TimeoutSeconds>
@@ -76,8 +76,8 @@
     <LanguagePack ID="ENU" IsDefault="true">
       <DisplayStrings>
         <DisplayString ElementID="Network.FileCount.Disable.WatcherNode.Task">
-          <Name>File Count Disable Watcher Node</Name>
-          <Description>Disable Network File Count Watcher Node task</Description>
+          <Name>Network File Share Disable Watcher Node</Name>
+          <Description>Disable Network File Share Watcher Node task</Description>
         </DisplayString>
       </DisplayStrings>
       <KnowledgeArticles></KnowledgeArticles>

@@ -57,31 +57,31 @@
     </ManagementPackReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Discoveries\Network.FileCount.mpx">
+    <Compile Include="Discoveries\Network.File.Share.mpx">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="LanguagePacks_.mpx">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Monitors\Network.FileCount.Share.FileCount.mpx">
+    <Compile Include="Monitors\Network.File.Share.FileCount.mpx">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Monitors\Network.FileCount.Share.IsAccessible.mpx">
+    <Compile Include="Monitors\Network.File.Share.IsAccessible.mpx">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Monitors\Network.FileCount.WatcherNode.ConfigFile.mpx">
+    <Compile Include="Monitors\Network.File.Share..WatcherNode.ConfigFile.mpx">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Rules\Network.FileCount.AggregateSize.CollectionRule.mpx">
+    <Compile Include="Rules\Network.File.Share.AggregateSize.CollectionRule.mpx">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Rules\Network.FileCount.CollectionRule.mpx">
+    <Compile Include="Rules\Network.File.Share.FileCount.CollectionRule.mpx">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tasks\Network.FileCount.Task.Disable.mpx">
+    <Compile Include="Tasks\Network.File.Share.Task.Disable.mpx">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tasks\Network.FileCount.Task.Enable.mpx">
+    <Compile Include="Tasks\Network.File.Share.Task.Enable.mpx">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Views\Network.FileCount.Views.mpx">

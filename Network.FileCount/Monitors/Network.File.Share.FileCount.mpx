@@ -95,7 +95,7 @@
                     [string]$sExtension = "*"
                     }
 
-                    [int]$iAge = $Age
+                    [int]$iAge = -$Age
                     [string]$sShare = $Share
                     [int]$iCount = $Count
                     [int]$iRecurse = $Recurse
@@ -106,11 +106,11 @@
                     # Count all files with the specific extension and older then the given time
                     if ($iRecurse -eq 1)
                     {
-                    # $fileCount = Get-ChildItem -Recurse "$sShare\$sExtension" | where{$_.LastWriteTime -le (Get-Date).AddMinutes($iAge)}|Measure-Object |%{$_.Count}
-                    $allFiles = Get-ChildItem -Recurse "$sShare\$sExtension" | where{$_.LastWriteTime -le (Get-Date).AddMinutes(-$iAge)}
+                    # Get files WITH recursion
+                    $allFiles = Get-ChildItem -Recurse "$sShare\$sExtension" | where{$_.LastWriteTime -le (Get-Date).AddMinutes($iAge)}
                     $fileCount = $allFiles.Count
                     If($fileCount -gt 0) {
-                    $fileSize = ($files | Measure-Object -Sum Length).Sum / 1MB
+                    $fileSize = ($allFiles | Measure-Object -Sum Length).Sum / 1MB
                     $fileSize = [Math]::Round($fileSize, 2)
                     } Else {
                     $fileSize = 0
@@ -135,11 +135,11 @@
                     }
                     else
                     {
-                    # $fileCount  = Get-ChildItem "$sShare\$sExtension" | where{$_.LastWriteTime -le (Get-Date).AddMinutes($iAge)}|Measure-Object |%{$_.Count}
-                    $allFiles = Get-ChildItem -Recurse "$sShare\$sExtension" | where{$_.LastWriteTime -le (Get-Date).AddMinutes(-$iAge)}
+                    # Get the files WITHOUT recursion
+                    $allFiles = Get-ChildItem "$sShare\$sExtension" | where{$_.LastWriteTime -le (Get-Date).AddMinutes($iAge)}
                     $fileCount = $allFiles.Count
                     If($fileCount -gt 0) {
-                    $fileSize = ($files | Measure-Object -Sum Length).Sum / 1MB
+                    $fileSize = ($allFiles | Measure-Object -Sum Length).Sum / 1MB
                     $fileSize = [Math]::Round($fileSize, 2)
                     } Else {
                     $fileSize = 0

@@ -18,11 +18,17 @@
                   #=================================================================================
                   #  Script to execute a task in PowerShell
                   #=================================================================================
-                  param($ConfigFileName)
+                  param($ConfigFileName,$LoggingLevel)
                   #=================================================================================
                   # Constants section - modify stuff here:
                   $registryKey = "HKLM:\Software\FileCount"
                   $registryAttribute = "CSV"
+                  If($LoggingLevel -ge 0 and $LoggingLevel -le 2){
+                  $newLoggingLevel = $LoggingLevel
+                  } Else {
+                  $newLoggingLevel = 0
+                  }
+
                   $registryValue = $configFileName
 
                   # Assign script name variable for use in event logging
@@ -53,6 +59,7 @@
                   {
                   New-Item -Path $registryKey -Force | Out-Null
                   New-ItemProperty -Path $registryKey -Name $registryAttribute -Value $registryValue -PropertyType String -Force | Out-Null
+                  New-ItemProperty -Path $registryKey -Name "LoggingLevel" -Value $newLoggingLevel -PropertyType Dword -Force | Out-Null
                   }
 
                   If(Test-Path $$configFileName)
@@ -61,7 +68,7 @@
                   Else
                   {
                   New-Item -Path $ConfigFileName -Force
-                  Add-Content -Path $ConfigFileName -Value "Id, Share, Extension, Count, Time, Recurse"
+                  Add-Content -Path $ConfigFileName -Value "Id, Share, Extension, Count, Age, Recurse"
                   }
                   #=================================================================================
 
@@ -90,7 +97,7 @@
     </ModuleTypes>
   </TypeDefinitions><Monitoring>
     <Tasks>
-      <Task ID="Network.FileCount.Enable.WatcherNode.Task" Accessibility="Public" Enabled="true" Target="Windows!Microsoft.Windows.Server.OperatingSystem" Timeout="120" Remotable="true">
+      <Task ID="Network.FileCount.Enable.WatcherNode.Task" Accessibility="Public" Enabled="true" Target="Windows!Microsoft.Windows.Computer" Timeout="120" Remotable="true">
         <Category>Custom</Category>
         <WriteAction ID="PSWA" TypeID="Network.FileCount.Enable.WatcherNode.Task.WA">
           <ConfigFileName>ENTER FILE NAME HERE</ConfigFileName>
@@ -102,8 +109,8 @@
     <LanguagePack ID="ENU" IsDefault="true">
       <DisplayStrings>
         <DisplayString ElementID="Network.FileCount.Enable.WatcherNode.Task">
-          <Name>File Count Enable Watcher Node</Name>
-          <Description>Enable File Count Watcher Node task</Description>
+          <Name>Network File Share Enable Watcher Node</Name>
+          <Description>Enable Network File Share Watcher Node task</Description>
         </DisplayString>
       </DisplayStrings>
       <KnowledgeArticles></KnowledgeArticles>
