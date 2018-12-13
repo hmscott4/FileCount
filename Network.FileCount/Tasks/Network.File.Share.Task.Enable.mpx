@@ -25,7 +25,7 @@
                   # Constants section - modify stuff here:
                   $registryKey = "HKLM:\Software\FileCount"
                   $registryAttribute = "CSV"
-                  If($LoggingLevel -ge 0 and $LoggingLevel -le 2){
+                  If($LoggingLevel -ge 0 -and $LoggingLevel -le 2){
                   $newLoggingLevel = $LoggingLevel
                   } Else {
                   $newLoggingLevel = 0

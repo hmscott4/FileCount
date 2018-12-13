@@ -50,7 +50,7 @@ This fragment depends on references:
                   # Constants section - modify stuff here:
                   $registryKey = "HKLM:\Software\FileCount"
                   $registryAttribute = "LoggingLevel"
-                  If($LoggingLevel -ge 0 and $LoggingLevel -le 2){
+                  If($LoggingLevel -ge 0 -and $LoggingLevel -le 2){
                   $newLoggingLevel = $LoggingLevel
                   } Else {
                   $newLoggingLevel = 0
@@ -77,14 +77,17 @@ This fragment depends on references:
                   #=================================================================================
                   If(Test-Path $registryKey)
                   {
+                  Set-ItemProperty -Path $registryKey -Name $registryAttribute -Value $newLoggingLevel -PropertyType String | Out-Null
+                  Write-Host "PowerShell script executed"
+                  Write-Host "LoggingLevel: " $newLoggingLevel
                   }
                   Else
                   {
-                  Set-ItemProperty -Path $registryKey -Name $registryAttribute -Value $newLoggingLevel -PropertyType String | Out-Null
+                  Write-Host "Logging level NOT updated"
+                  Write-Host "Registry Key HKLM:\Software\FileCount not found."
                   }
 
-                  Write-Host "PowerShell script executed"
-                  Write-Host "LoggingLevel: " $newLoggingLevel
+
                   #=================================================================================
 
                   # Log an event for script ending and total execution time.
