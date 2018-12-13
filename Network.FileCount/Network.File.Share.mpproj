@@ -2,10 +2,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <ProjectGuid>{d8f20025-2954-436b-82f2-e9e99beba6f3}</ProjectGuid>
-    <RootNamespace>Network.Filecount</RootNamespace>
+    <RootNamespace>Network.File.Share</RootNamespace>
     <Name>Network.File.Share</Name>
-    <ManagementPackName>Network.FileCount</ManagementPackName>
-    <Version>1.0.1.0</Version>
+    <ManagementPackName>Network.File.Share</ManagementPackName>
+    <Version>1.0.2.0</Version>
     <MpFrameworkVersion>v7.0.2</MpFrameworkVersion>
     <MpFrameworkProfile>OM</MpFrameworkProfile>
     <ProductVersion>1.1.0.0</ProductVersion>
@@ -90,7 +90,7 @@
     <Compile Include="Tasks\Network.File.Share.Task.LoggingLevel.Update.mpx">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Views\Network.FileCount.Views.mpx">
+    <Compile Include="Views\Network.File.Share.Views.mpx">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

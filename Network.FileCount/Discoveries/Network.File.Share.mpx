@@ -1,10 +1,10 @@
 ﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Monitoring>
     <Discoveries>
-      <Discovery ID="Network.FileCount.Share.Discovery" Target="Network.FileCount.WatcherNode" Enabled="true" ConfirmDelivery="false" Remotable="false" Priority="Normal">
+      <Discovery ID="Network.File.Share.Share.Discovery" Target="Network.File.Share.WatcherNode" Enabled="true" ConfirmDelivery="false" Remotable="false" Priority="Normal">
         <Category>Discovery</Category>
         <DiscoveryTypes>
-          <DiscoveryClass TypeID="Network.FileCount.Share" />
+          <DiscoveryClass TypeID="Network.File.Share.Share" />
         </DiscoveryTypes>
         <DataSource ID="DS" TypeID="Windows!Microsoft.Windows.TimedPowerShell.DiscoveryProvider">
           <IntervalSeconds>3600</IntervalSeconds>
@@ -41,21 +41,21 @@
             foreach ($share in $shares)
             {
             #Create Class Instance
-            $instance = $discoveryData.CreateClassInstance("$MPElement[Name='Network.FileCount.Share']$")
+            $instance = $discoveryData.CreateClassInstance("$MPElement[Name='Network.File.Share.Share']$")
 
             #Fill up properties of class
-            # $instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/ID$", $share.ID)
-            $instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/Share$", $share.Share)
-            if($share.Extension){$instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/Extension$", $Share.extension)} else {instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/Extension$", "*")}
-            if($share.Count){$instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/Count$", $share.Count)} else {$instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/Count$", 0)}
-            if($share.Age){$instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/Age$", $share.Age)} else {$instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/Age$", 0)}
-            if($share.Recurse){$instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/Recurse$", $Share.Recurse)} else {$instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/Recurse$", 0)}
-            if($share.WarnSizeMB){$instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/WarnSizeMB$", $Share.WarnSizeMB)} else {$instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/WarnSizeMB$", 0)}
-            if($share.ErrorSizeMB){$instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/ErrorSizeMB$", $Share.ErrorSizeMB)} else {$instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/ErrorSizeMB$", 0)}
+            # $instance.AddProperty("$MPElement[Name='Network.File.Share.Share']/ID$", $share.ID)
+            $instance.AddProperty("$MPElement[Name='Network.File.Share.Share']/Share$", $share.Share)
+            if($share.Extension){$instance.AddProperty("$MPElement[Name='Network.File.Share.Share']/Extension$", $Share.extension)} else {instance.AddProperty("$MPElement[Name='Network.File.Share.Share']/Extension$", "*")}
+            if($share.Count){$instance.AddProperty("$MPElement[Name='Network.File.Share.Share']/Count$", $share.Count)} else {$instance.AddProperty("$MPElement[Name='Network.File.Share.Share']/Count$", 0)}
+            if($share.Age){$instance.AddProperty("$MPElement[Name='Network.File.Share.Share']/Age$", $share.Age)} else {$instance.AddProperty("$MPElement[Name='Network.File.Share.Share']/Age$", 0)}
+            if($share.Recurse){$instance.AddProperty("$MPElement[Name='Network.File.Share.Share']/Recurse$", $Share.Recurse)} else {$instance.AddProperty("$MPElement[Name='Network.File.Share.Share']/Recurse$", 0)}
+            if($share.WarnSizeMB){$instance.AddProperty("$MPElement[Name='Network.File.Share.Share']/WarnSizeMB$", $Share.WarnSizeMB)} else {$instance.AddProperty("$MPElement[Name='Network.File.Share.Share']/WarnSizeMB$", 0)}
+            if($share.ErrorSizeMB){$instance.AddProperty("$MPElement[Name='Network.File.Share.Share']/ErrorSizeMB$", $Share.ErrorSizeMB)} else {$instance.AddProperty("$MPElement[Name='Network.File.Share.Share']/ErrorSizeMB$", 0)}
 
             #Add the displayname, path of the server and key property of the parent class. (always recurring)
             $instance.AddProperty("$MPElement[Name='System!System.Entity']/DisplayName$", $share.Share)
-            $instance.AddProperty("$MPElement[Name='Network.FileCount.WatcherNode']/CSV$", $csv)
+            $instance.AddProperty("$MPElement[Name='Network.File.Share.WatcherNode']/CSV$", $csv)
             $instance.AddProperty("$MPElement[Name='Windows!Microsoft.Windows.Computer']/PrincipalName$", $computerName)
             #Add the instance to the discoverydate propertybag
 
@@ -89,11 +89,11 @@
             </Parameter>
             <Parameter>
               <Name>CSV</Name>
-              <Value>$Target/Property[Type='Network.FileCount.WatcherNode']/CSV$</Value>
+              <Value>$Target/Property[Type='Network.File.Share.WatcherNode']/CSV$</Value>
             </Parameter>
             <Parameter>
               <Name>LoggingLevel</Name>
-              <Value>$Target/Property[Type='Network.FileCount.WatcherNode']/LoggingLevel$</Value>
+              <Value>$Target/Property[Type='Network.File.Share.WatcherNode']/LoggingLevel$</Value>
             </Parameter>
           </Parameters>
           <TimeoutSeconds>300</TimeoutSeconds>

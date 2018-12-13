@@ -1,0 +1,32 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Presentation>
+    <Views>
+      <View ID="Network.File.Share.Alert.view" Accessibility="Public" Enabled="true" Target="Network.File.Share.Share" TypeID="SC!Microsoft.SystemCenter.AlertViewType" Visible="true">
+        <Category>Operations</Category>
+        <Criteria>
+          <ResolutionState>
+            <State>0</State>
+          </ResolutionState>
+        </Criteria>
+      </View>
+      <View ID="Network.File.Share.State.view" Accessibility="Public" Enabled="true" Target="Network.File.Share.Share" TypeID="SC!Microsoft.SystemCenter.StateViewType" Visible="true">
+        <Category>Operations</Category>
+      </View>
+      <View ID="Network.File.Share.WatcherNode.State.view" Accessibility="Public" Enabled="true" Target="Network.File.Share.WatcherNode" TypeID="SC!Microsoft.SystemCenter.StateViewType" Visible="true">
+        <Category>Operations</Category>
+      </View>
+    </Views>
+    <Folders>
+      <Folder ID="Network.File.Share.Folder" Accessibility="Public" ParentFolder="SC!Microsoft.SystemCenter.Monitoring.ViewFolder.Root" />
+      <Folder ID="Network.FileCount.State.Folder" Accessibility="Public" ParentFolder="Network.File.Share.Folder" />
+    </Folders>
+    <FolderItems>
+      <FolderItem ElementID="Network.File.Share.Alert.view" Folder="Network.File.Share.Folder" ID="Network.File.Share.Alert.view.FolderItem" />
+      <FolderItem ElementID="Network.File.Share.State.view" Folder="Network.FileCount.State.Folder" ID="Network.File.Share.State.view.FolderItem" />
+      <FolderItem ElementID="Network.File.Share.WatcherNode.State.view" Folder="Network.FileCount.State.Folder" ID="Network.File.Share.WatcherNode.State.view.FolderItem" />
+    </FolderItems>
+    <StringResources>
+      <StringResource ID="Network.File.Share.File.Count.Monitor.AlertMessage" />
+    </StringResources>
+  </Presentation>  
+</ManagementPackFragment>

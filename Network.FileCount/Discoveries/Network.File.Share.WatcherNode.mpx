@@ -2,11 +2,11 @@
 <ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><TypeDefinitions>
     <EntityTypes>
       <ClassTypes>
-        <ClassType ID="Network.FileCount.WatcherNode" Accessibility="Public" Abstract="false" Base="Windows!Microsoft.Windows.LocalApplication" Hosted="true" Singleton="false" Extension="false">
+        <ClassType ID="Network.File.Share.WatcherNode" Accessibility="Public" Abstract="false" Base="Windows!Microsoft.Windows.LocalApplication" Hosted="true" Singleton="false" Extension="false">
           <Property ID="CSV" Type="string" AutoIncrement="false" Key="true" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
           <Property ID="LoggingLevel" Type="int" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
         </ClassType>
-        <ClassType ID="Network.FileCount.Share" Accessibility="Public" Abstract="false" Base="Windows!Microsoft.Windows.ApplicationComponent" Hosted="true" Singleton="false" Extension="false">
+        <ClassType ID="Network.File.Share.Share" Accessibility="Public" Abstract="false" Base="Windows!Microsoft.Windows.ApplicationComponent" Hosted="true" Singleton="false" Extension="false">
           <Property ID="ID" Type="int" AutoIncrement="true" Key="true" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
           <Property ID="Share" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="1024" MinLength="0" Required="false" Scale="0" />
           <Property ID="Extension" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
@@ -18,22 +18,22 @@
         </ClassType>
       </ClassTypes>
       <RelationshipTypes>
-        <RelationshipType ID="NetworkFileCountWatcherNodeContainsFileShare" Accessibility="Public" Abstract="false" Base="System!System.Hosting">
-          <Source ID="src" MinCardinality="0" MaxCardinality="2147483647" Type="Network.FileCount.WatcherNode" />
-          <Target ID="trgt" MinCardinality="0" MaxCardinality="2147483647" Type="Network.FileCount.Share" />
+        <RelationshipType ID="NetworkFileShareWatcherNodeContainsFileShare" Accessibility="Public" Abstract="false" Base="System!System.Hosting">
+          <Source ID="src" MinCardinality="0" MaxCardinality="2147483647" Type="Network.File.Share.WatcherNode" />
+          <Target ID="trgt" MinCardinality="0" MaxCardinality="2147483647" Type="Network.File.Share.Share" />
         </RelationshipType>
       </RelationshipTypes>
     </EntityTypes>
     <SecureReferences>
-      <SecureReference ID="Network.FileCount.RunasProfile" Accessibility="Public" />
+      <SecureReference ID="Network.File.Share.RunasProfile" Accessibility="Public" />
     </SecureReferences>
   </TypeDefinitions>
 <Monitoring>
     <Discoveries>
-      <Discovery ID="Network.FileCount.WatcherNode.Discovery" Target="Windows!Microsoft.Windows.OperatingSystem" Enabled="true" ConfirmDelivery="false" Remotable="false" Priority="Normal">
+      <Discovery ID="Network.File.Share.WatcherNode.Discovery" Target="Windows!Microsoft.Windows.OperatingSystem" Enabled="true" ConfirmDelivery="false" Remotable="false" Priority="Normal">
         <Category>Discovery</Category>
         <DiscoveryTypes>
-          <DiscoveryClass TypeID="Network.FileCount.WatcherNode" />
+          <DiscoveryClass TypeID="Network.File.Share.WatcherNode" />
         </DiscoveryTypes>
         <DataSource ID="DS" TypeID="Windows!Microsoft.Windows.FilteredRegistryDiscoveryProvider">
           <ComputerName>$Target/Host/Property[Type="Windows!Microsoft.Windows.Computer"]/NetworkName$</ComputerName>
@@ -58,7 +58,7 @@
             </RegistryAttributeDefinition>
           </RegistryAttributeDefinitions>
           <Frequency>21600</Frequency>
-          <ClassId>$MPElement[Name="Network.FileCount.WatcherNode"]$</ClassId>
+          <ClassId>$MPElement[Name="Network.File.Share.WatcherNode"]$</ClassId>
           <InstanceSettings>
             <Settings>
               <Setting>
@@ -70,11 +70,11 @@
                 <Value>$Target/Host/Property[Type="Windows!Microsoft.Windows.Computer"]/PrincipalName$</Value>
               </Setting>
               <Setting>
-                <Name>$MPElement[Name="Network.FileCount.WatcherNode"]/CSV$</Name>
+                <Name>$MPElement[Name="Network.File.Share.WatcherNode"]/CSV$</Name>
                 <Value>$Data/Values/CSV$</Value>
               </Setting>
               <Setting>
-                <Name>$MPElement[Name="Network.FileCount.WatcherNode"]/LoggingLevel$</Name>
+                <Name>$MPElement[Name="Network.File.Share.WatcherNode"]/LoggingLevel$</Name>
                 <Value>$Data/Values/LoggingLevel$</Value>
               </Setting>
             </Settings>

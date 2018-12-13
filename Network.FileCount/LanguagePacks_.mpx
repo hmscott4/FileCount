@@ -2,6 +2,14 @@
 <ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><LanguagePacks>
     <LanguagePack ID="ENU" IsDefault="true">
       <DisplayStrings>
+        <DisplayString ElementID="Network.File.Share.Share" SubElementID="WarnSizeMB">
+          <Name>WarnSizeMB</Name>
+          <Description>Threshold value for Warning alert in MB</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.File.Share.Share" SubElementID="ErrorSizeMB">
+          <Name>ErrorSizeMB</Name>
+          <Description>Threshold Value for Error Alert in MB</Description>
+        </DisplayString>
         <DisplayString ElementID="Network.FileCount.LoggingLevel.Update.Task.WA">
           <Name>Network File Share Update Logging Level</Name>
           <Description>Network File Share Update Logging Level (0=None;1=Error;2=Verbose)</Description>
@@ -18,7 +26,7 @@
           <Name>LoggingLevel</Name>
           <Description>LoggingLevel (0=None; 1=Error; 2=Verbose)</Description>
         </DisplayString>
-        <DisplayString ElementID="Network.FileCount.WatcherNode" SubElementID="LoggingLevel">
+        <DisplayString ElementID="Network.File.Share.WatcherNode" SubElementID="LoggingLevel">
           <Name>LoggingLevel</Name>
           <Description>LoggingLevel (0=None; 1=Error; 2=Verbose)</Description>
         </DisplayString>
@@ -70,15 +78,15 @@
           <Name>Share</Name>
           <Description>UNC Path to Share</Description>
         </DisplayString>
-        <DisplayString ElementID="Network.FileCount.WatcherNode.Accessible.Monitor.DataSource" SubElementID="IntervalSeconds">
+        <DisplayString ElementID="Network.File.Share.WatcherNode.Accessible.Monitor.DataSource" SubElementID="IntervalSeconds">
           <Name>ID</Name>
           <Description>ID</Description>
         </DisplayString>
-        <DisplayString ElementID="Network.FileCount.WatcherNode.Accessible.Monitor.DataSource" SubElementID="SyncTime">
+        <DisplayString ElementID="Network.File.Share.WatcherNode.Accessible.Monitor.DataSource" SubElementID="SyncTime">
           <Name>SyncTime</Name>
           <Description>SyncTime</Description>
         </DisplayString>
-        <DisplayString ElementID="Network.FileCount.WatcherNode.Accessible.Monitor.DataSource" SubElementID="TimeoutSeconds">
+        <DisplayString ElementID="Network.File.Share.WatcherNode.Accessible.Monitor.DataSource" SubElementID="TimeoutSeconds">
           <Name>TimeoutSeconds</Name>
           <Description>TimeoutSeconds</Description>
         </DisplayString>
@@ -86,11 +94,11 @@
           <Name>Network File Share Accessible Monitor Data Source</Name>
           <Description>Script to monitor UNC accessibility.  Does not count files.</Description>
         </DisplayString>
-        <DisplayString ElementID="Network.FileCount.WatcherNode.Accessible.Monitor.DataSource">
+        <DisplayString ElementID="Network.File.Share.WatcherNode.Accessible.Monitor.DataSource">
           <Name>Network File Share Watcher Node configuration file accessibility script</Name>
           <Description>Checks to see that the configuration file used by the Network File Share Watcher node is accessible.</Description>
         </DisplayString>
-        <DisplayString ElementID="Network.FileCount.WatcherNode.Accessible.Monitor.DataSource" SubElementID="CSV">
+        <DisplayString ElementID="Network.File.Share.WatcherNode.Accessible.Monitor.DataSource" SubElementID="CSV">
           <Name>CSV</Name>
           <Description>Name of CSV file</Description>
         </DisplayString>
@@ -138,19 +146,19 @@
           <Name>Share</Name>
           <Description>UNC Path to Network File Share</Description>
         </DisplayString>
-        <DisplayString ElementID="Network.FileCount.WatcherNode.Accessible.Monitor.MonitorType" SubElementID="IntervalSeconds">
+        <DisplayString ElementID="Network.File.Share.WatcherNode.Accessible.Monitor.MonitorType" SubElementID="IntervalSeconds">
           <Name>IntervalSeconds</Name>
           <Description>IntervalSeconds</Description>
         </DisplayString>
-        <DisplayString ElementID="Network.FileCount.WatcherNode.Accessible.Monitor.MonitorType" SubElementID="SyncTime">
+        <DisplayString ElementID="Network.File.Share.WatcherNode.Accessible.Monitor.MonitorType" SubElementID="SyncTime">
           <Name>SyncTime</Name>
           <Description>SyncTime</Description>
         </DisplayString>
-        <DisplayString ElementID="Network.FileCount.WatcherNode.Accessible.Monitor.MonitorType" SubElementID="TimeoutSeconds">
+        <DisplayString ElementID="Network.File.Share.WatcherNode.Accessible.Monitor.MonitorType" SubElementID="TimeoutSeconds">
           <Name>TimeoutSeconds</Name>
           <Description>TimeoutSeconds</Description>
         </DisplayString>
-        <DisplayString ElementID="Network.FileCount.WatcherNode.Accessible.Monitor.MonitorType" SubElementID="CSV">
+        <DisplayString ElementID="Network.File.Share.WatcherNode.Accessible.Monitor.MonitorType" SubElementID="CSV">
           <Name>CSV</Name>
           <Description>Name of CSV file</Description>
         </DisplayString>
@@ -166,11 +174,11 @@
           <Name>File Count Accessible Monitor Type</Name>
           <Description>File Count Accessible Monitor Type</Description>
         </DisplayString>
-        <DisplayString ElementID="Network.FileCount.WatcherNode.Accessible.Monitor.MonitorType">
+        <DisplayString ElementID="Network.File.Share.WatcherNode.Accessible.Monitor.MonitorType">
           <Name>Network File Share Watcher Node Accessible Monitor Type</Name>
           <Description>Network File Share Watcher Node Accessible Monitor Type</Description>
         </DisplayString>
-        <DisplayString ElementID="NetworkFileCountWatcherNodeContainsFileShare">
+        <DisplayString ElementID="NetworkFileShareWatcherNodeContainsFileShare">
           <Name>Network File Share Watcher Node Contains File Share Relationship</Name>
           <Description>Network File Share Watcher Node Contains Network File Share Relationship</Description>
         </DisplayString>
@@ -194,15 +202,15 @@
           <Name>Timeout</Name>
           <Description>Timeout</Description>
         </DisplayString>
-        <DisplayString ElementID="Network.FileCount.Share.Monitoring.PSScript.Rule.CollectFileCount">
+        <DisplayString ElementID="Network.File.Share.Monitoring.PSScript.Rule.CollectFileCount">
           <Name>Network File Share File Count Collection Rule</Name>
           <Description>Network File Share File Count Collection Rule.  Counts the files in the network file share matching the criteria specified.</Description>
         </DisplayString>  
-          <DisplayString ElementID="Network.FileCount.WatcherNode.Discovery">
+          <DisplayString ElementID="Network.File.Share.WatcherNode.Discovery">
             <Name>Network File Share Watcher Node Discovery</Name>
             <Description>Network File Share Watcher Node Discovery</Description>
           </DisplayString>
-          <DisplayString ElementID="Network.FileCount.Share.Discovery">
+          <DisplayString ElementID="Network.File.Share.Share.Discovery">
             <Name>Network File Share Discovery</Name>
             <Description>Network File Share Discovery</Description>
           </DisplayString>
@@ -210,7 +218,7 @@
             <Name>Network File Share File Count Monitor</Name>
             <Description>Used to monitor the number of files in the specific share matching the given extension</Description>
           </DisplayString>
-          <DisplayString ElementID="Network.FileCount.File.Share.File.Count.Monitor.AlertMessage">
+          <DisplayString ElementID="Network.File.Share.File.Count.Monitor.AlertMessage">
             <Name>Network File Share: File Count Exceeded</Name>
             <Description>The network file share {0} has {1} unprocessed files with extension {2}</Description>
           </DisplayString>
@@ -222,36 +230,36 @@
             <Name>FileCountStatusNotOK</Name>
             <Description>FileCountStatusNotOK</Description>
           </DisplayString>
-          <DisplayString ElementID="Network.FileCount.WatcherNode">
+          <DisplayString ElementID="Network.File.Share.WatcherNode">
             <Name>Network File Share Watcher Node</Name>
             <Description>This is a Windows Computer that will initiate the file count monitors</Description>
           </DisplayString>
-          <DisplayString ElementID="Network.FileCount.Share">
+          <DisplayString ElementID="Network.File.Share.Share">
             <Name>Network File Share</Name>
             <Description>Network File Share where files will be counted based on the data provided in the CSV file</Description>
           </DisplayString>
-          <DisplayString ElementID="Network.FileCount.WatcherNode" SubElementID="CSV">
+          <DisplayString ElementID="Network.File.Share.WatcherNode" SubElementID="CSV">
             <Name>CSV Path</Name>
           </DisplayString>
-          <DisplayString ElementID="Network.FileCount.Share" SubElementID="ID">
+          <DisplayString ElementID="Network.File.Share.Share" SubElementID="ID">
             <Name>ID</Name>
           </DisplayString>
-          <DisplayString ElementID="Network.FileCount.Share" SubElementID="Share">
+          <DisplayString ElementID="Network.File.Share.Share" SubElementID="Share">
             <Name>Share</Name>
           </DisplayString>
-          <DisplayString ElementID="Network.FileCount.Share" SubElementID="Extension">
+          <DisplayString ElementID="Network.File.Share.Share" SubElementID="Extension">
             <Name>Extension</Name>
           </DisplayString>
-          <DisplayString ElementID="Network.FileCount.Share" SubElementID="Count">
+          <DisplayString ElementID="Network.File.Share.Share" SubElementID="Count">
             <Name>Count</Name>
           </DisplayString>
-          <DisplayString ElementID="Network.FileCount.Share" SubElementID="Age">
+          <DisplayString ElementID="Network.File.Share.Share" SubElementID="Age">
             <Name>Age</Name>
           </DisplayString>
-          <DisplayString ElementID="Network.FileCount.Share" SubElementID="Recurse">
+          <DisplayString ElementID="Network.File.Share.Share" SubElementID="Recurse">
             <Name>Recurse</Name>
           </DisplayString>
-          <DisplayString ElementID="Network.FileCount.Folder">
+          <DisplayString ElementID="Network.File.Share.Folder">
             <Name>Network File Share Monitoring</Name>
             <Description></Description>
           </DisplayString>
@@ -259,23 +267,23 @@
             <Name>State Views</Name>
             <Description></Description>
           </DisplayString>
-          <DisplayString ElementID="Network.FileCount.RunasProfile">
+          <DisplayString ElementID="Network.File.Share.RunasProfile">
             <Name>Network File Share Runas Profile</Name>
             <Description>Used to monitor discovered network file shares</Description>
           </DisplayString>
-          <DisplayString ElementID="Network.FileCount">
+          <DisplayString ElementID="Network.File.Share">
             <Name>Network File Share Management Pack</Name>
             <Description>Count files in an existing UNC path.  Discover UNC paths from CSV file located on server.  See MP Guide for additional configuration information.</Description>
           </DisplayString>
-          <DisplayString ElementID="Network.FileCount.Alert.view">
+          <DisplayString ElementID="Network.File.Share.Alert.view">
             <Name>Network File Share Alerts</Name>
             <Description>Overview of all open alerts on File count folders</Description>
           </DisplayString>
-          <DisplayString ElementID="Network.FileCount.Share.State.view">
+          <DisplayString ElementID="Network.File.Share.State.view">
             <Name>Network File Share State</Name>
             <Description>This view shows the state of discovered Network File Shares</Description>
           </DisplayString>
-          <DisplayString ElementID="Network.FileCount.Watchernode.State.view">
+          <DisplayString ElementID="Network.File.Share.WatcherNode.State.view">
             <Name>Network File Share Watcher Node State</Name>
             <Description>This view shows the state of all Network File  Share Watcher Node(s)</Description>
           </DisplayString>
@@ -283,7 +291,7 @@
           <Name>LoggingLevel</Name>
           <Description>LoggingLevel (0=None, 1=Error, 2=Verbose)</Description>
         </DisplayString>
-        <DisplayString ElementID="Network.FileCount.Share.Monitoring.PSScript.Rule.CollectAggregateSize">
+        <DisplayString ElementID="Network.File.Share.Monitoring.PSScript.Rule.CollectAggregateSize">
           <Name>Network File Share Aggregate Size (MB) Collection Rule</Name>
           <Description>Network File Share Aggregate Size (MB) Collection Rule</Description>
         </DisplayString>
@@ -305,7 +313,7 @@
               </maml:section>
             </MamlContent>
           </KnowledgeArticle>
-          <KnowledgeArticle ElementID="Network.FileCount" Visible="true">
+          <KnowledgeArticle ElementID="Network.File.Share.Share" Visible="true">
             <MamlContent>
               <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
                 <maml:title>Summary</maml:title>
@@ -346,7 +354,7 @@
               </maml:section>
             </MamlContent>
           </KnowledgeArticle>
-          <KnowledgeArticle ElementID="Network.FileCount.WatcherNode.Discovery" Visible="true">
+          <KnowledgeArticle ElementID="Network.File.Share.WatcherNode.Discovery" Visible="true">
             <MamlContent>
               <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
                 <maml:title>Summary</maml:title>
@@ -358,7 +366,7 @@
               </maml:section>
             </MamlContent>
           </KnowledgeArticle>
-          <KnowledgeArticle ElementID="Network.FileCount.WatcherNode.Accessible.Monitor" Visible="true">
+          <KnowledgeArticle ElementID="Network.File.Share.WatcherNode.Accessible.Monitor" Visible="true">
             <MamlContent>
               <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
                 <maml:title>Summary</maml:title>
@@ -371,7 +379,7 @@
             </MamlContent>
           </KnowledgeArticle>
 
-          <KnowledgeArticle ElementID="Network.FileCount.Share.Discovery" Visible="true">
+          <KnowledgeArticle ElementID="Network.File.Share.Share.Discovery" Visible="true">
             <MamlContent>
               <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
                 <maml:title>Summary</maml:title>
@@ -383,7 +391,7 @@
               </maml:section>
             </MamlContent>
           </KnowledgeArticle>
-          <KnowledgeArticle ElementID="Network.FileCount.Share.Monitoring.PSScript.Rule.CollectAggregateSize" Visible="true">
+          <KnowledgeArticle ElementID="Network.File.Share.Monitoring.PSScript.Rule.CollectAggregateSize" Visible="true">
             <MamlContent>
               <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
                 <maml:title>Summary</maml:title>
@@ -391,7 +399,7 @@
               </maml:section>
             </MamlContent>
           </KnowledgeArticle>
-          <KnowledgeArticle ElementID="Network.FileCount.Share.Monitoring.PSScript.Rule.CollectFileCount" Visible="true">
+          <KnowledgeArticle ElementID="Network.File.Share.Monitoring.PSScript.Rule.CollectFileCount" Visible="true">
             <MamlContent>
               <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
                 <maml:title>Summary</maml:title>

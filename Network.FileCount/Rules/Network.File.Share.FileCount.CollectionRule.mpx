@@ -1,24 +1,24 @@
 ﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Monitoring>
     <Rules>
-      <Rule ID="Network.FileCount.Share.Monitoring.PSScript.Rule.CollectFileCount" Enabled="true" Target="Network.FileCount.Share" ConfirmDelivery="true" Remotable="false" Priority="Normal" DiscardLevel="100">
+      <Rule ID="Network.File.Share.Monitoring.PSScript.Rule.CollectFileCount" Enabled="true" Target="Network.File.Share.Share" ConfirmDelivery="true" Remotable="false" Priority="Normal" DiscardLevel="100">
         <Category>PerformanceCollection</Category>
         <DataSources>
-          <DataSource ID="DataSource" TypeID="Network.FileCount.DataSource" RunAs="Network.FileCount.RunasProfile">
+          <DataSource ID="DataSource" TypeID="Network.FileCount.DataSource" RunAs="Network.File.Share.RunasProfile">
             <IntervalSeconds>900</IntervalSeconds>
             <SyncTime></SyncTime>
-            <Share>$Target/Property[Type='Network.FileCount.Share']/Share$</Share>
-            <Extension>$Target/Property[Type='Network.FileCount.Share']/Extension$</Extension>
-            <Count>$Target/Property[Type='Network.FileCount.Share']/Count$</Count>
-            <Age>$Target/Property[Type='Network.FileCount.Share']/Age$</Age>
-            <Recurse>$Target/Property[Type='Network.FileCount.Share']/Recurse$</Recurse>
-            <LoggingLevel>$Target/Host/Property[Type='Network.FileCount.WatcherNode']/LoggingLevel$</LoggingLevel>
+            <Share>$Target/Property[Type='Network.File.Share.Share']/Share$</Share>
+            <Extension>$Target/Property[Type='Network.File.Share.Share']/Extension$</Extension>
+            <Count>$Target/Property[Type='Network.File.Share.Share']/Count$</Count>
+            <Age>$Target/Property[Type='Network.File.Share.Share']/Age$</Age>
+            <Recurse>$Target/Property[Type='Network.File.Share.Share']/Recurse$</Recurse>
+            <LoggingLevel>$Target/Host/Property[Type='Network.File.Share.WatcherNode']/LoggingLevel$</LoggingLevel>
           </DataSource>
         </DataSources>
         <ConditionDetection ID="MapToPerf" TypeID="Perf!System.Performance.DataGenericMapper">
           <ObjectName>$Target/Host/Host/Property[Type='Windows!Microsoft.Windows.Computer']/PrincipalName$</ObjectName>
           <CounterName>File Count</CounterName>
-          <InstanceName>$Target/Property[Type='Network.FileCount.Share']/Share$ ($Target/Property[Type='Network.FileCount.Share']/Extension$)</InstanceName>
+          <InstanceName>$Target/Property[Type='Network.File.Share.Share']/Share$ ($Target/Property[Type='Network.File.Share.Share']/Extension$)</InstanceName>
           <Value>$Data/Property[@Name='Files']$</Value>
         </ConditionDetection>
         <WriteActions>

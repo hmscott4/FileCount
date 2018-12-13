@@ -16,7 +16,7 @@ LastModified: 29-May-2017
 In this fragment you need to replace:
   Network
   FileCount
-  Network.FileCount.WatcherNode
+  Network.File.Share.WatcherNode
   LoggingLevel.Update
 
 This fragment depends on references:
@@ -116,7 +116,7 @@ This fragment depends on references:
   </TypeDefinitions>
   <Monitoring>
     <Tasks>
-      <Task ID="Network.FileCount.LoggingLevel.Update.Task" Accessibility="Public" Enabled="true" Target="Network.FileCount.WatcherNode" Timeout="120" Remotable="true">
+      <Task ID="Network.FileCount.LoggingLevel.Update.Task" Accessibility="Public" Enabled="true" Target="Network.File.Share.WatcherNode" Timeout="120" Remotable="true">
         <Category>Custom</Category>
         <WriteAction ID="PSWA" TypeID="Network.FileCount.LoggingLevel.Update.Task.WA">
           <LoggingLevel>0</LoggingLevel>
