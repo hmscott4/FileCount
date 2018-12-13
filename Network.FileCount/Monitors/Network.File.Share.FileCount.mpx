@@ -125,7 +125,7 @@
                     $strStatus = 1
                     $strMessage="Number of Files ($fileCount) with extension $sExtension in $sShare is under threshold $iCount."
                     If($LoggingLevel -ge 2) {
-                    $momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Found $fileCount file(s) totaling $fileSize with extension $sExtension in $sShare. `n Under threshold $iCount for number of files found.")
+                    $momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Found $fileCount file(s) totaling $fileSize MB with extension $sExtension in $sShare. `n Under threshold $iCount for number of files found.")
                     }
                     }
                     else

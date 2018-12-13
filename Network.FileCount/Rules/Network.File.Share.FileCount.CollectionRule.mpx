@@ -22,8 +22,8 @@
           <Value>$Data/Property[@Name='Files']$</Value>
         </ConditionDetection>
         <WriteActions>
-          <WriteAction ID="WriteToDBLicenses" TypeID="SC!Microsoft.SystemCenter.CollectPerformanceData" />
-          <WriteAction ID="PublishLicenses" TypeID="MSDL!Microsoft.SystemCenter.DataWarehouse.PublishPerformanceData" />
+          <WriteAction ID="WriteToDBFileCount" TypeID="SC!Microsoft.SystemCenter.CollectPerformanceData" />
+          <WriteAction ID="PublishFileCount" TypeID="MSDL!Microsoft.SystemCenter.DataWarehouse.PublishPerformanceData" />
         </WriteActions>
       </Rule>
     </Rules>    
