@@ -274,7 +274,7 @@ This fragment depends on references:
           </DisplayString>         
           <DisplayString ElementID="Network.FileCount.Accessible.Monitor.AlertMessage">
             <Name>File Share Accessible Monitor: Failure</Name>
-            <Description>File Share Accessible Monitor: Unable to access the network file share.  Check that the share is avialable and that the RunAs account is configured correctly.</Description>
+            <Description>File Share Accessible Monitor: Unable to access the network file share.  Check that the share is available and that the RunAs account is configured correctly.</Description>
           </DisplayString>
         </DisplayStrings>
         <KnowledgeArticles>

@@ -56,6 +56,7 @@
                 <ProbeAction ID="PSScript" TypeID="Windows!Microsoft.Windows.PowerShellPropertyBagTriggerOnlyProbe">
                   <ScriptName>GetFileCount.ps1</ScriptName>
                   <ScriptBody>
+
                     param([string]$Share, [string]$Extension, [int]$Count, [int]$Age, [int]$Recurse, [int]$LoggingLevel)
 
                     $ScriptName = "GetFileCount.ps1"
@@ -79,7 +80,8 @@
                     # Load PropertyBag function
                     $bag = $momapi.CreatePropertyBag()
                     #Log script event that we are starting task
-                    If($LoggingLevel -ge 2) {
+                    If($LoggingLevel -ge 2)
+                    {
                     $momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Script is starting. `n Running as ($whoami).")
                     }
                     #=================================================================================
@@ -107,74 +109,44 @@
                     if ($iRecurse -eq 1)
                     {
                     # Get files WITH recursion
-                    $allFiles = Get-ChildItem -Recurse "$sShare\$sExtension" | where{$_.LastWriteTime -le (Get-Date).AddMinutes($iAge)}
+                    $allFiles = Get-ChildItem -Recurse "$sShare\$sExtension" | Where-Object{$_.LastWriteTime -le (Get-Date).AddMinutes($iAge)}
+                    }
+                    else {
+                    $allFiles = Get-ChildItem "$sShare\$sExtension" | Where-Object{$_.LastWriteTime -le (Get-Date).AddMinutes($iAge)}
+                    }
+
+                    # Set output values
                     $fileCount = $allFiles.Count
-                    If($fileCount -gt 0) {
                     $fileSize = ($allFiles | Measure-Object -Sum Length).Sum / 1MB
                     $fileSize = [Math]::Round($fileSize, 2)
-                    } Else {
-                    $fileSize = 0
-                    }
 
                     if ($fileCount -le $iCount)
                     {
                     $strStatus = 1
-                    $strMessage="Number of Files ($fileCount) in $sShare is under threshold $iCount."
+                    $strMessage="Number of Files ($fileCount) with extension $sExtension in $sShare is under threshold $iCount."
                     If($LoggingLevel -ge 2) {
-                    $momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Found $fileCount file(s) with extension $sExtension in $sShare. `n Under threshold $iCount.")
+                    $momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Found $fileCount file(s) totaling $fileSize with extension $sExtension in $sShare. `n Under threshold $iCount for number of files found.")
                     }
                     }
                     else
                     {
-                    $strMessage="Number of Files ($fileCount) in $sShare exceeds threshold $iCount."
+                    $strStatus = 0
+                    $strMessage="Number of Files ($fileCount) in $sShare with extension $sExtension exceeds threshold $iCount."
                     If($LoggingLevel -ge 1){
-                    $momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Found $fileCount file(s) with extension $sExtension in $sShare.`n Exceeds threshold $iCount.")
-                    }
-                    $strStatus = 0
+                    $momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Found $fileCount file(s) totaling $fileSize MB with extension $sExtension in $sShare.`n Exceeds threshold $iCount for number of files found.")
                     }
                     }
-                    else
-                    {
-                    # Get the files WITHOUT recursion
-                    $allFiles = Get-ChildItem "$sShare\$sExtension" | where{$_.LastWriteTime -le (Get-Date).AddMinutes($iAge)}
-                    $fileCount = $allFiles.Count
-                    If($fileCount -gt 0) {
-                    $fileSize = ($allFiles | Measure-Object -Sum Length).Sum / 1MB
-                    $fileSize = [Math]::Round($fileSize, 2)
-                    } Else {
-                    $fileSize = 0
-                    }
-                    if ($fileCount -le $iCount)
-                    {
-                    $strMessage="Number of Files ($fileCount) in $sShare is under threshold $iCount."
-                    If($LoggingLevel -ge 2) {
-                    $momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Found $fileCount file(s) with extension $sExtension in $sShare. `n Under threshold $iCount.")
-                    }
-                    $strStatus = 1
-                    }
-                    else
-                    {
-
-                    $strMessage="Number of Files ($fileCount) in $sShare exceeds threshold $iCount."
-                    If($LoggingLevel -ge 1) {
-                    $momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Found $fileCount file(s) with extension $sExtension in $sShare.`n Exceeds threshold $iCount.")
-                    }
-                    $strStatus = 0
-                    }
-                    }
-                    }
-
-                    Else
-                    {
+                    } else {
                     # Unable to access File Share
-                    $strMessage="Unable to access $sShare"
+                    $strMessage="Unable to access $sShare as $whoami"
+
+                    $strStatus = 0
+                    $fileCount = 0
+                    $fileSize = 0
+
                     If($LoggingLevel -ge 1) {
                     $momapi.LogScriptEvent($ScriptName,$EventID,2,"`n Unable to access $sShare as $whoami.")
                     }
-                    # $count = 0
-                    $fileCount = 0
-                    $fileSize = 0
-                    $strStatus = 0
                     }
 
                     # End of script section
@@ -326,6 +298,7 @@
             <AlertParameter1>$Target/Property[Type='Network.FileCount.Share']/Share$</AlertParameter1>
             <AlertParameter2>$Data/Context/Property[@Name='Files']$</AlertParameter2>
             <AlertParameter3>$Target/Property[Type='Network.FileCount.Share']/Extension$</AlertParameter3>
+            <AlertParameter4>$Data/Context/Property[@Name='Files']$</AlertParameter4>
           </AlertParameters>
         </AlertSettings>
         <OperationalStates>
