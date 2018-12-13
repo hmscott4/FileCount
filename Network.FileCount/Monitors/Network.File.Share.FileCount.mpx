@@ -11,6 +11,8 @@
             <xsd:element minOccurs="1" name="Count" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
             <xsd:element minOccurs="1" name="Age" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
             <xsd:element minOccurs="1" name="Recurse" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+            <xsd:element minOccurs="1" name="WarnSizeMB" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+            <xsd:element minOccurs="1" name="ErrorSizeMB" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
             <xsd:element minOccurs="1" name="LoggingLevel" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
           </Configuration>
           <OverrideableParameters>
@@ -21,6 +23,8 @@
             <OverrideableParameter ID="Count" Selector="$Config/Count$" ParameterType="int" />
             <OverrideableParameter ID="Age" Selector="$Config/Age$" ParameterType="int" />
             <OverrideableParameter ID="Recurse" Selector="$Config/Recurse$" ParameterType="int" />
+            <OverrideableParameter ID="WarnSizeMB" Selector="$Config/Age$" ParameterType="int" />
+            <OverrideableParameter ID="ErrorSizeMB" Selector="$Config/Recurse$" ParameterType="int" />
             <OverrideableParameter ID="LoggingLevel" Selector="$Config/Recurse$" ParameterType="int" />
           </OverrideableParameters>
           <ModuleImplementation Isolation="Any">
@@ -48,6 +52,8 @@
             <xsd:element minOccurs="0" name="Count" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
             <xsd:element minOccurs="0" name="Age" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
             <xsd:element minOccurs="0" name="Recurse" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+            <xsd:element minOccurs="0" name="WarnSizeMB" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+            <xsd:element minOccurs="0" name="ErrorSizeMB" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
             <xsd:element minOccurs="0" name="LoggingLevel" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
           </Configuration>
           <ModuleImplementation Isolation="Any">
@@ -57,7 +63,7 @@
                   <ScriptName>GetFileCount.ps1</ScriptName>
                   <ScriptBody>
 
-                    param([string]$Share, [string]$Extension, [int]$Count, [int]$Age, [int]$Recurse, [int]$LoggingLevel)
+                    param([string]$Share, [string]$Extension, [int]$Count, [int]$Age, [int]$Recurse, [int]$WarnSizeMB, [int]$ErrorSizeMB, [int]$LoggingLevel)
 
                     $ScriptName = "GetFileCount.ps1"
                     $EventID = 3521
@@ -101,6 +107,8 @@
                     [string]$sShare = $Share
                     [int]$iCount = $Count
                     [int]$iRecurse = $Recurse
+                    [int]$iWarnSizeMB = $WarnSizeMB
+                    [int]$iErrorSizeMB = $ErrorSizeMB
 
                     # Test to see if Share is Accessible
                     If(Test-Path -path "$sShare" -pathType Container -ErrorAction SilentlyContinue)
@@ -109,10 +117,10 @@
                     if ($iRecurse -eq 1)
                     {
                     # Get files WITH recursion
-                    $allFiles = Get-ChildItem -Recurse "$sShare\$sExtension" | Where-Object{$_.LastWriteTime -le (Get-Date).AddMinutes($iAge)}
+                    $allFiles = Get-ChildItem -Recurse -Directory "$sShare\$sExtension" -ErrorAction SilentlyContinue| Where-Object{$_.LastWriteTime -le (Get-Date).AddMinutes($iAge)}
                     }
                     else {
-                    $allFiles = Get-ChildItem "$sShare\$sExtension" | Where-Object{$_.LastWriteTime -le (Get-Date).AddMinutes($iAge)}
+                    $allFiles = Get-ChildItem -Directory "$sShare\$sExtension" -ErrorAction SilentlyContinue | Where-Object{$_.LastWriteTime -le (Get-Date).AddMinutes($iAge)}
                     }
 
                     # Set output values
@@ -188,6 +196,14 @@
                       <Value>$Config/Recurse$</Value>
                     </Parameter>
                     <Parameter>
+                      <Name>WarnSizeMB</Name>
+                      <Value>$Config/WarnSizeMB$</Value>
+                    </Parameter>
+                    <Parameter>
+                      <Name>ErrorSizeMB</Name>
+                      <Value>$Config/ErrorSizeMB$</Value>
+                    </Parameter>
+                    <Parameter>
                       <Name>LoggingLevel</Name>
                       <Value>$Config/LoggingLevel$</Value>
                     </Parameter>
@@ -218,6 +234,8 @@
           <xsd:element name="Count" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
           <xsd:element name="Age" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
           <xsd:element name="Recurse" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element name="WarnSizeMB" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element name="ErrorSizeMB" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
           <xsd:element name="LoggingLevel" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
         </Configuration>
         <OverrideableParameters>
@@ -228,6 +246,8 @@
           <OverrideableParameter ID="Count" Selector="$Config/Count$" ParameterType="int" />
           <OverrideableParameter ID="Age" Selector="$Config/Age$" ParameterType="int" />
           <OverrideableParameter ID="Recurse" Selector="$Config/Recurse$" ParameterType="int" />
+          <OverrideableParameter ID="WarnSizeMB" Selector="$Config/WarnSizeMB$" ParameterType="int" />
+          <OverrideableParameter ID="ErrorSizeMB" Selector="$Config/ErrorSizeMB$" ParameterType="int" />
           <OverrideableParameter ID="LoggingLevel" Selector="$Config/LoggingLevel$" ParameterType="int" />
         </OverrideableParameters>
         <MonitorImplementation>
@@ -240,6 +260,8 @@
               <Count>$Config/Count$</Count>
               <Age>$Config/Age$</Age>
               <Recurse>$Config/Recurse$</Recurse>
+              <WarnSizeMB>$Config/WarnSizeMB$</WarnSizeMB>
+              <ErrorSizeMB>$Config/ErrorSizeMB$</ErrorSizeMB>
               <LoggingLevel>$Config/LoggingLevel$</LoggingLevel>
             </DataSource>
             <ConditionDetection ID="FilterFileCountStatusOK" TypeID="System!System.ExpressionFilter">
@@ -298,7 +320,7 @@
             <AlertParameter1>$Target/Property[Type='Network.File.Share.Share']/Share$</AlertParameter1>
             <AlertParameter2>$Data/Context/Property[@Name='Files']$</AlertParameter2>
             <AlertParameter3>$Target/Property[Type='Network.File.Share.Share']/Extension$</AlertParameter3>
-            <AlertParameter4>$Data/Context/Property[@Name='Files']$</AlertParameter4>
+            <AlertParameter4>$Data/Context/Property[@Name='SizeMB']$</AlertParameter4>
           </AlertParameters>
         </AlertSettings>
         <OperationalStates>
@@ -313,6 +335,8 @@
           <Count>$Target/Property[Type='Network.File.Share.Share']/Count$</Count>
           <Age>$Target/Property[Type='Network.File.Share.Share']/Age$</Age>
           <Recurse>$Target/Property[Type='Network.File.Share.Share']/Recurse$</Recurse>
+          <WarnSizeMB>$Target/Property[Type='Network.File.Share.Share']/WarnSizeMB$</WarnSizeMB>
+          <ErrorSizeMB>$Target/Property[Type='Network.File.Share.Share']/ErrorSizeMB$</ErrorSizeMB>
           <LoggingLevel>$Target/Host/Property[Type='Network.File.Share.WatcherNode']/LoggingLevel$</LoggingLevel>
         </Configuration>
       </UnitMonitor>

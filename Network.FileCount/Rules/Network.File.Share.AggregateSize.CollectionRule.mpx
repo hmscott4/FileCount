@@ -12,6 +12,8 @@
             <Count>$Target/Property[Type='Network.File.Share.Share']/Count$</Count>
             <Age>$Target/Property[Type='Network.File.Share.Share']/Age$</Age>
             <Recurse>$Target/Property[Type='Network.File.Share.Share']/Recurse$</Recurse>
+            <WarnSizeMB>$Target/Property[Type='Network.File.Share.Share']/WarnSizeMB$</WarnSizeMB>
+            <ErrorSizeMB>$Target/Property[Type='Network.File.Share.Share']/ErrorSizeMB$</ErrorSizeMB>
             <LoggingLevel>$Target/Host/Property[Type='Network.File.Share.WatcherNode']/LoggingLevel$</LoggingLevel>
           </DataSource>
         </DataSources>

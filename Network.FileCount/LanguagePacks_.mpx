@@ -2,6 +2,22 @@
 <ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><LanguagePacks>
     <LanguagePack ID="ENU" IsDefault="true">
       <DisplayStrings>
+        <DisplayString ElementID="Network.FileCount.DataSource" SubElementID="WarnSizeMB">
+          <Name>WarnSizeMB</Name>
+          <Description>Warning threshold in MB.</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.FileCount.DataSource" SubElementID="ErrorSizeMB">
+          <Name>ErrorSizeMB</Name>
+          <Description>Error Threshold in MB</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.FileCount.Status.MonitorType" SubElementID="WarnSizeMB">
+          <Name>WarnSizeMB</Name>
+          <Description>Warning threshold in MB</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.FileCount.Status.MonitorType" SubElementID="ErrorSizeMB">
+          <Name>ErrorSizeMB</Name>
+          <Description>Error Threshold in MB</Description>
+        </DisplayString>
         <DisplayString ElementID="Network.File.Share.Share" SubElementID="WarnSizeMB">
           <Name>WarnSizeMB</Name>
           <Description>Threshold value for Warning alert in MB</Description>
@@ -220,7 +236,7 @@
           </DisplayString>
           <DisplayString ElementID="Network.File.Share.File.Count.Monitor.AlertMessage">
             <Name>Network File Share: File Count Exceeded</Name>
-            <Description>The network file share {0} has {1} unprocessed files with extension {2}</Description>
+            <Description>The network file share {0} has {1} unprocessed files with extension {2}.  The aggregate size of files with the matching extension is {3} MB.</Description>
           </DisplayString>
           <DisplayString ElementID="Network.FileCount.File.Share.File.Count.Monitor" SubElementID="FileCountStatusOK">
             <Name>FileCountStatusOK</Name>
