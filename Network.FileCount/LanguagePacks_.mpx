@@ -184,6 +184,7 @@
         </DisplayString>
         <DisplayString ElementID="Network.FileCount.Share.Monitoring.PSScript.Rule.CollectFileCount">
           <Name>Network File Share File Count Collection Rule</Name>
+          <Description>Network File Share File Count Collection Rule.  Counts the files in the network file share matching the criteria specified.</Description>
         </DisplayString>  
           <DisplayString ElementID="Network.FileCount.WatcherNode.Discovery">
             <Name>Network File Share Watcher Node Discovery</Name>
