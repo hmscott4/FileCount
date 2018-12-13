@@ -1,13 +1,38 @@
-﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><TypeDefinitions>
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <!--
+%%
+Description:
+  An AGENT TASK that will run a PowerShell Script with Parameters passed to the script
+  CompanyID - is a short abbreviation for your company with NO SPACES OR SPECIAL CHARACTERS ALLOWED
+  AppName - is a short name for your app with NO SPACES OR SPECIAL CHARACTERS ALLOWED   
+  ClassID - is the targeted class such as your custom class or Windows!Microsoft.Windows.Server.OperatingSystem
+  TaskName - is a short name for the task with NO SPACES OR SPECIAL CHARACTERS ALLOWED 
+  You will need to customize your parameters in this example and add or remove as needed
+
+Version: 1.0
+LastModified: 29-May-2017
+%%
+
+In this fragment you need to replace:
+  Network
+  FileCount
+  Network.FileCount.WatcherNode
+  LoggingLevel.Update
+
+This fragment depends on references:
+  RequiredReference: Alias="System", ID="System.Library"
+  RequiredReference: Alias="Windows", ID="Microsoft.Windows.Library"
+
+@@Author=Kevin Holman@@  
+-->
+  <TypeDefinitions>
     <ModuleTypes>
-      <WriteActionModuleType ID="Network.FileCount.Enable.WatcherNode.Task.WA" Accessibility="Internal" Batching="false">
+      <WriteActionModuleType ID="Network.FileCount.LoggingLevel.Update.Task.WA" Accessibility="Internal" Batching="false">
         <Configuration>
-          <xsd:element minOccurs="1" name="ConfigFileName" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
           <xsd:element minOccurs="1" name="LoggingLevel" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
           <xsd:element minOccurs="1" name="TimeoutSeconds" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
         </Configuration>
         <OverrideableParameters>
-          <OverrideableParameter ID="ConfigFileName" Selector="$Config/ConfigFileName$" ParameterType="string" />
           <OverrideableParameter ID="LoggingLevel" Selector="$Config/LoggingLevel$" ParameterType="int" />
           <OverrideableParameter ID="TimeoutSeconds" Selector="$Config/TimeoutSeconds$" ParameterType="int" />
         </OverrideableParameters>
@@ -15,26 +40,25 @@
           <Composite>
             <MemberModules>
               <WriteAction ID="PSWA" TypeID="Windows!Microsoft.Windows.PowerShellWriteAction">
-                <ScriptName>Network.FileCount.Enable.WatcherNode.Task.WA.ps1</ScriptName>
+                <ScriptName>Network.FileCount.LoggingLevel.Update.Task.WA.ps1</ScriptName>
                 <ScriptBody>
                   #=================================================================================
                   #  Script to execute a task in PowerShell
                   #=================================================================================
-                  param($ConfigFileName,$LoggingLevel)
+                  param($LoggingLevel)
                   #=================================================================================
                   # Constants section - modify stuff here:
                   $registryKey = "HKLM:\Software\FileCount"
-                  $registryAttribute = "CSV"
+                  $registryAttribute = "LoggingLevel"
                   If($LoggingLevel -ge 0 and $LoggingLevel -le 2){
                   $newLoggingLevel = $LoggingLevel
                   } Else {
                   $newLoggingLevel = 0
                   }
 
-                  $registryValue = $configFileName
-
                   # Assign script name variable for use in event logging
-                  $ScriptName = "Network.FileCount.Enable.WatcherNode.Task.WA.ps1"
+                  $ScriptName = "Network.FileCount.LoggingLevel.Update.Task.WA.ps1"
+                  $EventID = 3524
                   #=================================================================================
 
                   # Gather script start time
@@ -47,45 +71,28 @@
                   $momapi = New-Object -comObject "Mom.ScriptAPI"
 
                   #Log script event that we are starting task
-                  $momapi.LogScriptEvent($ScriptName,3524,0, "Starting script task.  Running as ($whoami)")
+                  $momapi.LogScriptEvent($ScriptName,$EventID,0, "Starting script task.  Running as ($whoami)")
 
                   # Begin Main Script
                   #=================================================================================
-                  # Test the path to the registry key to see if it already exists
                   If(Test-Path $registryKey)
                   {
                   }
                   Else
                   {
-                  New-Item -Path $registryKey -Force | Out-Null
-                  New-ItemProperty -Path $registryKey -Name $registryAttribute -Value $registryValue -PropertyType String -Force | Out-Null
-                  New-ItemProperty -Path $registryKey -Name "LoggingLevel" -Value $newLoggingLevel -PropertyType String -Force | Out-Null
-                  }
-
-                  If(Test-Path $$configFileName)
-                  {
-                  }
-                  Else
-                  {
-                  New-Item -Path $ConfigFileName -Force
-                  Add-Content -Path $ConfigFileName -Value "Id, Share, Extension, Count, Age, Recurse"
+                  Set-ItemProperty -Path $registryKey -Name $registryAttribute -Value $newLoggingLevel -PropertyType String | Out-Null
                   }
 
                   Write-Host "PowerShell script executed"
-                  Write-Host "ConfigFileName: " $ConfigFileName
                   Write-Host "LoggingLevel: " $newLoggingLevel
                   #=================================================================================
 
                   # Log an event for script ending and total execution time.
                   $EndTime = Get-Date
                   $ScriptTime = ($EndTime - $StartTime).TotalSeconds
-                  $momapi.LogScriptEvent($ScriptName,3524,0,"`n Script has completed. `n Runtime was ($ScriptTime) seconds.")
+                  $momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Script has completed. `n Runtime was ($ScriptTime) seconds.")
                 </ScriptBody>
                 <Parameters>
-                  <Parameter>
-                    <Name>ConfigFileName</Name>
-                    <Value>$Config/ConfigFileName$</Value>
-                  </Parameter>
                   <Parameter>
                     <Name>LoggingLevel</Name>
                     <Value>$Config/LoggingLevel$</Value>
@@ -103,25 +110,27 @@
         <InputType>System!System.BaseData</InputType>
       </WriteActionModuleType>
     </ModuleTypes>
-  </TypeDefinitions><Monitoring>
+  </TypeDefinitions>
+  <Monitoring>
     <Tasks>
-      <Task ID="Network.FileCount.Enable.WatcherNode.Task" Accessibility="Public" Enabled="true" Target="Windows!Microsoft.Windows.Computer" Timeout="120" Remotable="true">
+      <Task ID="Network.FileCount.LoggingLevel.Update.Task" Accessibility="Public" Enabled="true" Target="Network.FileCount.WatcherNode" Timeout="120" Remotable="true">
         <Category>Custom</Category>
-        <WriteAction ID="PSWA" TypeID="Network.FileCount.Enable.WatcherNode.Task.WA">
-          <ConfigFileName>ENTER FILE NAME HERE</ConfigFileName>
+        <WriteAction ID="PSWA" TypeID="Network.FileCount.LoggingLevel.Update.Task.WA">
           <LoggingLevel>0</LoggingLevel>
           <TimeoutSeconds>60</TimeoutSeconds>
         </WriteAction>
       </Task>
     </Tasks>
-  </Monitoring><LanguagePacks>
+  </Monitoring>
+  <LanguagePacks>
     <LanguagePack ID="ENU" IsDefault="true">
       <DisplayStrings>
-        <DisplayString ElementID="Network.FileCount.Enable.WatcherNode.Task">
-          <Name>Network File Share Enable Watcher Node</Name>
-          <Description>Enable Network File Share Watcher Node task</Description>
+        <DisplayString ElementID="Network.FileCount.LoggingLevel.Update.Task">
+          <Name>Network File Share Watcher Node Update Logging Level</Name>
+          <Description>Network File Share Watcher Node Update Logging Level (0=None,1=Error,2=Verbose)</Description>
         </DisplayString>
       </DisplayStrings>
       <KnowledgeArticles></KnowledgeArticles>
     </LanguagePack>
-  </LanguagePacks></ManagementPackFragment>
+  </LanguagePacks>
+</ManagementPackFragment>

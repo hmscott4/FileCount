@@ -263,7 +263,7 @@ This fragment depends on references:
       <LanguagePack ID="ENU" IsDefault="true">
         <DisplayStrings>
           <DisplayString ElementID="Network.FileCount.Accessible.Monitor">
-            <Name>File Share Accessible Monitor</Name>
+            <Name>Network File Share Is Accessible Monitor</Name>
             <Description>Used to monitor the accessibility of a file share</Description>
           </DisplayString>
           <DisplayString ElementID="Network.FileCount.Accessible.Monitor" SubElementID="FileShareAccessible">

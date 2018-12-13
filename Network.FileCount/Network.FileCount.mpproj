@@ -84,6 +84,9 @@
     <Compile Include="Tasks\Network.File.Share.Task.Enable.mpx">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Tasks\Network.File.Share.Task.LoggingLevel.Update.mpx">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Views\Network.FileCount.Views.mpx">
       <SubType>Code</SubType>
     </Compile>

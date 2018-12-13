@@ -223,7 +223,7 @@
     <LanguagePack ID="ENU" IsDefault="true">
       <DisplayStrings>
         <DisplayString ElementID="Network.FileCount.WatcherNode.Accessible.Monitor">
-          <Name>FileCount FileCount.WatcherNode.Accessible Monitor</Name>
+          <Name>Network File Share Watcher Node Configuration File Is Accessible Monitor</Name>
           <Description>Verifies that the configuration file for the Watcher node is accessible.</Description>
         </DisplayString>
         <DisplayString ElementID="Network.FileCount.WatcherNode.Accessible.Monitor" SubElementID="ConfigFileFound">

@@ -38,12 +38,12 @@
 
                   # Begin Main Script
                   #=================================================================================
-                  # Write-Host "PowerShell script executed"
-                  # Write-Host "ConfigFileName: " $ConfigFileName
                   If(Test-Path -Path "HKLM:\Software\FileCount")
                   {
                   Remove-Item -Path "HKLM:\Software\FileCount" -Force
                   }
+                  Write-Host "PowerShell script executed"
+                  Write-Host "Network File Share Watcher Node Disabled"
                   #=================================================================================
 
                   # Log an event for script ending and total execution time.
@@ -65,7 +65,7 @@
     </ModuleTypes>
   </TypeDefinitions><Monitoring>
     <Tasks>
-      <Task ID="Network.FileCount.Disable.WatcherNode.Task" Accessibility="Public" Enabled="true" Target="Windows!Microsoft.Windows.Computer" Timeout="120" Remotable="true">
+      <Task ID="Network.FileCount.Disable.WatcherNode.Task" Accessibility="Public" Enabled="true" Target="Network.FileCount.WatcherNode" Timeout="120" Remotable="true">
         <Category>Custom</Category>
         <WriteAction ID="PSWA" TypeID="Network.FileCount.Disable.WatcherNode.Task.WA">
           <TimeoutSeconds>60</TimeoutSeconds>

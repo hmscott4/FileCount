@@ -2,9 +2,21 @@
 <ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><LanguagePacks>
     <LanguagePack ID="ENU" IsDefault="true">
       <DisplayStrings>
+        <DisplayString ElementID="Network.FileCount.LoggingLevel.Update.Task.WA">
+          <Name>Network File Share Update Logging Level</Name>
+          <Description>Network File Share Update Logging Level (0=None;1=Error;2=Verbose)</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.FileCount.LoggingLevel.Update.Task.WA" SubElementID="LoggingLevel">
+          <Name>LoggingLevel</Name>
+          <Description>LoggingLevel (0=None,1=Error,2=Verbose)</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.FileCount.LoggingLevel.Update.Task.WA" SubElementID="TimeoutSeconds">
+          <Name>TimeoutSeconds</Name>
+          <Description>TimeoutSeconds</Description>
+        </DisplayString>
         <DisplayString ElementID="Network.FileCount.Enable.WatcherNode.Task.WA" SubElementID="LoggingLevel">
           <Name>LoggingLevel</Name>
-          <Description>LoggingLevel (0=None;1=Error;2=Verbose)</Description>
+          <Description>LoggingLevel (0=None; 1=Error; 2=Verbose)</Description>
         </DisplayString>
         <DisplayString ElementID="Network.FileCount.WatcherNode" SubElementID="LoggingLevel">
           <Name>LoggingLevel</Name>
@@ -195,7 +207,7 @@
             <Description>Network File Share Discovery</Description>
           </DisplayString>
           <DisplayString ElementID="Network.FileCount.File.Share.File.Count.Monitor">
-            <Name>File Share File Count Monitor</Name>
+            <Name>Network File Share File Count Monitor</Name>
             <Description>Used to monitor the number of files in the specific share matching the given extension</Description>
           </DisplayString>
           <DisplayString ElementID="Network.FileCount.File.Share.File.Count.Monitor.AlertMessage">
