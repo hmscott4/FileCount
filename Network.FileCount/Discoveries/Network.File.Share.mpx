@@ -1,95 +1,6 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><TypeDefinitions>
-    <EntityTypes>
-      <ClassTypes>
-        <ClassType ID="Network.FileCount.WatcherNode" Accessibility="Public" Abstract="false" Base="Windows!Microsoft.Windows.LocalApplication" Hosted="true" Singleton="false" Extension="false">
-          <Property ID="CSV" Type="string" AutoIncrement="false" Key="true" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
-          <Property ID="LoggingLevel" Type="int" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
-        </ClassType>
-        <ClassType ID="Network.FileCount.Share" Accessibility="Public" Abstract="false" Base="Windows!Microsoft.Windows.ApplicationComponent" Hosted="true" Singleton="false" Extension="false">
-          <Property ID="ID" Type="int" AutoIncrement="false" Key="true" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
-          <Property ID="Share" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="1024" MinLength="0" Required="false" Scale="0" />
-          <Property ID="Extension" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
-          <Property ID="Count" Type="int" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
-          <Property ID="Age" Type="int" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
-          <Property ID="Recurse" Type="int" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
-        </ClassType>
-      </ClassTypes>
-      <RelationshipTypes>
-        <RelationshipType ID="NetworkFileCountWatcherNodeContainsFileShare" Accessibility="Public" Abstract="false" Base="System!System.Hosting">
-          <Source ID="src" MinCardinality="0" MaxCardinality="2147483647" Type="Network.FileCount.WatcherNode" />
-          <Target ID="trgt" MinCardinality="0" MaxCardinality="2147483647" Type="Network.FileCount.Share" />
-        </RelationshipType>
-      </RelationshipTypes>
-    </EntityTypes>
-    <SecureReferences>
-      <SecureReference ID="Network.FileCount.RunasProfile" Accessibility="Public" />
-    </SecureReferences>
-  </TypeDefinitions>
-<Monitoring>
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Monitoring>
     <Discoveries>
-      <Discovery ID="Network.FileCount.WatcherNode.Discovery" Target="Windows!Microsoft.Windows.OperatingSystem" Enabled="true" ConfirmDelivery="false" Remotable="false" Priority="Normal">
-        <Category>Discovery</Category>
-        <DiscoveryTypes>
-          <DiscoveryClass TypeID="Network.FileCount.WatcherNode" />
-        </DiscoveryTypes>
-        <DataSource ID="DS" TypeID="Windows!Microsoft.Windows.FilteredRegistryDiscoveryProvider">
-          <ComputerName>$Target/Host/Property[Type="Windows!Microsoft.Windows.Computer"]/NetworkName$</ComputerName>
-          <RegistryAttributeDefinitions>
-            <RegistryAttributeDefinition>
-              <AttributeName>FileCountExists</AttributeName>
-              <Path>SOFTWARE\FileCount</Path>
-              <PathType>0</PathType>
-              <AttributeType>0</AttributeType>
-            </RegistryAttributeDefinition>
-            <RegistryAttributeDefinition>
-              <AttributeName>CSV</AttributeName>
-              <Path>SOFTWARE\FileCount\CSV</Path>
-              <PathType>1</PathType>
-              <AttributeType>1</AttributeType>
-            </RegistryAttributeDefinition>
-            <RegistryAttributeDefinition>
-              <AttributeName>LoggingLevel</AttributeName>
-              <Path>SOFTWARE\FileCount\LoggingLevel</Path>
-              <PathType>1</PathType>
-              <AttributeType>1</AttributeType>
-            </RegistryAttributeDefinition>
-          </RegistryAttributeDefinitions>
-          <Frequency>21600</Frequency>
-          <ClassId>$MPElement[Name="Network.FileCount.WatcherNode"]$</ClassId>
-          <InstanceSettings>
-            <Settings>
-              <Setting>
-                <Name>$MPElement[Name="System!System.Entity"]/DisplayName$</Name>
-                <Value>Network File Share WatcherNode ($Target/Host/Property[Type="Windows!Microsoft.Windows.Computer"]/NetbiosComputerName$)</Value>
-              </Setting>
-              <Setting>
-                <Name>$MPElement[Name="Windows!Microsoft.Windows.Computer"]/PrincipalName$</Name>
-                <Value>$Target/Host/Property[Type="Windows!Microsoft.Windows.Computer"]/PrincipalName$</Value>
-              </Setting>
-              <Setting>
-                <Name>$MPElement[Name="Network.FileCount.WatcherNode"]/CSV$</Name>
-                <Value>$Data/Values/CSV$</Value>
-              </Setting>
-              <Setting>
-                <Name>$MPElement[Name="Network.FileCount.WatcherNode"]/LoggingLevel$</Name>
-                <Value>$Data/Values/LoggingLevel$</Value>
-              </Setting>
-            </Settings>
-          </InstanceSettings>
-          <Expression>
-            <SimpleExpression>
-              <ValueExpression>
-                <XPathQuery Type="Boolean">Values/FileCountExists</XPathQuery>
-              </ValueExpression>
-              <Operator>Equal</Operator>
-              <ValueExpression>
-                <Value Type="Boolean">true</Value>
-              </ValueExpression>
-            </SimpleExpression>
-          </Expression>
-        </DataSource>
-      </Discovery>
       <Discovery ID="Network.FileCount.Share.Discovery" Target="Network.FileCount.WatcherNode" Enabled="true" ConfirmDelivery="false" Remotable="false" Priority="Normal">
         <Category>Discovery</Category>
         <DiscoveryTypes>
@@ -108,13 +19,14 @@
             # 1 = Errors/Warnings
             # 2 = Verbose
             # ================================================================================
+            $EventID = 3520
 
 
             #Create Discovery Property Bag
             $api = new-object -comObject 'MOM.ScriptAPI'
             $discoveryData = $api.CreateDiscoveryData(0, $SourceId, $ManagedEntityId)
             If($LoggingLevel -ge 2) {
-            $api.LogScriptEvent("GetSharesFromCSV.ps1", 3520, 0, "Discovery Started")
+            $api.LogScriptEvent("GetSharesFromCSV.ps1", $EventID, 0, "Discovery Started")
             }
 
             # BEGIN MAIN SCRIPT
@@ -132,12 +44,14 @@
             $instance = $discoveryData.CreateClassInstance("$MPElement[Name='Network.FileCount.Share']$")
 
             #Fill up properties of class
-            $instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/ID$", $share.ID)
+            # $instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/ID$", $share.ID)
             $instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/Share$", $share.Share)
             if($share.Extension){$instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/Extension$", $Share.extension)} else {instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/Extension$", "*")}
             if($share.Count){$instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/Count$", $share.Count)} else {$instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/Count$", 0)}
             if($share.Age){$instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/Age$", $share.Age)} else {$instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/Age$", 0)}
             if($share.Recurse){$instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/Recurse$", $Share.Recurse)} else {$instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/Recurse$", 0)}
+            if($share.WarnSizeMB){$instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/WarnSizeMB$", $Share.WarnSizeMB)} else {$instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/WarnSizeMB$", 0)}
+            if($share.ErrorSizeMB){$instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/ErrorSizeMB$", $Share.ErrorSizeMB)} else {$instance.AddProperty("$MPElement[Name='Network.FileCount.Share']/ErrorSizeMB$", 0)}
 
             #Add the displayname, path of the server and key property of the parent class. (always recurring)
             $instance.AddProperty("$MPElement[Name='System!System.Entity']/DisplayName$", $share.Share)
@@ -147,13 +61,13 @@
 
             $discoveryData.AddInstance($instance)
             If($LoggingLevel -ge 2) {
-            $api.LogScriptEvent("GetSharesFromCSV.ps1", 3520, 0, "Added instance $share.Share")
+            $api.LogScriptEvent("GetSharesFromCSV.ps1", $EventID, 0, "Added instance $share.Share")
             }
 
             }
 
             If($LoggingLevel -ge 2) {
-            $api.LogScriptEvent("GetSharesFromCSV.ps1", 3520, 0, "Discovery Ended")
+            $api.LogScriptEvent("GetSharesFromCSV.ps1", $EventID, 0, "Discovery Ended")
             }
 
             $discoveryData
@@ -185,8 +99,7 @@
           <TimeoutSeconds>300</TimeoutSeconds>
           <StrictErrorHandling>true</StrictErrorHandling>
         </DataSource>
-      </Discovery>
+      </Discovery>      
     </Discoveries>
   </Monitoring>
-  <LanguagePacks>
-  </LanguagePacks></ManagementPackFragment>
+</ManagementPackFragment>

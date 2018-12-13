@@ -68,7 +68,7 @@
                   Else
                   {
                   New-Item -Path $ConfigFileName -Force
-                  Add-Content -Path $ConfigFileName -Value "Id, Share, Extension, Count, Age, Recurse"
+                  Add-Content -Path $ConfigFileName -Value "Id, Share, Extension, Count, Age, Recurse, WarnSizeMB, ErrorSizeMB"
                   }
 
                   Write-Host "PowerShell script executed"

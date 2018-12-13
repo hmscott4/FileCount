@@ -3,7 +3,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <ProjectGuid>{d8f20025-2954-436b-82f2-e9e99beba6f3}</ProjectGuid>
     <RootNamespace>Network.Filecount</RootNamespace>
-    <Name>Network.FileCount</Name>
+    <Name>Network.File.Share</Name>
     <ManagementPackName>Network.FileCount</ManagementPackName>
     <Version>1.0.1.0</Version>
     <MpFrameworkVersion>v7.0.2</MpFrameworkVersion>
@@ -58,6 +58,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Discoveries\Network.File.Share.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Discoveries\Network.File.Share.WatcherNode.mpx">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="LanguagePacks_.mpx">

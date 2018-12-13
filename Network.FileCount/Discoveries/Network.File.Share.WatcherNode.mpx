@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><TypeDefinitions>
+    <EntityTypes>
+      <ClassTypes>
+        <ClassType ID="Network.FileCount.WatcherNode" Accessibility="Public" Abstract="false" Base="Windows!Microsoft.Windows.LocalApplication" Hosted="true" Singleton="false" Extension="false">
+          <Property ID="CSV" Type="string" AutoIncrement="false" Key="true" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
+          <Property ID="LoggingLevel" Type="int" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
+        </ClassType>
+        <ClassType ID="Network.FileCount.Share" Accessibility="Public" Abstract="false" Base="Windows!Microsoft.Windows.ApplicationComponent" Hosted="true" Singleton="false" Extension="false">
+          <Property ID="ID" Type="int" AutoIncrement="true" Key="true" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
+          <Property ID="Share" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="1024" MinLength="0" Required="false" Scale="0" />
+          <Property ID="Extension" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
+          <Property ID="Count" Type="int" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
+          <Property ID="Age" Type="int" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
+          <Property ID="Recurse" Type="int" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
+          <Property ID="WarnSizeMB" Type="int" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
+          <Property ID="ErrorSizeMB" Type="int" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
+        </ClassType>
+      </ClassTypes>
+      <RelationshipTypes>
+        <RelationshipType ID="NetworkFileCountWatcherNodeContainsFileShare" Accessibility="Public" Abstract="false" Base="System!System.Hosting">
+          <Source ID="src" MinCardinality="0" MaxCardinality="2147483647" Type="Network.FileCount.WatcherNode" />
+          <Target ID="trgt" MinCardinality="0" MaxCardinality="2147483647" Type="Network.FileCount.Share" />
+        </RelationshipType>
+      </RelationshipTypes>
+    </EntityTypes>
+    <SecureReferences>
+      <SecureReference ID="Network.FileCount.RunasProfile" Accessibility="Public" />
+    </SecureReferences>
+  </TypeDefinitions>
+<Monitoring>
+    <Discoveries>
+      <Discovery ID="Network.FileCount.WatcherNode.Discovery" Target="Windows!Microsoft.Windows.OperatingSystem" Enabled="true" ConfirmDelivery="false" Remotable="false" Priority="Normal">
+        <Category>Discovery</Category>
+        <DiscoveryTypes>
+          <DiscoveryClass TypeID="Network.FileCount.WatcherNode" />
+        </DiscoveryTypes>
+        <DataSource ID="DS" TypeID="Windows!Microsoft.Windows.FilteredRegistryDiscoveryProvider">
+          <ComputerName>$Target/Host/Property[Type="Windows!Microsoft.Windows.Computer"]/NetworkName$</ComputerName>
+          <RegistryAttributeDefinitions>
+            <RegistryAttributeDefinition>
+              <AttributeName>FileCountExists</AttributeName>
+              <Path>SOFTWARE\FileCount</Path>
+              <PathType>0</PathType>
+              <AttributeType>0</AttributeType>
+            </RegistryAttributeDefinition>
+            <RegistryAttributeDefinition>
+              <AttributeName>CSV</AttributeName>
+              <Path>SOFTWARE\FileCount\CSV</Path>
+              <PathType>1</PathType>
+              <AttributeType>1</AttributeType>
+            </RegistryAttributeDefinition>
+            <RegistryAttributeDefinition>
+              <AttributeName>LoggingLevel</AttributeName>
+              <Path>SOFTWARE\FileCount\LoggingLevel</Path>
+              <PathType>1</PathType>
+              <AttributeType>1</AttributeType>
+            </RegistryAttributeDefinition>
+          </RegistryAttributeDefinitions>
+          <Frequency>21600</Frequency>
+          <ClassId>$MPElement[Name="Network.FileCount.WatcherNode"]$</ClassId>
+          <InstanceSettings>
+            <Settings>
+              <Setting>
+                <Name>$MPElement[Name="System!System.Entity"]/DisplayName$</Name>
+                <Value>Network File Share WatcherNode ($Target/Host/Property[Type="Windows!Microsoft.Windows.Computer"]/NetbiosComputerName$)</Value>
+              </Setting>
+              <Setting>
+                <Name>$MPElement[Name="Windows!Microsoft.Windows.Computer"]/PrincipalName$</Name>
+                <Value>$Target/Host/Property[Type="Windows!Microsoft.Windows.Computer"]/PrincipalName$</Value>
+              </Setting>
+              <Setting>
+                <Name>$MPElement[Name="Network.FileCount.WatcherNode"]/CSV$</Name>
+                <Value>$Data/Values/CSV$</Value>
+              </Setting>
+              <Setting>
+                <Name>$MPElement[Name="Network.FileCount.WatcherNode"]/LoggingLevel$</Name>
+                <Value>$Data/Values/LoggingLevel$</Value>
+              </Setting>
+            </Settings>
+          </InstanceSettings>
+          <Expression>
+            <SimpleExpression>
+              <ValueExpression>
+                <XPathQuery Type="Boolean">Values/FileCountExists</XPathQuery>
+              </ValueExpression>
+              <Operator>Equal</Operator>
+              <ValueExpression>
+                <Value Type="Boolean">true</Value>
+              </ValueExpression>
+            </SimpleExpression>
+          </Expression>
+        </DataSource>
+      </Discovery>
+
+    </Discoveries>
+  </Monitoring>
+  <LanguagePacks>
+  </LanguagePacks>
+</ManagementPackFragment>
