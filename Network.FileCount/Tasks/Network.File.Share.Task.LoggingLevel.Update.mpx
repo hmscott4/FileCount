@@ -77,7 +77,7 @@ This fragment depends on references:
                   #=================================================================================
                   If(Test-Path $registryKey)
                   {
-                  Set-ItemProperty -Path $registryKey -Name $registryAttribute -Value $newLoggingLevel -PropertyType String | Out-Null
+                  Set-ItemProperty -Path $registryKey -Name $registryAttribute -Value $newLoggingLevel | Out-Null
                   Write-Host "PowerShell script executed"
                   Write-Host "LoggingLevel: " $newLoggingLevel
                   }
