@@ -2,6 +2,66 @@
 <ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><LanguagePacks>
     <LanguagePack ID="ENU" IsDefault="true">
       <DisplayStrings>
+        <DisplayString ElementID="Network.File.Share.WatcherNode" SubElementID="FileCatalog">
+          <Name>FileCatalog</Name>
+          <Description>Path to folder where File Catalog files are stored.</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.File.Share.Share" SubElementID="CatalogVersion">
+          <Name>Catalog Version</Name>
+          <Description>Hash algorithm version to use with New-FileCatalog.  Valid values are 1.0 and 2.0.  Version 2.0 is recommended.</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.File.Share.Share" SubElementID="CatalogIsValid">
+          <Name>Catalog Is Valid</Name>
+          <Description>Test-FileCatalog found that the integrity of the file share is valid.</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.File.Share.Share" SubElementID="CatalogLastCalculated">
+          <Name>Catalog Last Calculated</Name>
+          <Description>The last date/time that New-FileCatalog was executed.</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.File.Share.Share" SubElementID="CatalogName">
+          <Name>Catalog Name</Name>
+          <Description>Name of the Catalog File used the last time that New-FileCatalog was called.</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.File.Share.FileCatalog.New.Task.WA" SubElementID="FileShare">
+          <Name>File Share</Name>
+          <Description>Network File Share UNC path</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.File.Share.FileCatalog.New.Task.WA" SubElementID="FileCatalog">
+          <Name>File Catalog</Name>
+          <Description>Path to directory where computed File Catalog will be stored.</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.File.Share.FileCatalog.New.Task.WA" SubElementID="CatalogVersion">
+          <Name>Catalog Version</Name>
+          <Description>Version of FileCatalog to use (valid values are 1.0 and 2.0).</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.File.Share.FileCatalog.New.Task.WA" SubElementID="TimeoutSeconds">
+          <Name>Timeout Seconds</Name>
+          <Description>Timeout Seconds</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.File.Share.FileCatalog.Update.Task.WA">
+          <Name>Network File Share File Catalog Update Task</Name>
+          <Description>Update File Catalog File Share Name</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.File.Share.FileCatalog.Update.Task.WA" SubElementID="FileCatalog">
+          <Name>File Catalog</Name>
+          <Description>New location of File Catalog directory.</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.File.Share.FileCatalog.Update.Task.WA" SubElementID="TimeoutSeconds">
+          <Name>TimeoutSeconds</Name>
+          <Description>TimeoutSeconds</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.FileCount.Enable.WatcherNode.Task.WA" SubElementID="FileCatalog">
+          <Name>File Catalog</Name>
+          <Description>Path to directory where computed File Catalog files will be stored.</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.File.Share.FileCatalog.New.Task.WA">
+          <Name>Network File Share Compute New File Catalog</Name>
+          <Description>Task to generate a new File Catalog file to validate file share contents.</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.FileCount.Enable.WatcherNode.Task">
+          <Name>Network File Share Enable Watcher Node Task</Name>
+          <Description>Enable a Network File Share Watcher Node.  This task adds registry keys and creates a template configuration file for monitoring UNC Network Shares.</Description>
+        </DisplayString>
         <DisplayString ElementID="Network.FileCount.DataSource" SubElementID="WarnSizeMB">
           <Name>WarnSizeMB</Name>
           <Description>Warning threshold in MB.</Description>

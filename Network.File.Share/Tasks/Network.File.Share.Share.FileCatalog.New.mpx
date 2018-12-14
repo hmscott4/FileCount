@@ -27,15 +27,17 @@ This fragment depends on references:
 -->
   <TypeDefinitions>
     <ModuleTypes>
-      <WriteActionModuleType ID="Network.File.Share.FileCatalog.New.Task.WA" Accessibility="Internal" Batching="false">
+      <WriteActionModuleType ID="Network.File.Share.FileCatalog.New.Task.WA" Accessibility="Internal" Batching="false" RunAs="Network.File.Share.RunasProfile">
         <Configuration>
           <xsd:element minOccurs="1" name="FileShare" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
           <xsd:element minOccurs="1" name="FileCatalog" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element minOccurs="1" name="CatalogVersion" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
           <xsd:element minOccurs="1" name="TimeoutSeconds" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
         </Configuration>
         <OverrideableParameters>
           <OverrideableParameter ID="FileShare" Selector="$Config/FileShare$" ParameterType="string" />
           <OverrideableParameter ID="FileCatalog" Selector="$Config/FileCatalog$" ParameterType="string" />
+          <OverrideableParameter ID="CatalogVersion" Selector="$Config/CatalogVersion$" ParameterType="string" />
           <OverrideableParameter ID="TimeoutSeconds" Selector="$Config/TimeoutSeconds$" ParameterType="int" />
         </OverrideableParameters>
         <ModuleImplementation Isolation="Any">
@@ -47,7 +49,7 @@ This fragment depends on references:
                   #=================================================================================
                   #  Script to execute a task in PowerShell
                   #=================================================================================
-                  param($FileShare, $FileCatalog)
+                  param($FileShare, $FileCatalog, $CatalogVersion)
                   #=================================================================================
                   # Constants section - modify stuff here:
 
@@ -73,11 +75,27 @@ This fragment depends on references:
 
                   # Begin Main Script
                   #=================================================================================
-                  
-                  
-                  Write-Host "PowerShell script executed"
-                  Write-Host "FileShare: " $FileShare
-                  Write-Host "FileCatalog: " $FileCatalog
+                  $fileName = (new-guid).ToString()
+                  $fileCatalogPath = Join-Path -Path $FileCatalog -ChildPath "$fileName.cat"
+
+                  # Test value of $CatalogVerion
+                  ==================================================================================
+                  If($CatalogVersion -ne "2.0" -and $CatalogVersion -ne "1.0"){
+                  $CatalogVersion = "2.0"
+                  }
+
+                  $Result = New-FileCatalog -Path $FileShare -CatalogFilePath $fileCatalogPath -CatalogVersion $CatalogVersion
+                  If($Result){
+
+                    Write-Host "PowerShell script executed"
+                    Write-Host "FileShare: " $FileShare
+                    Write-Host "FileCatalog: " $fileCatalogPath
+                  }
+                  Else
+                  {
+                    Write-Host "PowerShell script failed"
+                    Write-Host "Check the file share $fileShare and the folder $FileCatalog. `n Verify that the RunAs account has permissions to both."
+                  }
                   #=================================================================================
 
                   # Log an event for script ending and total execution time.
@@ -93,6 +111,10 @@ This fragment depends on references:
                   <Parameter>
                     <Name>FileCatalog</Name>
                     <Value>$Config/FileCatalog$</Value>
+                  </Parameter>
+                  <Parameter>
+                    <Name>CatalogVersion</Name>
+                    <Value>$Config/CatalogVersion$</Value>
                   </Parameter>
                 </Parameters>
                 <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
@@ -110,11 +132,12 @@ This fragment depends on references:
   </TypeDefinitions>
   <Monitoring>
     <Tasks>
-      <Task ID="Network.File.Share.FileCatalog.New.Task" Accessibility="Public" Enabled="true" Target="Network.File.Share.Share" Timeout="120" Remotable="false"  RunAs="Network.File.Share.RunasProfile">
+      <Task ID="Network.File.Share.FileCatalog.New.Task" Accessibility="Public" Enabled="true" Target="Network.File.Share.Share" Timeout="120" Remotable="false">
         <Category>Custom</Category>
         <WriteAction ID="PSWA" TypeID="Network.File.Share.FileCatalog.New.Task.WA">
           <FileShare>$Target/Property[Type="Network.File.Share.Share"]/Share$</FileShare>
           <FileCatalog>$Target/Host/Property[Type="Network.File.Share.WatcherNode"]/FileCatalog$</FileCatalog>
+          <CatalogVersion>2.0</CatalogVersion>
           <TimeoutSeconds>60</TimeoutSeconds>
         </WriteAction>
       </Task>
