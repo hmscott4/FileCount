@@ -22,11 +22,11 @@
                   #=================================================================================
                   #  Script to execute a task in PowerShell
                   #=================================================================================
-                  param($ConfigFileName,$LoggingLevel)
+                  param($ConfigFileName,$LoggingLevel,$FileCatalog)
                   #=================================================================================
                   # Constants section - modify stuff here:
                   $registryKey = "HKLM:\SOFTWARE\Microsoft\Microsoft Operations Manager\MP\NetworkFileShare\MgmtGroups\$Target/ManagementGroup/Name$"
-
+                  $EventId = 3524
 
                   $registryAttribute = "CSV"
                   If($LoggingLevel -ge 0 -and $LoggingLevel -le 2){
@@ -51,23 +51,28 @@
                   $momapi = New-Object -comObject "Mom.ScriptAPI"
 
                   #Log script event that we are starting task
-                  $momapi.LogScriptEvent($ScriptName,3524,0, "Starting script task.  Running as ($whoami)")
+                  $momapi.LogScriptEvent($ScriptName,$EventID,0, "Starting script task.  Running as ($whoami)")
 
                   # Begin Main Script
                   #=================================================================================
                   # Test the path to the registry key to see if it already exists
                   If(Test-Path $registryKey)
                   {
+                  $momapi.LogScriptEvent($ScriptName,$EventID,0, "Found existing registry key. ")
                   }
                   Else
                   {
                   New-Item -Path $registryKey -Force | Out-Null
                   New-ItemProperty -Path $registryKey -Name $registryAttribute -Value $registryValue -PropertyType String -Force | Out-Null
                   New-ItemProperty -Path $registryKey -Name "LoggingLevel" -Value $newLoggingLevel -PropertyType String -Force | Out-Null
+                  New-ItemProperty -Path $registryKey -Name "FileCatalog" -Value $FileCatalog -PropertyType String -Force | Out-Null
                   }
 
-                  If(Test-Path $$configFileName)
+                  # Test for the existence of configuration file
+                  # If the file does not exist, then create new (empty)
+                  If(Test-Path $configFileName)
                   {
+                  $momapi.LogScriptEvent($ScriptName,$EventID,0, "Found existing config file $ConfigFileName. ")
                   }
                   Else
                   {
@@ -75,15 +80,30 @@
                   Add-Content -Path $ConfigFileName -Value "Id, Share, Extension, Count, Age, Recurse, WarnSizeMB, ErrorSizeMB"
                   }
 
+                  # Test for the existence of path to file catalog
+                  # 1. If FileCatalog not specified, skip
+                  # 2. If FileCatalog is specific, but does not exist, create the path
+                  If($FileCatalog.Length -gt 0) {
+                  If(Test-Path $FileCatalog)
+                  {
+                  $momapi.LogScriptEvent($ScriptName,$EventID,0, "Found existing file catalog $FileCatalog. ")
+                  }
+                  Else
+                  {
+                  New-Item -Directory $FileCatalog -Force
+                  }
+                  }
+
                   Write-Host "PowerShell script executed"
                   Write-Host "ConfigFileName: " $ConfigFileName
                   Write-Host "LoggingLevel: " $newLoggingLevel
+                  Write-Host "FileCatalog: " $FileCatalog
                   #=================================================================================
 
                   # Log an event for script ending and total execution time.
                   $EndTime = Get-Date
                   $ScriptTime = ($EndTime - $StartTime).TotalSeconds
-                  $momapi.LogScriptEvent($ScriptName,3524,0,"`n Script has completed. `n Runtime was ($ScriptTime) seconds.")
+                  $momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Script has completed. `n Runtime was ($ScriptTime) seconds.")
                 </ScriptBody>
                 <Parameters>
                   <Parameter>
