@@ -22,7 +22,7 @@
 
                   # Assign script name variable for use in event logging
                   $ScriptName = "Network.FileCount.Disable.WatcherNode.Task.WA.ps1"
-                  $EventID = 3524
+                  $EventID = "3524"
                   #=================================================================================
 
                   # Gather script start time

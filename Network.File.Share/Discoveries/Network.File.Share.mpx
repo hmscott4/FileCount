@@ -19,7 +19,7 @@
             # 1 = Errors/Warnings
             # 2 = Verbose
             # ================================================================================
-            $EventID = 3520
+            $EventID = "3520"
             $StartTime = Get-Date
             $whoami = whoami
 
@@ -54,6 +54,7 @@
             if($share.Recurse){$instance.AddProperty("$MPElement[Name='Network.File.Share.Share']/Recurse$", $Share.Recurse)} else {$instance.AddProperty("$MPElement[Name='Network.File.Share.Share']/Recurse$", 0)}
             if($share.WarnSizeMB){$instance.AddProperty("$MPElement[Name='Network.File.Share.Share']/WarnSizeMB$", $Share.WarnSizeMB)} else {$instance.AddProperty("$MPElement[Name='Network.File.Share.Share']/WarnSizeMB$", 0)}
             if($share.ErrorSizeMB){$instance.AddProperty("$MPElement[Name='Network.File.Share.Share']/ErrorSizeMB$", $Share.ErrorSizeMB)} else {$instance.AddProperty("$MPElement[Name='Network.File.Share.Share']/ErrorSizeMB$", 0)}
+            if($share.EnableFileCatalog){$instance.AddProperty("$MPElement[Name='Network.File.Share.Share']/EnableFileCatalog$", $Share.EnableFileCatalog)} else {$instance.AddProperty("$MPElement[Name='Network.File.Share.Share']/EnableFileCatalog$", 0)}
 
             #Add the displayname, path of the server and key property of the parent class. (always recurring)
             $instance.AddProperty("$MPElement[Name='System!System.Entity']/DisplayName$", $share.Share)

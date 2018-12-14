@@ -53,7 +53,7 @@ This fragment depends on references:
 
                   # Assign script name variable for use in event logging
                   $ScriptName = "Network.File.Share.WatcherNode.FileCatalog.Update.Task.WA.ps1"
-                  $EventID = 3525
+                  $EventID = "3524"
                   #=================================================================================
 
                   # Gather script start time

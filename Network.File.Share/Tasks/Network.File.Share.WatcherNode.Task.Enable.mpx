@@ -26,7 +26,7 @@
                   #=================================================================================
                   # Constants section - modify stuff here:
                   $registryKey = "HKLM:\SOFTWARE\Microsoft\Microsoft Operations Manager\MP\NetworkFileShare\MgmtGroups\$Target/ManagementGroup/Name$"
-                  $EventId = 3524
+                  $EventId = "3524"
 
                   $registryAttribute = "CSV"
                   If($LoggingLevel -ge 0 -and $LoggingLevel -le 2){
@@ -77,7 +77,7 @@
                   Else
                   {
                   New-Item -Path $ConfigFileName -Force
-                  Add-Content -Path $ConfigFileName -Value "Id, Share, Extension, Count, Age, Recurse, WarnSizeMB, ErrorSizeMB"
+                  Add-Content -Path $ConfigFileName -Value "Id, Share, Extension, Count, Age, Recurse, WarnSizeMB, ErrorSizeMB, EnableFileCatalog"
                   }
 
                   # Test for the existence of path to file catalog

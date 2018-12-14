@@ -84,6 +84,9 @@
     <Compile Include="Rules\Network.File.Share.FileCount.CollectionRule.mpx">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Rules\Network.File.Share.Rule.New.FileCatalog.mpx">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Tasks\Network.File.Share.Share.FileCatalog.New.mpx">
       <SubType>Code</SubType>
     </Compile>
@@ -106,6 +109,7 @@
   <ItemGroup>
     <Folder Include="Discoveries" />
     <Folder Include="Monitors" />
+    <Folder Include="Groups" />
     <Folder Include="Tasks" />
     <Folder Include="Views" />
     <Folder Include="Rules" />

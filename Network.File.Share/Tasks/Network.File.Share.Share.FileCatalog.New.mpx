@@ -67,7 +67,7 @@ This fragment depends on references:
                   $momapi = New-Object -comObject "Mom.ScriptAPI"
 
                   # Set EventID
-                  $EventID = 3526
+                  $EventID = "3525"
                   #=================================================================================
 
                   #Log script event that we are starting task
