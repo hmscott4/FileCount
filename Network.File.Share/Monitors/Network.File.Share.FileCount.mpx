@@ -117,10 +117,10 @@
                     if ($iRecurse -eq 1)
                     {
                     # Get files WITH recursion
-                    $allFiles = Get-ChildItem -Recurse -Directory "$sShare\$sExtension" -ErrorAction SilentlyContinue| Where-Object{$_.LastWriteTime -le (Get-Date).AddMinutes($iAge)}
+                    $allFiles = Get-ChildItem -Recurse -Path "$sShare\$sExtension" -ErrorAction SilentlyContinue| Where-Object{$_.LastWriteTime -le (Get-Date).AddMinutes($iAge)}
                     }
                     else {
-                    $allFiles = Get-ChildItem -Directory "$sShare\$sExtension" -ErrorAction SilentlyContinue | Where-Object{$_.LastWriteTime -le (Get-Date).AddMinutes($iAge)}
+                    $allFiles = Get-ChildItem -Path "$sShare\$sExtension" -ErrorAction SilentlyContinue | Where-Object{$_.LastWriteTime -le (Get-Date).AddMinutes($iAge)}
                     }
 
                     # Set output values
@@ -303,6 +303,18 @@
               </Node>
             </RegularDetection>
           </RegularDetections>
+          <OnDemandDetections>
+            <OnDemandDetection MonitorTypeStateID="FileCountStatusOK">
+              <Node ID="FilterFileCountStatusOK">
+                <Node ID="DS" />
+              </Node>
+            </OnDemandDetection>
+            <OnDemandDetection MonitorTypeStateID="FileCountStatusNotOK">
+              <Node ID="FilterFileCountStatusNotOK">
+                <Node ID="DS" />
+              </Node>
+            </OnDemandDetection>
+          </OnDemandDetections>
         </MonitorImplementation>
       </UnitMonitorType>
     </MonitorTypes>

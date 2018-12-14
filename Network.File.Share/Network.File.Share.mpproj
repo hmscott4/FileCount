@@ -57,6 +57,9 @@
     </ManagementPackReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Discoveries\Network.File.Share.Classes.mpx">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Discoveries\Network.File.Share.mpx">
       <SubType>Code</SubType>
     </Compile>
