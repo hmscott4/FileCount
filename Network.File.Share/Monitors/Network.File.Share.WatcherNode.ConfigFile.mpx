@@ -65,13 +65,13 @@
                     #=================================================================================
 
                     If(Test-Path -path "$CSV" -pathType Leaf -ErrorAction SilentlyContinue){
-                    $momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Check failed. `n FileCount configuration file $CSV found as user $whoami.")
+                    $momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Check succeeded. `n Network File Share configuration file $CSV found as user $whoami.")
                     $strResult = "ConfigFileFound"
                     $strMessage = "Configuration file $CSV is accessible as user $whoami."
                     }
                     else
                     {
-                    $momapi.LogScriptEvent($ScriptName,$EventID,2,"`n Check failed. `n FileCount configuration file $CSV NOT found as user $whoami.")
+                    $momapi.LogScriptEvent($ScriptName,$EventID,2,"`n Check failed. `n Network File Share configuration file $CSV NOT found as user $whoami.")
                     $strResult = "ConfigFileNotFound"
                     $strMessage = "Configuration file $CSV is NOT accessible as user $whoami."
                     }

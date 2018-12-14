@@ -22,6 +22,7 @@
 
                   # Assign script name variable for use in event logging
                   $ScriptName = "Network.FileCount.Disable.WatcherNode.Task.WA.ps1"
+                  $EventID = 3524
                   #=================================================================================
 
                   # Gather script start time
@@ -34,13 +35,13 @@
                   $momapi = New-Object -comObject "Mom.ScriptAPI"
 
                   #Log script event that we are starting task
-                  $momapi.LogScriptEvent($ScriptName,3524,0, "Starting script task.  Running as ($whoami)")
+                  $momapi.LogScriptEvent($ScriptName,$EventID,0, "Starting script task.  Running as ($whoami)")
 
                   # Begin Main Script
                   #=================================================================================
-                  If(Test-Path -Path "HKLM:\Software\FileCount")
+                  If(Test-Path -Path "HKLM:\SOFTWARE\Microsoft\Microsoft Operations Manager\MP\NetworkFileShare\MgmtGroups\$Target/ManagementGroup/Name$")
                   {
-                  Remove-Item -Path "HKLM:\Software\FileCount" -Force
+                  Remove-Item -Path "HKLM:\SOFTWARE\Microsoft\Microsoft Operations Manager\MP\NetworkFileShare\MgmtGroups\$Target/ManagementGroup/Name$" -Force
                   }
                   Write-Host "PowerShell script executed"
                   Write-Host "Network File Share Watcher Node Disabled"
@@ -49,7 +50,7 @@
                   # Log an event for script ending and total execution time.
                   $EndTime = Get-Date
                   $ScriptTime = ($EndTime - $StartTime).TotalSeconds
-                  $momapi.LogScriptEvent($ScriptName,3524,0,"`n Script has completed. `n Runtime was ($ScriptTime) seconds.")
+                  $momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Script has completed. `n Runtime was ($ScriptTime) seconds.")
                 </ScriptBody>
                 <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
               </WriteAction>

@@ -23,7 +23,9 @@
                   param($ConfigFileName,$LoggingLevel)
                   #=================================================================================
                   # Constants section - modify stuff here:
-                  $registryKey = "HKLM:\Software\FileCount"
+                  $registryKey = "HKLM:\SOFTWARE\Microsoft\Microsoft Operations Manager\MP\NetworkFileShare\MgmtGroups\$Target/ManagementGroup/Name$"
+
+
                   $registryAttribute = "CSV"
                   If($LoggingLevel -ge 0 -and $LoggingLevel -le 2){
                   $newLoggingLevel = $LoggingLevel

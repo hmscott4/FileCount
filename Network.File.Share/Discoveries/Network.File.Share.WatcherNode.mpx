@@ -13,19 +13,19 @@
           <RegistryAttributeDefinitions>
             <RegistryAttributeDefinition>
               <AttributeName>FileCountExists</AttributeName>
-              <Path>SOFTWARE\FileCount</Path>
+              <Path>SOFTWARE\Microsoft\Microsoft Operations Manager\MP\NetworkFileShare\MgmtGroups\$Target/ManagementGroup/Name$</Path>
               <PathType>0</PathType>
               <AttributeType>0</AttributeType>
             </RegistryAttributeDefinition>
             <RegistryAttributeDefinition>
               <AttributeName>CSV</AttributeName>
-              <Path>SOFTWARE\FileCount\CSV</Path>
+              <Path>SOFTWARE\Microsoft\Microsoft Operations Manager\MP\NetworkFileShare\MgmtGroups\$Target/ManagementGroup/Name$\CSV</Path>
               <PathType>1</PathType>
               <AttributeType>1</AttributeType>
             </RegistryAttributeDefinition>
             <RegistryAttributeDefinition>
               <AttributeName>LoggingLevel</AttributeName>
-              <Path>SOFTWARE\FileCount\LoggingLevel</Path>
+              <Path>SOFTWARE\Microsoft\Microsoft Operations Manager\MP\NetworkFileShare\MgmtGroups\$Target/ManagementGroup/Name$\LoggingLevel</Path>
               <PathType>1</PathType>
               <AttributeType>1</AttributeType>
             </RegistryAttributeDefinition>

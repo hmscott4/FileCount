@@ -374,7 +374,7 @@
             <MamlContent>
               <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
                 <maml:title>Summary</maml:title>
-                <maml:para>This discovery checks for the presence of the registry key HKLM:\Software\FileCount and the associated STRING attribure CSV. If present, the target is assumed to be a Network File Count Watcher node.</maml:para>
+                <maml:para>This discovery checks for the presence of the registry key SOFTWARE\Microsoft\Microsoft Operations Manager\MP\NetworkFileShare\MgmtGroups\$Target/ManagementGroup/Name$ and the associated STRING attribure CSV. If present, the target is assumed to be a Network File Count Watcher node.</maml:para>
               </maml:section>
               <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
                 <maml:title>Overridable Parameters</maml:title>
@@ -395,7 +395,7 @@
             <MamlContent>
               <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
                 <maml:title>Summary</maml:title>
-                <maml:para>This monitor checks the value of the CSV attribute in the HKLM:\Software\FileCount registry key.  This attribute should contain a string value pointing to the configuration file.  If present and accessible under the Run As account, this monitor returns a healthy state.</maml:para>
+                <maml:para>This monitor checks the value of the CSV attribute in the SOFTWARE\Microsoft\Microsoft Operations Manager\MP\NetworkFileShare\MgmtGroups\$Target/ManagementGroup/Name$ registry key.  This attribute should contain a string value pointing to the configuration file.  If present and accessible under the Run As account, this monitor returns a healthy state.</maml:para>
               </maml:section>
               <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
                 <maml:title>Causes</maml:title>

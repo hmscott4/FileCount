@@ -20,13 +20,15 @@
             # 2 = Verbose
             # ================================================================================
             $EventID = 3520
+            $StartTime = Get-Date
+            $whoami = whoami
 
 
             #Create Discovery Property Bag
             $api = new-object -comObject 'MOM.ScriptAPI'
             $discoveryData = $api.CreateDiscoveryData(0, $SourceId, $ManagedEntityId)
             If($LoggingLevel -ge 2) {
-            $api.LogScriptEvent("GetSharesFromCSV.ps1", $EventID, 0, "Discovery Started")
+            $api.LogScriptEvent("GetSharesFromCSV.ps1", $EventID, 0, "Discovery Started. `Running as $whoami. `n Configuration File: $csv.")
             }
 
             # BEGIN MAIN SCRIPT
@@ -61,13 +63,15 @@
 
             $discoveryData.AddInstance($instance)
             If($LoggingLevel -ge 2) {
-            $api.LogScriptEvent("GetSharesFromCSV.ps1", $EventID, 0, "Added instance $share.Share")
+            $api.LogScriptEvent("GetSharesFromCSV.ps1", $EventID, 0, "Added instance ($share).Share")
             }
 
             }
 
             If($LoggingLevel -ge 2) {
-            $api.LogScriptEvent("GetSharesFromCSV.ps1", $EventID, 0, "Discovery Ended")
+            $EndTime = Get-Date
+            $ScriptTime = ($EndTime - $StartTime).TotalSeconds
+            $api.LogScriptEvent("GetSharesFromCSV.ps1", $EventID, 0, "Discovery Ended. Duration $ScriptTime seconds.")
             }
 
             $discoveryData
