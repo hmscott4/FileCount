@@ -86,15 +86,28 @@ This fragment depends on references:
 
                   $Result = New-FileCatalog -Path $FileShare -CatalogFilePath $fileCatalogPath -CatalogVersion $CatalogVersion
                   If($Result){
+                  $SourceId = $MPElement$
+                  $ManagedEntityId = $Target/Id$
 
-                    Write-Host "PowerShell script executed"
-                    Write-Host "FileShare: " $FileShare
-                    Write-Host "FileCatalog: " $fileCatalogPath
+                  Write-Host "PowerShell script executed"
+                  Write-Host "FileShare: " $FileShare
+                  Write-Host "FileCatalog: " $fileCatalogPath
+
+                  $discoveryData = $momapi.CreateDiscoveryData(0, $SourceId, $ManagedEntityId)
+                  $instance = $discoveryData.CreateClassInstance("$MPElement[Name='Network.File.Share.Share']$")
+                  $instance.AddProperty("$MPElement[Name='Network.File.Share.Share']/ID$", $share.ID)
+                  $instance.AddProperty("$MPElement[Name='Network.File.Share.Share']/CatalogVersion$", $CatalogVersion)
+                  $instance.AddProperty("$MPElement[Name='Network.File.Share.Share']/CatalogLastCalculated$", (Get-Date).ToUniversalTime())
+                  $instance.AddProperty("$MPElement[Name='Network.File.Share.Share']/CatalogName$", $fileCatalogPath)
+
+                  $discoveryData.AddInstance($instance)
+                  $discoveryData
+
                   }
                   Else
                   {
-                    Write-Host "PowerShell script failed"
-                    Write-Host "Check the file share $fileShare and the folder $FileCatalog. `n Verify that the RunAs account has permissions to both."
+                  Write-Host "PowerShell script failed"
+                  Write-Host "Check the file share $fileShare and the folder $FileCatalog. `n Verify that the RunAs account has permissions to both."
                   }
                   #=================================================================================
 

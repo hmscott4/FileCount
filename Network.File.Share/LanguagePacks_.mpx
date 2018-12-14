@@ -2,6 +2,46 @@
 <ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><LanguagePacks>
     <LanguagePack ID="ENU" IsDefault="true">
       <DisplayStrings>
+        <DisplayString ElementID="Network.File.Share.Share" SubElementID="EnableFileCatalog">
+          <Name>Enable File Catalog</Name>
+          <Description>Enable File Catalog</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.File.Share.Rule.New.FileCatalog.TimedPowerShell.Rule.DS">
+          <Name>Network File Share Calculate New File Catalog</Name>
+          <Description>Network File Share Calculate New File Catalog</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.File.Share.Rule.New.FileCatalog.TimedPowerShell.Rule.DS" SubElementID="IntervalSeconds">
+          <Name>Interval Seconds</Name>
+          <Description>Interval Seconds</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.File.Share.Rule.New.FileCatalog.TimedPowerShell.Rule.DS" SubElementID="SyncTime">
+          <Name>Sync Time</Name>
+          <Description>Sync Time</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.File.Share.Rule.New.FileCatalog.TimedPowerShell.Rule.WA">
+          <Name>Network File Share Compute New File Validate Catalog Write Action</Name>
+          <Description>Network File Share Compute New File Validate Catalog Write Action</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.File.Share.Rule.New.FileCatalog.TimedPowerShell.Rule.WA" SubElementID="FileShareId">
+          <Name>File Share Id</Name>
+          <Description>File Share Id</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.File.Share.Rule.New.FileCatalog.TimedPowerShell.Rule.WA" SubElementID="FileShare">
+          <Name>File Share</Name>
+          <Description>File Share</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.File.Share.Rule.New.FileCatalog.TimedPowerShell.Rule.WA" SubElementID="FileCatalog">
+          <Name>File Catalog</Name>
+          <Description>File Catalog</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.File.Share.Rule.New.FileCatalog.TimedPowerShell.Rule.WA" SubElementID="CatalogVersion">
+          <Name>Catalog Version</Name>
+          <Description>Catalog Version</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.File.Share.Rule.New.FileCatalog.TimedPowerShell.Rule.WA" SubElementID="TimeoutSeconds">
+          <Name>Timeout Seconds</Name>
+          <Description>Timeout Seconds</Description>
+        </DisplayString>
         <DisplayString ElementID="Network.File.Share.WatcherNode" SubElementID="FileCatalog">
           <Name>FileCatalog</Name>
           <Description>Path to folder where File Catalog files are stored.</Description>
