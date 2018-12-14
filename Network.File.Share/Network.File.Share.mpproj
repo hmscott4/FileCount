@@ -84,13 +84,19 @@
     <Compile Include="Rules\Network.File.Share.FileCount.CollectionRule.mpx">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tasks\Network.File.Share.Task.Disable.mpx">
+    <Compile Include="Tasks\Network.File.Share.Share.Task.FileCatalog.New.mpx">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tasks\Network.File.Share.Task.Enable.mpx">
+    <Compile Include="Tasks\Network.File.Share.WatcherNode.Task.FileCatalog.Update.mpx">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tasks\Network.File.Share.Task.LoggingLevel.Update.mpx">
+    <Compile Include="Tasks\Network.File.Share.WatcherNode.Task.Disable.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\Network.File.Share.WatcherNode.Task.Enable.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tasks\Network.File.Share.WatcherNode.Task.LoggingLevel.Update.mpx">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Views\Network.File.Share.Views.mpx">

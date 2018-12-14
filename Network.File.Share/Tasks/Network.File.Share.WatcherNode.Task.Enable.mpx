@@ -4,11 +4,13 @@
         <Configuration>
           <xsd:element minOccurs="1" name="ConfigFileName" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
           <xsd:element minOccurs="1" name="LoggingLevel" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element minOccurs="1" name="FileCatalog" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
           <xsd:element minOccurs="1" name="TimeoutSeconds" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
         </Configuration>
         <OverrideableParameters>
           <OverrideableParameter ID="ConfigFileName" Selector="$Config/ConfigFileName$" ParameterType="string" />
           <OverrideableParameter ID="LoggingLevel" Selector="$Config/LoggingLevel$" ParameterType="int" />
+          <OverrideableParameter ID="FileCatalog" Selector="$Config/ConfigFileName$" ParameterType="string" />
           <OverrideableParameter ID="TimeoutSeconds" Selector="$Config/TimeoutSeconds$" ParameterType="int" />
         </OverrideableParameters>
         <ModuleImplementation Isolation="Any">
@@ -92,6 +94,10 @@
                     <Name>LoggingLevel</Name>
                     <Value>$Config/LoggingLevel$</Value>
                   </Parameter>
+                  <Parameter>
+                    <Name>FileCatalog</Name>
+                    <Value>$Config/FileCatalog$</Value>
+                  </Parameter>
                 </Parameters>
                 <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
               </WriteAction>
@@ -112,6 +118,7 @@
         <WriteAction ID="PSWA" TypeID="Network.FileCount.Enable.WatcherNode.Task.WA">
           <ConfigFileName>ENTER FILE NAME HERE</ConfigFileName>
           <LoggingLevel>0</LoggingLevel>
+          <FileCatalog>ENTER FILE PATH HERE</FileCatalog>
           <TimeoutSeconds>60</TimeoutSeconds>
         </WriteAction>
       </Task>
@@ -119,10 +126,6 @@
   </Monitoring><LanguagePacks>
     <LanguagePack ID="ENU" IsDefault="true">
       <DisplayStrings>
-        <DisplayString ElementID="Network.FileCount.Enable.WatcherNode.Task">
-          <Name>Network File Share Enable Watcher Node</Name>
-          <Description>Enable Network File Share Watcher Node task</Description>
-        </DisplayString>
       </DisplayStrings>
       <KnowledgeArticles></KnowledgeArticles>
     </LanguagePack>
