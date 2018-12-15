@@ -17,7 +17,7 @@
           <Property ID="WarnSizeMB" Type="int" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
           <Property ID="ErrorSizeMB" Type="int" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
           <Property ID="EnableFileCatalog" Type="int" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />          
-          <Property ID="CatalogVersion" Type="decimal" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="16"  MinLength="0" Required="false" Scale="2" />
+          <Property ID="CatalogVersion" Type="int" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256"  MinLength="0" Required="false" Scale="0" />
           <Property ID="CatalogIsValid" Type="bool" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
           <Property ID="CatalogLastCalculated" Type="datetime" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
           <Property ID="CatalogName" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />

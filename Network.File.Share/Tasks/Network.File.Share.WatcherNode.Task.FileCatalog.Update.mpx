@@ -124,7 +124,7 @@ This fragment depends on references:
     <LanguagePack ID="ENU" IsDefault="true">
       <DisplayStrings>
         <DisplayString ElementID="Network.File.Share.FileCatalog.Update.Task">
-          <Name>File Share Watcher Node FileCatalog Update Task</Name>
+          <Name>Network File Share Watcher Node FileCatalog Update Task</Name>
           <Description>Update the path to store FileCatalog files.  Used to store FileCatalogs for New-FileCatalog and Test-FileCatalog tasks.</Description>
         </DisplayString>
       </DisplayStrings>

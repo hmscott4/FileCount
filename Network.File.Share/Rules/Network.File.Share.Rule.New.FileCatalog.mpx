@@ -37,14 +37,14 @@
           <xsd:element minOccurs="1" name="FileShareId" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
           <xsd:element minOccurs="1" name="FileShare" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
           <xsd:element minOccurs="1" name="FileCatalog" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
-          <xsd:element minOccurs="1" name="CatalogVersion" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element minOccurs="1" name="CatalogVersion" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
           <xsd:element minOccurs="1" name="TimeoutSeconds" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
         </Configuration>
         <OverrideableParameters>
           <OverrideableParameter ID="FileShareId" Selector="$Config/FileShareId$" ParameterType="int" />
           <OverrideableParameter ID="FileShare" Selector="$Config/FileShare$" ParameterType="string" />
           <OverrideableParameter ID="FileCatalog" Selector="$Config/FileCatalog$" ParameterType="string" />
-          <OverrideableParameter ID="CatalogVersion" Selector="$Config/CatalogVersion$" ParameterType="string" />
+          <OverrideableParameter ID="CatalogVersion" Selector="$Config/CatalogVersion$" ParameterType="int" />
           <OverrideableParameter ID="TimeoutSeconds" Selector="$Config/TimeoutSeconds$" ParameterType="int" />
         </OverrideableParameters>
         <ModuleImplementation Isolation="Any">
@@ -107,8 +107,8 @@
 
                   # Test value of $CatalogVerion
                   ==================================================================================
-                  If($CatalogVersion -ne "2.0" -and $CatalogVersion -ne "1.0"){
-                  $CatalogVersion = "2.0"
+                  If($CatalogVersion -ne 2 -and $CatalogVersion -ne 1){
+                  $CatalogVersion = 2
                   }
 
                   $Result = New-FileCatalog -Path $FileShare -CatalogFilePath $fileCatalogPath -CatalogVersion $CatalogVersion
