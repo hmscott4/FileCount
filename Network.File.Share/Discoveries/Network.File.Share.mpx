@@ -6,7 +6,7 @@
         <DiscoveryTypes>
           <DiscoveryClass TypeID="Network.File.Share.Share" />
         </DiscoveryTypes>
-        <DataSource ID="DS" TypeID="Windows!Microsoft.Windows.TimedPowerShell.DiscoveryProvider">
+        <DataSource ID="DS" TypeID="Windows!Microsoft.Windows.TimedPowerShell.DiscoveryProvider" RunAs="Network.File.Share.Discovery.RunasProfile">
           <IntervalSeconds>3600</IntervalSeconds>
           <SyncTime />
           <ScriptName>GetSharesFromCSV.ps1</ScriptName>

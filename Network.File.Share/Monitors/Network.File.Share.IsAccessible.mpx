@@ -28,7 +28,7 @@ This fragment depends on references:
 -->
     <TypeDefinitions>
       <ModuleTypes>
-        <DataSourceModuleType ID="Network.FileCount.Accessible.Monitor.DataSource" Accessibility="Internal" Batching="false" RunAs="Network.File.Share.RunasProfile">
+        <DataSourceModuleType ID="Network.File.Share.Accessible.Monitor.DataSource" Accessibility="Internal" Batching="false" RunAs="Network.File.Share.RunasProfile">
           <Configuration>
             <xsd:element minOccurs="1" type="xsd:integer" name="IntervalSeconds" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
             <xsd:element minOccurs="0" type="xsd:string" name="SyncTime" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
@@ -68,7 +68,7 @@ This fragment depends on references:
                     # Constants section - modify stuff here:
                     #=================================================================================
                     # Assign script name variable for use in event logging.
-                    $ScriptName = "Network.FileCount.Accessible.Monitor.DataSource.ps1"
+                    $ScriptName = "Network.File.Share.Accessible.Monitor.DataSource.ps1"
                     $EventID = "3522"
                     #=================================================================================
 
@@ -148,7 +148,7 @@ This fragment depends on references:
         </DataSourceModuleType>
       </ModuleTypes>
       <MonitorTypes>
-        <UnitMonitorType ID="Network.FileCount.Accessible.Monitor.MonitorType" Accessibility="Internal">
+        <UnitMonitorType ID="Network.File.Share.Accessible.Monitor.MonitorType" Accessibility="Internal">
           <MonitorTypeStates>
             <MonitorTypeState ID="FileShareAccessible" NoDetection="false" />
             <MonitorTypeState ID="FileShareNotAccessible" NoDetection="false" />
@@ -167,7 +167,7 @@ This fragment depends on references:
           </OverrideableParameters>
           <MonitorImplementation>
             <MemberModules>
-              <DataSource ID="DS" TypeID="Network.FileCount.Accessible.Monitor.DataSource">
+              <DataSource ID="DS" TypeID="Network.File.Share.Accessible.Monitor.DataSource">
                 <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
                 <SyncTime>$Config/SyncTime$</SyncTime>
                 <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
@@ -230,9 +230,9 @@ This fragment depends on references:
     </TypeDefinitions>
     <Monitoring>
       <Monitors>
-        <UnitMonitor ID="Network.FileCount.Accessible.Monitor" Accessibility="Public" Enabled="true" Target="Network.File.Share.Share" ParentMonitorID="Health!System.Health.AvailabilityState" Remotable="false" Priority="Normal" TypeID="Network.FileCount.Accessible.Monitor.MonitorType" ConfirmDelivery="true">
+        <UnitMonitor ID="Network.File.Share.Accessible.Monitor" Accessibility="Public" Enabled="true" Target="Network.File.Share.Share" ParentMonitorID="Health!System.Health.AvailabilityState" Remotable="false" Priority="Normal" TypeID="Network.File.Share.Accessible.Monitor.MonitorType" ConfirmDelivery="true">
           <Category>AvailabilityHealth</Category>
-          <AlertSettings AlertMessage="Network.FileCount.Accessible.Monitor.AlertMessage">
+          <AlertSettings AlertMessage="Network.File.Share.Accessible.Monitor.AlertMessage">
             <AlertOnState>Error</AlertOnState>
             <!-- Warning or Error should match OperationalStates below  -->
             <AutoResolve>true</AutoResolve>
@@ -256,29 +256,29 @@ This fragment depends on references:
     </Monitoring>
     <Presentation>
       <StringResources>
-        <StringResource ID="Network.FileCount.Accessible.Monitor.AlertMessage" />
+        <StringResource ID="Network.File.Share.Accessible.Monitor.AlertMessage" />
       </StringResources>
     </Presentation>
     <LanguagePacks>
       <LanguagePack ID="ENU" IsDefault="true">
         <DisplayStrings>
-          <DisplayString ElementID="Network.FileCount.Accessible.Monitor">
+          <DisplayString ElementID="Network.File.Share.Accessible.Monitor">
             <Name>Network File Share Is Accessible Monitor</Name>
             <Description>Used to monitor the accessibility of a file share</Description>
           </DisplayString>
-          <DisplayString ElementID="Network.FileCount.Accessible.Monitor" SubElementID="FileShareAccessible">
+          <DisplayString ElementID="Network.File.Share.Accessible.Monitor" SubElementID="FileShareAccessible">
             <Name>File share accessible</Name>
           </DisplayString>
-          <DisplayString ElementID="Network.FileCount.Accessible.Monitor" SubElementID="FileShareNotAccessible">
+          <DisplayString ElementID="Network.File.Share.Accessible.Monitor" SubElementID="FileShareNotAccessible">
             <Name>File share not accessible</Name>
           </DisplayString>         
-          <DisplayString ElementID="Network.FileCount.Accessible.Monitor.AlertMessage">
+          <DisplayString ElementID="Network.File.Share.Accessible.Monitor.AlertMessage">
             <Name>File Share Accessible Monitor: Failure</Name>
             <Description>File Share Accessible Monitor: Unable to access the network file share.  Check that the share is available and that the RunAs account is configured correctly.</Description>
           </DisplayString>
         </DisplayStrings>
         <KnowledgeArticles>
-          <KnowledgeArticle ElementID="Network.FileCount.Accessible.Monitor.MonitorType" Visible="true">
+          <KnowledgeArticle ElementID="Network.File.Share.Accessible.Monitor.MonitorType" Visible="true">
             <MamlContent>
               <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
                 <maml:title>Summary</maml:title>

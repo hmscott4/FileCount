@@ -26,6 +26,54 @@
     </EntityTypes>
     <SecureReferences>
       <SecureReference ID="Network.File.Share.RunasProfile" Accessibility="Public" />
+      <SecureReference ID="Network.File.Share.Discovery.RunasProfile" Accessibility="Public" />
     </SecureReferences>
   </TypeDefinitions>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+        <DisplayString ElementID="Network.File.Share.Discovery.RunasProfile">
+          <Name>Network File Share Properties Discovery Run As Profile</Name>
+          <Description>This account is used to detect and parse the Network File Share configuration file.</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.File.Share.RunasProfile">
+          <Name>Network File Share Runas Profile</Name>
+          <Description>Used to monitor discovered network file shares</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.File.Share.WatcherNode">
+          <Name>Network File Share Watcher Node</Name>
+          <Description>This is a Windows Computer that monitors remote UNC File Shares.</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.File.Share.WatcherNode" SubElementID="CSV">
+          <Name>CSV Path</Name>
+        </DisplayString>
+        <DisplayString ElementID="Network.File.Share.WatcherNode" SubElementID="LoggingLevel">
+          <Name>LoggingLevel</Name>
+          <Description>LoggingLevel (0=None; 1=Error; 2=Verbose)</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.File.Share.Share">
+          <Name>Network File Share</Name>
+          <Description>Network File Share where files will be counted based on the data provided in the CSV file</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.File.Share.Share" SubElementID="ID">
+          <Name>ID</Name>
+        </DisplayString>
+        <DisplayString ElementID="Network.File.Share.Share" SubElementID="Share">
+          <Name>Share</Name>
+        </DisplayString>
+        <DisplayString ElementID="Network.File.Share.Share" SubElementID="Extension">
+          <Name>Extension</Name>
+        </DisplayString>
+        <DisplayString ElementID="Network.File.Share.Share" SubElementID="Count">
+          <Name>Count</Name>
+        </DisplayString>
+        <DisplayString ElementID="Network.File.Share.Share" SubElementID="Age">
+          <Name>Age</Name>
+        </DisplayString>
+        <DisplayString ElementID="Network.File.Share.Share" SubElementID="Recurse">
+          <Name>Recurse</Name>
+        </DisplayString>
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>  
 </ManagementPackFragment>

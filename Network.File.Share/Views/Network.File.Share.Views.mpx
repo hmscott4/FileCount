@@ -18,12 +18,12 @@
     </Views>
     <Folders>
       <Folder ID="Network.File.Share.Folder" Accessibility="Public" ParentFolder="SC!Microsoft.SystemCenter.Monitoring.ViewFolder.Root" />
-      <Folder ID="Network.FileCount.State.Folder" Accessibility="Public" ParentFolder="Network.File.Share.Folder" />
+      <Folder ID="Network.File.Share.State.Folder" Accessibility="Public" ParentFolder="Network.File.Share.Folder" />
     </Folders>
     <FolderItems>
       <FolderItem ElementID="Network.File.Share.Alert.view" Folder="Network.File.Share.Folder" ID="Network.File.Share.Alert.view.FolderItem" />
-      <FolderItem ElementID="Network.File.Share.State.view" Folder="Network.FileCount.State.Folder" ID="Network.File.Share.State.view.FolderItem" />
-      <FolderItem ElementID="Network.File.Share.WatcherNode.State.view" Folder="Network.FileCount.State.Folder" ID="Network.File.Share.WatcherNode.State.view.FolderItem" />
+      <FolderItem ElementID="Network.File.Share.State.view" Folder="Network.File.Share.State.Folder" ID="Network.File.Share.State.view.FolderItem" />
+      <FolderItem ElementID="Network.File.Share.WatcherNode.State.view" Folder="Network.File.Share.State.Folder" ID="Network.File.Share.WatcherNode.State.view.FolderItem" />
     </FolderItems>
     <StringResources>
       <StringResource ID="Network.File.Share.File.Count.Monitor.AlertMessage" />
