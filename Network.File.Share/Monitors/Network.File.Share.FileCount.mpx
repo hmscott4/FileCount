@@ -2,7 +2,7 @@
   <TypeDefinitions>
 
       <ModuleTypes>
-        <DataSourceModuleType ID="Network.FileCount.DataSource" Accessibility="Public" Batching="false" RunAs="Network.File.Share.RunasProfile">
+        <DataSourceModuleType ID="Network.File.Share.FileCount.DataSource" Accessibility="Public" Batching="false" RunAs="Network.File.Share.RunasProfile">
           <Configuration>
             <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
             <xsd:element minOccurs="0" name="SyncTime" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
@@ -34,7 +34,7 @@
                   <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
                   <SyncTime>$Config/SyncTime$</SyncTime>
                 </DataSource>
-                <ProbeAction ID="Probe" TypeID="Network.FileCount.DataSource.PSScript" />
+                <ProbeAction ID="Probe" TypeID="Network.File.Share.FileCount.DataSource.PSScript" />
               </MemberModules>
               <Composition>
                 <Node ID="Probe">
@@ -45,7 +45,7 @@
           </ModuleImplementation>
           <OutputType>System!System.PropertyBagData</OutputType>
         </DataSourceModuleType>
-        <ProbeActionModuleType ID="Network.FileCount.DataSource.PSScript" Accessibility="Public" Batching="false" PassThrough="false" RunAs="Network.File.Share.RunasProfile">
+        <ProbeActionModuleType ID="Network.File.Share.FileCount.DataSource.PSScript" Accessibility="Public" Batching="false" PassThrough="false" RunAs="Network.File.Share.RunasProfile">
           <Configuration>
             <xsd:element minOccurs="0" name="Share" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
             <xsd:element minOccurs="0" name="Extension" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
@@ -252,7 +252,7 @@
         </OverrideableParameters>
         <MonitorImplementation>
           <MemberModules>
-            <DataSource ID="DS" TypeID="Network.FileCount.DataSource">
+            <DataSource ID="DS" TypeID="Network.File.Share.FileCount.DataSource">
               <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
               <SyncTime>$Config/SyncTime$</SyncTime>
               <Share>$Config/Share$</Share>

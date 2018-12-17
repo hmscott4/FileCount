@@ -285,9 +285,13 @@ This fragment depends on references:
                 <maml:para>This monitor checks to see if a UNC path defined on the watcher node is accessible.</maml:para>
               </maml:section>
               <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
-                <maml:title>Error Conditions</maml:title>
+                <maml:title>Causes</maml:title>
+                <maml:para>This monitor will fail if the UNC file share no longer exists, is not accessible via the network or if the defined RunAs account does not have permissions to the share.</maml:para>
+              </maml:section>
+              <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+                <maml:title>Resolutions</maml:title>
                 <maml:para>If this monitor fails, check to be sure that the UNC path still exists and that the RunAs account is defined and has permissions to the share.</maml:para>
-              </maml:section>              
+              </maml:section>
             </MamlContent>
           </KnowledgeArticle>
         </KnowledgeArticles>        

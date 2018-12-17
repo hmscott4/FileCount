@@ -27,7 +27,7 @@ This fragment depends on references:
 -->
   <TypeDefinitions>
     <ModuleTypes>
-      <WriteActionModuleType ID="Network.FileCount.LoggingLevel.Update.Task.WA" Accessibility="Internal" Batching="false">
+      <WriteActionModuleType ID="Network.File.Share.WatcherNode.LoggingLevel.Update.Task.WA" Accessibility="Internal" Batching="false">
         <Configuration>
           <xsd:element minOccurs="1" name="LoggingLevel" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
           <xsd:element minOccurs="1" name="TimeoutSeconds" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
@@ -40,7 +40,7 @@ This fragment depends on references:
           <Composite>
             <MemberModules>
               <WriteAction ID="PSWA" TypeID="Windows!Microsoft.Windows.PowerShellWriteAction">
-                <ScriptName>Network.FileCount.LoggingLevel.Update.Task.WA.ps1</ScriptName>
+                <ScriptName>Network.File.Share.WatcherNode.LoggingLevel.Update.Task.WA.ps1</ScriptName>
                 <ScriptBody>
                   #=================================================================================
                   #  Script to execute a task in PowerShell
@@ -57,7 +57,7 @@ This fragment depends on references:
                   }
 
                   # Assign script name variable for use in event logging
-                  $ScriptName = "Network.FileCount.LoggingLevel.Update.Task.WA.ps1"
+                  $ScriptName = "Network.File.Share.WatcherNode.LoggingLevel.Update.Task.WA.ps1"
                   $EventID = "3524"
                   #=================================================================================
 
@@ -116,9 +116,9 @@ This fragment depends on references:
   </TypeDefinitions>
   <Monitoring>
     <Tasks>
-      <Task ID="Network.FileCount.LoggingLevel.Update.Task" Accessibility="Public" Enabled="true" Target="Network.File.Share.WatcherNode" Timeout="120" Remotable="true">
+      <Task ID="Network.File.Share.WatcherNode.LoggingLevel.Update.Task" Accessibility="Public" Enabled="true" Target="Network.File.Share.WatcherNode" Timeout="120" Remotable="true">
         <Category>Custom</Category>
-        <WriteAction ID="PSWA" TypeID="Network.FileCount.LoggingLevel.Update.Task.WA">
+        <WriteAction ID="PSWA" TypeID="Network.File.Share.WatcherNode.LoggingLevel.Update.Task.WA">
           <LoggingLevel>0</LoggingLevel>
           <TimeoutSeconds>60</TimeoutSeconds>
         </WriteAction>
@@ -128,7 +128,7 @@ This fragment depends on references:
   <LanguagePacks>
     <LanguagePack ID="ENU" IsDefault="true">
       <DisplayStrings>
-        <DisplayString ElementID="Network.FileCount.LoggingLevel.Update.Task">
+        <DisplayString ElementID="Network.File.Share.WatcherNode.LoggingLevel.Update.Task">
           <Name>Network File Share Watcher Node Update Logging Level</Name>
           <Description>Network File Share Watcher Node Update Logging Level (0=None,1=Error,2=Verbose)</Description>
         </DisplayString>

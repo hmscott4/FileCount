@@ -4,7 +4,7 @@
       <Rule ID="Network.File.Share.Monitoring.PSScript.Rule.CollectFileCount" Enabled="true" Target="Network.File.Share.Share" ConfirmDelivery="true" Remotable="false" Priority="Normal" DiscardLevel="100">
         <Category>PerformanceCollection</Category>
         <DataSources>
-          <DataSource ID="DataSource" TypeID="Network.FileCount.DataSource" RunAs="Network.File.Share.RunasProfile">
+          <DataSource ID="DataSource" TypeID="Network.File.Share.FileCount.DataSource" RunAs="Network.File.Share.RunasProfile">
             <IntervalSeconds>900</IntervalSeconds>
             <SyncTime></SyncTime>
             <Share>$Target/Property[Type='Network.File.Share.Share']/Share$</Share>
