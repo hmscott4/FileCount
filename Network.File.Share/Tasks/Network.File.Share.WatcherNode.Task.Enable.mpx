@@ -4,13 +4,11 @@
         <Configuration>
           <xsd:element minOccurs="1" name="ConfigFileName" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
           <xsd:element minOccurs="1" name="LoggingLevel" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
-          <xsd:element minOccurs="1" name="FileCatalog" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
           <xsd:element minOccurs="1" name="TimeoutSeconds" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
         </Configuration>
         <OverrideableParameters>
           <OverrideableParameter ID="ConfigFileName" Selector="$Config/ConfigFileName$" ParameterType="string" />
           <OverrideableParameter ID="LoggingLevel" Selector="$Config/LoggingLevel$" ParameterType="int" />
-          <OverrideableParameter ID="FileCatalog" Selector="$Config/ConfigFileName$" ParameterType="string" />
           <OverrideableParameter ID="TimeoutSeconds" Selector="$Config/TimeoutSeconds$" ParameterType="int" />
         </OverrideableParameters>
         <ModuleImplementation Isolation="Any">
@@ -22,7 +20,7 @@
                   #=================================================================================
                   #  Script to execute a task in PowerShell
                   #=================================================================================
-                  param($ConfigFileName,$LoggingLevel,$FileCatalog)
+                  param($ConfigFileName,$LoggingLevel)
                   #=================================================================================
                   # Constants section - modify stuff here:
                   $registryKey = "HKLM:\SOFTWARE\Microsoft\Microsoft Operations Manager\MP\NetworkFileShare\MgmtGroups\$Target/ManagementGroup/Name$"
@@ -65,7 +63,6 @@
                   New-Item -Path $registryKey -Force | Out-Null
                   New-ItemProperty -Path $registryKey -Name $registryAttribute -Value $registryValue -PropertyType String -Force | Out-Null
                   New-ItemProperty -Path $registryKey -Name "LoggingLevel" -Value $newLoggingLevel -PropertyType String -Force | Out-Null
-                  New-ItemProperty -Path $registryKey -Name "FileCatalog" -Value $FileCatalog -PropertyType String -Force | Out-Null
                   }
 
                   # Test for the existence of configuration file
@@ -77,27 +74,13 @@
                   Else
                   {
                   New-Item -Path $ConfigFileName -Force
-                  Add-Content -Path $ConfigFileName -Value "Id, Share, Extension, Count, Age, Recurse, WarnSizeMB, ErrorSizeMB, EnableFileCatalog"
+                  Add-Content -Path $ConfigFileName -Value "Id, Share, Extension, Count, Age, Recurse, WarnSizeMB, ErrorSizeMB"
                   }
 
-                  # Test for the existence of path to file catalog
-                  # 1. If FileCatalog not specified, skip
-                  # 2. If FileCatalog is specific, but does not exist, create the path
-                  If($FileCatalog.Length -gt 0) {
-                  If(Test-Path $FileCatalog)
-                  {
-                  $momapi.LogScriptEvent($ScriptName,$EventID,0, "Found existing file catalog $FileCatalog. ")
-                  }
-                  Else
-                  {
-                  New-Item -Directory $FileCatalog -Force
-                  }
-                  }
 
                   Write-Host "PowerShell script executed"
                   Write-Host "ConfigFileName: " $ConfigFileName
                   Write-Host "LoggingLevel: " $newLoggingLevel
-                  Write-Host "FileCatalog: " $FileCatalog
                   #=================================================================================
 
                   # Log an event for script ending and total execution time.
@@ -113,10 +96,6 @@
                   <Parameter>
                     <Name>LoggingLevel</Name>
                     <Value>$Config/LoggingLevel$</Value>
-                  </Parameter>
-                  <Parameter>
-                    <Name>FileCatalog</Name>
-                    <Value>$Config/FileCatalog$</Value>
                   </Parameter>
                 </Parameters>
                 <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
@@ -138,7 +117,6 @@
         <WriteAction ID="PSWA" TypeID="Network.FileCount.Enable.WatcherNode.Task.WA">
           <ConfigFileName>ENTER FILE NAME HERE</ConfigFileName>
           <LoggingLevel>0</LoggingLevel>
-          <FileCatalog>ENTER FILE PATH HERE</FileCatalog>
           <TimeoutSeconds>60</TimeoutSeconds>
         </WriteAction>
       </Task>

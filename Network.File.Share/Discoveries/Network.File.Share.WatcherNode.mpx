@@ -29,12 +29,6 @@
               <PathType>1</PathType>
               <AttributeType>1</AttributeType>
             </RegistryAttributeDefinition>
-            <RegistryAttributeDefinition>
-              <AttributeName>FileCatalog</AttributeName>
-              <Path>SOFTWARE\Microsoft\Microsoft Operations Manager\MP\NetworkFileShare\MgmtGroups\$Target/ManagementGroup/Name$\FileCatalog</Path>
-              <PathType>1</PathType>
-              <AttributeType>1</AttributeType>
-            </RegistryAttributeDefinition>
           </RegistryAttributeDefinitions>
           <Frequency>21600</Frequency>
           <ClassId>$MPElement[Name="Network.File.Share.WatcherNode"]$</ClassId>
@@ -56,10 +50,6 @@
                 <Name>$MPElement[Name="Network.File.Share.WatcherNode"]/LoggingLevel$</Name>
                 <Value>$Data/Values/LoggingLevel$</Value>
               </Setting>
-              <Setting>
-                <Name>$MPElement[Name="Network.File.Share.WatcherNode"]/FileCatalog$</Name>
-                <Value>$Data/Values/FileCatalog$</Value>
-              </Setting>
             </Settings>
           </InstanceSettings>
           <Expression>
@@ -75,7 +65,6 @@
           </Expression>
         </DataSource>
       </Discovery>
-
     </Discoveries>
   </Monitoring>
   <LanguagePacks>
