@@ -6,14 +6,6 @@
           <Name>Network File Share Enable Watcher Node Task</Name>
           <Description>Enable a Network File Share Watcher Node.  This task adds registry keys and creates a template configuration file for monitoring UNC Network Shares.</Description>
         </DisplayString>
-        <DisplayString ElementID="Network.File.Share.FileCount.DataSource" SubElementID="WarnSizeMB">
-          <Name>WarnSizeMB</Name>
-          <Description>Warning threshold in MB.</Description>
-        </DisplayString>
-        <DisplayString ElementID="Network.File.Share.FileCount.DataSource" SubElementID="ErrorSizeMB">
-          <Name>ErrorSizeMB</Name>
-          <Description>Error Threshold in MB</Description>
-        </DisplayString>
         <DisplayString ElementID="Network.File.Share.Share" SubElementID="WarnSizeMB">
           <Name>WarnSizeMB</Name>
           <Description>Threshold value for Warning alert in MB</Description>
@@ -37,38 +29,6 @@
         <DisplayString ElementID="Network.File.Share.WatcherNode.Enable.Task.WA" SubElementID="LoggingLevel">
           <Name>LoggingLevel</Name>
           <Description>LoggingLevel (0=None; 1=Error; 2=Verbose)</Description>
-        </DisplayString>
-        <DisplayString ElementID="Network.File.Share.FileCount.DataSource">
-          <Name>Network File Share File Count Data Source</Name>
-          <Description>Script to enumerate UNC paths and count files.</Description>
-        </DisplayString>
-        <DisplayString ElementID="Network.File.Share.FileCount.DataSource" SubElementID="Interval">
-          <Name>Interval</Name>
-          <Description>Interval (seconds)</Description>
-        </DisplayString>
-        <DisplayString ElementID="Network.File.Share.FileCount.DataSource" SubElementID="SyncTime">
-          <Name>SyncTime</Name>
-          <Description>Sync Time</Description>
-        </DisplayString>
-        <DisplayString ElementID="Network.File.Share.FileCount.DataSource" SubElementID="Share">
-          <Name>Share</Name>
-          <Description>Share</Description>
-        </DisplayString>
-        <DisplayString ElementID="Network.File.Share.FileCount.DataSource" SubElementID="Extension">
-          <Name>Extension</Name>
-          <Description>Extension</Description>
-        </DisplayString>
-        <DisplayString ElementID="Network.File.Share.FileCount.DataSource" SubElementID="Count">
-          <Name>Count</Name>
-          <Description>Count</Description>
-        </DisplayString>
-        <DisplayString ElementID="Network.File.Share.FileCount.DataSource" SubElementID="Age">
-          <Name>Age</Name>
-          <Description>Age (in Minutes)</Description>
-        </DisplayString>
-        <DisplayString ElementID="Network.File.Share.FileCount.DataSource" SubElementID="Recurse">
-          <Name>Recurse</Name>
-          <Description>Recurse</Description>
         </DisplayString>
         <DisplayString ElementID="Network.File.Share.WatcherNode.Accessible.Monitor.DataSource" SubElementID="IntervalSeconds">
           <Name>ID</Name>
@@ -214,10 +174,6 @@
             <Name>Network File Share Watcher Node State</Name>
             <Description>This view shows the state of all Network File  Share Watcher Node(s)</Description>
           </DisplayString>
-        <DisplayString ElementID="Network.File.Share.FileCount.DataSource" SubElementID="LoggingLevel">
-          <Name>LoggingLevel</Name>
-          <Description>LoggingLevel (0=None, 1=Error, 2=Verbose)</Description>
-        </DisplayString>
         <DisplayString ElementID="Network.File.Share.Monitoring.PSScript.Rule.CollectAggregateSize">
           <Name>Network File Share Aggregate Size (MB) Collection Rule</Name>
           <Description>Network File Share Aggregate Size (MB) Collection Rule</Description>

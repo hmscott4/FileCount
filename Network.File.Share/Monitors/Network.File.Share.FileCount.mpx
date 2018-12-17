@@ -18,14 +18,7 @@
           <OverrideableParameters>
             <OverrideableParameter ID="Interval" Selector="$Config/IntervalSeconds$" ParameterType="int" />
             <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string" />
-            <OverrideableParameter ID="Share" Selector="$Config/Share$" ParameterType="string" />
-            <OverrideableParameter ID="Extension" Selector="$Config/Extension$" ParameterType="string" />
-            <OverrideableParameter ID="Count" Selector="$Config/Count$" ParameterType="int" />
-            <OverrideableParameter ID="Age" Selector="$Config/Age$" ParameterType="int" />
-            <OverrideableParameter ID="Recurse" Selector="$Config/Recurse$" ParameterType="int" />
-            <OverrideableParameter ID="WarnSizeMB" Selector="$Config/Age$" ParameterType="int" />
-            <OverrideableParameter ID="ErrorSizeMB" Selector="$Config/Recurse$" ParameterType="int" />
-            <OverrideableParameter ID="LoggingLevel" Selector="$Config/Recurse$" ParameterType="int" />
+            <OverrideableParameter ID="LoggingLevel" Selector="$Config/LoggingLevel$" ParameterType="int" />
           </OverrideableParameters>
           <ModuleImplementation Isolation="Any">
             <Composite>
@@ -363,6 +356,22 @@
           <Description>SyncTime</Description>
         </DisplayString>
         <DisplayString ElementID="Network.File.Share.Status.MonitorType" SubElementID="LoggingLevel">
+          <Name>LoggingLevel</Name>
+          <Description>LoggingLevel (0=None, 1=Error, 2=Verbose)</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.File.Share.FileCount.DataSource">
+          <Name>Network File Share File Count Data Source</Name>
+          <Description>Script to enumerate UNC paths and count files.</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.File.Share.FileCount.DataSource" SubElementID="Interval">
+          <Name>Interval</Name>
+          <Description>Interval (seconds)</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.File.Share.FileCount.DataSource" SubElementID="SyncTime">
+          <Name>SyncTime</Name>
+          <Description>Sync Time</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.File.Share.FileCount.DataSource" SubElementID="LoggingLevel">
           <Name>LoggingLevel</Name>
           <Description>LoggingLevel (0=None, 1=Error, 2=Verbose)</Description>
         </DisplayString>
