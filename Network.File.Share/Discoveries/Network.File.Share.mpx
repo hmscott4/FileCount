@@ -106,4 +106,28 @@
       </Discovery>      
     </Discoveries>
   </Monitoring>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <KnowledgeArticles>
+        <KnowledgeArticle ElementID="Network.File.Share" Visible="true">
+          <MamlContent>
+            <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+              <maml:title>Summary</maml:title>
+              <maml:para>This management pack allows administrators to configure monitoring of remote UNC file shares that are not hosted on agent-managed servers (ie, a Windows Server).</maml:para>
+              <maml:para>To configure this management pack, admins need to designate a Watcher Node (an agent-managed Windows Server) and create a CSV file with a list of the network shares to be monitored.  In addition, this management pack requires the use of a RunAs account (a Windows Active Directory Account) with access to the remote file share.</maml:para>
+              <maml:para>This management pack monitors the count of files (by file type) in a remote file share.  In addition, it can be used to validate remote network share access for the RunAs account.</maml:para>
+            </maml:section>
+          </MamlContent>
+        </KnowledgeArticle>
+        <KnowledgeArticle ElementID="Network.File.Share.Share" Visible="true">
+          <MamlContent>
+            <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+              <maml:title>Summary</maml:title>
+              <maml:para>The Network File share object represents a UNC path that is accessible over the network (example; \\MyShare\MyFolder).</maml:para>
+            </maml:section>
+          </MamlContent>
+        </KnowledgeArticle>
+      </KnowledgeArticles>
+    </LanguagePack>
+  </LanguagePacks>
 </ManagementPackFragment>

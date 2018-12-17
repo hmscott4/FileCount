@@ -14,14 +14,6 @@
           <Name>ErrorSizeMB</Name>
           <Description>Error Threshold in MB</Description>
         </DisplayString>
-        <DisplayString ElementID="Network.File.Share.Status.MonitorType" SubElementID="WarnSizeMB">
-          <Name>WarnSizeMB</Name>
-          <Description>Warning threshold in MB</Description>
-        </DisplayString>
-        <DisplayString ElementID="Network.File.Share.Status.MonitorType" SubElementID="ErrorSizeMB">
-          <Name>ErrorSizeMB</Name>
-          <Description>Error Threshold in MB</Description>
-        </DisplayString>
         <DisplayString ElementID="Network.File.Share.Share" SubElementID="WarnSizeMB">
           <Name>WarnSizeMB</Name>
           <Description>Threshold value for Warning alert in MB</Description>
@@ -78,22 +70,6 @@
           <Name>Recurse</Name>
           <Description>Recurse</Description>
         </DisplayString>
-        <DisplayString ElementID="Network.File.Share.Accessible.Monitor.DataSource" SubElementID="IntervalSeconds">
-          <Name>IntervalSeconds</Name>
-          <Description>IntervalSeconds</Description>
-        </DisplayString>
-        <DisplayString ElementID="Network.File.Share.Accessible.Monitor.DataSource" SubElementID="SyncTime">
-          <Name>SyncTime</Name>
-          <Description>SyncTime</Description>
-        </DisplayString>
-        <DisplayString ElementID="Network.File.Share.Accessible.Monitor.DataSource" SubElementID="TimeoutSeconds">
-          <Name>TimeoutSeconds</Name>
-          <Description>TimeoutSeconds</Description>
-        </DisplayString>
-        <DisplayString ElementID="Network.File.Share.Accessible.Monitor.DataSource" SubElementID="Share">
-          <Name>Share</Name>
-          <Description>UNC Path to Share</Description>
-        </DisplayString>
         <DisplayString ElementID="Network.File.Share.WatcherNode.Accessible.Monitor.DataSource" SubElementID="IntervalSeconds">
           <Name>ID</Name>
           <Description>ID</Description>
@@ -117,34 +93,6 @@
         <DisplayString ElementID="Network.File.Share.WatcherNode.Accessible.Monitor.DataSource" SubElementID="CSV">
           <Name>CSV</Name>
           <Description>Name of CSV file</Description>
-        </DisplayString>
-        <DisplayString ElementID="Network.File.Share.Status.MonitorType" SubElementID="IntervalSeconds">
-          <Name>IntervalSeconds</Name>
-          <Description>IntervalSeconds</Description>
-        </DisplayString>
-        <DisplayString ElementID="Network.File.Share.Status.MonitorType" SubElementID="SyncTime">
-          <Name>SyncTime</Name>
-          <Description>SyncTime</Description>
-        </DisplayString>
-        <DisplayString ElementID="Network.File.Share.Status.MonitorType" SubElementID="Share">
-          <Name>Share</Name>
-          <Description>Share</Description>
-        </DisplayString>
-        <DisplayString ElementID="Network.File.Share.Status.MonitorType" SubElementID="Extension">
-          <Name>Extension</Name>
-          <Description>File Extension</Description>
-        </DisplayString>
-        <DisplayString ElementID="Network.File.Share.Status.MonitorType" SubElementID="Count">
-          <Name>Count</Name>
-          <Description>Count</Description>
-        </DisplayString>
-        <DisplayString ElementID="Network.File.Share.Status.MonitorType" SubElementID="Age">
-          <Name>Age</Name>
-          <Description>Age</Description>
-        </DisplayString>
-        <DisplayString ElementID="Network.File.Share.Status.MonitorType" SubElementID="Recurse">
-          <Name>Recurse</Name>
-          <Description>Recurse</Description>
         </DisplayString>
         <DisplayString ElementID="Network.File.Share.Accessible.Monitor.MonitorType" SubElementID="IntervalSeconds">
           <Name>IntervalSeconds</Name>
@@ -181,10 +129,6 @@
         <DisplayString ElementID="Network.File.Share.FileCount.DataSource.PSScript">
           <Name>Network File Share File Count Data Source Script</Name>
           <Description>Script to count the files in UNC path</Description>
-        </DisplayString>
-        <DisplayString ElementID="Network.File.Share.Status.MonitorType">
-          <Name>Network File Share File Count Status Monitor Type</Name>
-          <Description>Network File Share File Count Status Monitor Type</Description>
         </DisplayString>
         <DisplayString ElementID="Network.File.Share.Accessible.Monitor.MonitorType">
           <Name>Network File Share Accessible Monitor Type</Name>
@@ -278,46 +222,10 @@
           <Name>Network File Share Aggregate Size (MB) Collection Rule</Name>
           <Description>Network File Share Aggregate Size (MB) Collection Rule</Description>
         </DisplayString>
-        <DisplayString ElementID="Network.File.Share.Status.MonitorType" SubElementID="LoggingLevel">
-          <Name>LoggingLevel</Name>
-          <Description>LoggingLevel (0=None, 1=Error, 2=Verbose)</Description>
-        </DisplayString>
         </DisplayStrings>
         <KnowledgeArticles>
-          <KnowledgeArticle ElementID="Network.File.Share.Status.MonitorType" Visible="true">
-            <MamlContent>
-              <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
-                <maml:title>Summary</maml:title>
-                <maml:para>This monitor checks a UNC (shared folder) for a count of files.  The monitor can test for specific file extensions and can be recursive or non-recursive.  If the file count exceeds the threshold defined in the parameter file, then an error occurs.</maml:para>
-              </maml:section>
-              <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
-                <maml:title>Causes</maml:title>
-                <maml:para>This script will fail if the UNC path is not accessible or if the count of files in the UNC share matching the specified criteria exceeds the threshold value.</maml:para>
-              </maml:section>
-              <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
-                <maml:title>Resolutions</maml:title>
-                <maml:para>If this monitor fails, check to be sure that the UNC path still exists and that the RunAs account is defined and has permissions to the share.  Also check to see that the count of files matching the conditions defined does not exceed the threshold value.</maml:para>
-              </maml:section>
-            </MamlContent>
-          </KnowledgeArticle>
-          <KnowledgeArticle ElementID="Network.File.Share" Visible="true">
-            <MamlContent>
-              <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
-                <maml:title>Summary</maml:title>
-                <maml:para>This management pack allows administrators to configure monitoring of remote UNC file shares that are not hosted on agent-managed servers (ie, a Windows Server).</maml:para>
-                <maml:para>To configure this management pack, admins need to designate a Watcher Node (an agent-managed Windows Server) and create a CSV file with a list of the network shares to be monitored.  In addition, this management pack requires the use of a RunAs account (a Windows Active Directory Account) with access to the remote file share.</maml:para>
-                <maml:para>This management pack monitors the count of files (by file type) in a remote file share.  In addition, it can be used to validate remote network share access for the RunAs account.</maml:para>
-              </maml:section>
-            </MamlContent>
-          </KnowledgeArticle>
-          <KnowledgeArticle ElementID="Network.File.Share.Share" Visible="true">
-            <MamlContent>
-              <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
-                <maml:title>Summary</maml:title>
-                <maml:para>The Network File share object represents a UNC path that is accessible over the network (example; \\MyShare\MyFolder).</maml:para>
-              </maml:section>
-            </MamlContent>
-          </KnowledgeArticle>          
+
+
           <KnowledgeArticle ElementID="Network.File.Share.Accessible.Monitor" Visible="true">
             <MamlContent>
               <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">

@@ -39,7 +39,6 @@ This fragment depends on references:
             <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int" />
             <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string" />
             <OverrideableParameter ID="TimeoutSeconds" Selector="$Config/TimeoutSeconds$" ParameterType="int" />
-            <OverrideableParameter ID="Share" Selector="$Config/Share$" ParameterType="string" />
           </OverrideableParameters>
           <ModuleImplementation Isolation="Any">
             <Composite>
@@ -275,6 +274,18 @@ This fragment depends on references:
           <DisplayString ElementID="Network.File.Share.Accessible.Monitor.AlertMessage">
             <Name>File Share Accessible Monitor: Failure</Name>
             <Description>File Share Accessible Monitor: Unable to access the network file share.  Check that the share is available and that the RunAs account is configured correctly.</Description>
+          </DisplayString>
+          <DisplayString ElementID="Network.File.Share.Accessible.Monitor.DataSource" SubElementID="IntervalSeconds">
+            <Name>IntervalSeconds</Name>
+            <Description>IntervalSeconds</Description>
+          </DisplayString>
+          <DisplayString ElementID="Network.File.Share.Accessible.Monitor.DataSource" SubElementID="SyncTime">
+            <Name>SyncTime</Name>
+            <Description>SyncTime</Description>
+          </DisplayString>
+          <DisplayString ElementID="Network.File.Share.Accessible.Monitor.DataSource" SubElementID="TimeoutSeconds">
+            <Name>TimeoutSeconds</Name>
+            <Description>TimeoutSeconds</Description>
           </DisplayString>
         </DisplayStrings>
         <KnowledgeArticles>
