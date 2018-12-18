@@ -46,7 +46,7 @@
             $instance = $discoveryData.CreateClassInstance("$MPElement[Name='Network.File.Share.Share']$")
 
             # Fill up properties of class
-            # $instance.AddProperty("$MPElement[Name='Network.File.Share.Share']/ID$", $share.ID)
+            $instance.AddProperty("$MPElement[Name='Network.File.Share.Share']/ID$", $share.ID)
             $instance.AddProperty("$MPElement[Name='Network.File.Share.Share']/Share$", $share.Share)
             if($share.Extension){$instance.AddProperty("$MPElement[Name='Network.File.Share.Share']/Extension$", $Share.extension)} else {instance.AddProperty("$MPElement[Name='Network.File.Share.Share']/Extension$", "*")}
             if($share.ErrorCount){$instance.AddProperty("$MPElement[Name='Network.File.Share.Share']/ErrorCount$", $share.ErrorCount)} else {$instance.AddProperty("$MPElement[Name='Network.File.Share.Share']/ErrorCount$", 0)}
