@@ -34,9 +34,14 @@
       <Alias>MSDL</Alias>
       <MinVersion>7.1.10226.0</MinVersion>
     </ManagementPackReference>
+    <ManagementPackReference Include="Microsoft.SystemCenter.InstanceGroup.Library">
+      <HintPath>C:\Program Files (x86)\System Center Visual Studio Authoring Extensions\References\OM2012R2\Microsoft.SystemCenter.InstanceGroup.Library.mp</HintPath>
+      <Alias>MSIL</Alias>
+      <MinVersion>7.5.8501.0</MinVersion>
+    </ManagementPackReference>
     <ManagementPackReference Include="Microsoft.SystemCenter.Library">
       <Alias>SC</Alias>
-      <PackageToBundle>false</PackageToBundle>
+      <PackageToBundle>False</PackageToBundle>
     </ManagementPackReference>
     <ManagementPackReference Include="Microsoft.Windows.Library">
       <Alias>Windows</Alias>
@@ -48,7 +53,7 @@
     </ManagementPackReference>
     <ManagementPackReference Include="System.Library">
       <Alias>System</Alias>
-      <PackageToBundle>false</PackageToBundle>
+      <PackageToBundle>False</PackageToBundle>
     </ManagementPackReference>
     <ManagementPackReference Include="System.Performance.Library">
       <HintPath>C:\Program Files (x86)\System Center Visual Studio Authoring Extensions\References\OM2012R2\System.Performance.Library.mp</HintPath>
@@ -57,6 +62,9 @@
     </ManagementPackReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Discoveries\Network.File.Share.Groups.mpx">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Discoveries\Network.File.Share.Classes.mpx">
       <SubType>Code</SubType>
     </Compile>

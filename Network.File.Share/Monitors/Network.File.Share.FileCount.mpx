@@ -8,10 +8,9 @@
             <xsd:element minOccurs="0" name="SyncTime" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
             <xsd:element minOccurs="1" name="Share" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
             <xsd:element minOccurs="1" name="Extension" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
-            <xsd:element minOccurs="1" name="Count" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+            <xsd:element minOccurs="1" name="ErrorCount" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
             <xsd:element minOccurs="1" name="Age" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
             <xsd:element minOccurs="1" name="Recurse" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
-            <xsd:element minOccurs="1" name="WarnSizeMB" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
             <xsd:element minOccurs="1" name="ErrorSizeMB" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
             <xsd:element minOccurs="1" name="LoggingLevel" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
           </Configuration>
@@ -42,10 +41,9 @@
           <Configuration>
             <xsd:element minOccurs="0" name="Share" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
             <xsd:element minOccurs="0" name="Extension" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
-            <xsd:element minOccurs="0" name="Count" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+            <xsd:element minOccurs="0" name="ErrorCount" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
             <xsd:element minOccurs="0" name="Age" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
             <xsd:element minOccurs="0" name="Recurse" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
-            <xsd:element minOccurs="0" name="WarnSizeMB" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
             <xsd:element minOccurs="0" name="ErrorSizeMB" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
             <xsd:element minOccurs="0" name="LoggingLevel" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
           </Configuration>
@@ -56,7 +54,7 @@
                   <ScriptName>GetFileCount.ps1</ScriptName>
                   <ScriptBody>
 
-                    param([string]$Share, [string]$Extension, [int]$Count, [int]$Age, [int]$Recurse, [int]$WarnSizeMB, [int]$ErrorSizeMB, [int]$LoggingLevel)
+                    param([string]$Share, [string]$Extension, [int]$ErrorCount, [int]$Age, [int]$Recurse, [int]$ErrorSizeMB, [int]$LoggingLevel)
 
                     $ScriptName = "GetFileCount.ps1"
                     $EventID = "3521"
@@ -98,9 +96,8 @@
 
                     [int]$iAge = -$Age
                     [string]$sShare = $Share
-                    [int]$iCount = $Count
+                    [int]$iErrorCount = $ErrorCount
                     [int]$iRecurse = $Recurse
-                    [int]$iWarnSizeMB = $WarnSizeMB
                     [int]$iErrorSizeMB = $ErrorSizeMB
 
                     # Test to see if Share is Accessible
@@ -121,20 +118,20 @@
                     $fileSize = ($allFiles | Measure-Object -Sum Length).Sum / 1MB
                     $fileSize = [Math]::Round($fileSize, 2)
 
-                    if ($fileCount -le $iCount)
+                    if ($fileCount -le $iErrorCount)
                     {
                     $strStatus = 1
-                    $strMessage="Number of Files ($fileCount) with extension $sExtension in $sShare is under threshold $iCount."
+                    $strMessage="Number of Files ($fileCount) with extension $sExtension in $sShare is under threshold $iErrorCount."
                     If($LoggingLevel -ge 2) {
-                    $momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Found $fileCount file(s) totaling $fileSize MB with extension $sExtension in $sShare. `n Under threshold $iCount for number of files found.")
+                    $momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Found $fileCount file(s) totaling $fileSize MB with extension $sExtension in $sShare. `n Under threshold $iErrorCount for number of files found.")
                     }
                     }
                     else
                     {
                     $strStatus = 0
-                    $strMessage="Number of Files ($fileCount) in $sShare with extension $sExtension exceeds threshold $iCount."
+                    $strMessage="Number of Files ($fileCount) in $sShare with extension $sExtension exceeds threshold $iErrorCount."
                     If($LoggingLevel -ge 1){
-                    $momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Found $fileCount file(s) totaling $fileSize MB with extension $sExtension in $sShare.`n Exceeds threshold $iCount for number of files found.")
+                    $momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Found $fileCount file(s) totaling $fileSize MB with extension $sExtension in $sShare.`n Exceeds threshold $iErrorCount for number of files found.")
                     }
                     }
                     } else {
@@ -177,8 +174,8 @@
                       <Value>$Config/Extension$</Value>
                     </Parameter>
                     <Parameter>
-                      <Name>Count</Name>
-                      <Value>$Config/Count$</Value>
+                      <Name>ErrorCount</Name>
+                      <Value>$Config/ErrorCount$</Value>
                     </Parameter>
                     <Parameter>
                       <Name>Age</Name>
@@ -187,10 +184,6 @@
                     <Parameter>
                       <Name>Recurse</Name>
                       <Value>$Config/Recurse$</Value>
-                    </Parameter>
-                    <Parameter>
-                      <Name>WarnSizeMB</Name>
-                      <Value>$Config/WarnSizeMB$</Value>
                     </Parameter>
                     <Parameter>
                       <Name>ErrorSizeMB</Name>
@@ -224,10 +217,9 @@
           <xsd:element name="SyncTime" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
           <xsd:element name="Share" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
           <xsd:element name="Extension" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
-          <xsd:element name="Count" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element name="ErrorCount" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
           <xsd:element name="Age" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
           <xsd:element name="Recurse" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
-          <xsd:element name="WarnSizeMB" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
           <xsd:element name="ErrorSizeMB" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
           <xsd:element name="LoggingLevel" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
         </Configuration>
@@ -243,10 +235,9 @@
               <SyncTime>$Config/SyncTime$</SyncTime>
               <Share>$Config/Share$</Share>
               <Extension>$Config/Extension$</Extension>
-              <Count>$Config/Count$</Count>
+              <ErrorCount>$Config/ErrorCount$</ErrorCount>
               <Age>$Config/Age$</Age>
               <Recurse>$Config/Recurse$</Recurse>
-              <WarnSizeMB>$Config/WarnSizeMB$</WarnSizeMB>
               <ErrorSizeMB>$Config/ErrorSizeMB$</ErrorSizeMB>
               <LoggingLevel>$Config/LoggingLevel$</LoggingLevel>
             </DataSource>
@@ -330,10 +321,9 @@
           <SyncTime></SyncTime>
           <Share>$Target/Property[Type='Network.File.Share.Share']/Share$</Share>
           <Extension>$Target/Property[Type='Network.File.Share.Share']/Extension$</Extension>
-          <Count>$Target/Property[Type='Network.File.Share.Share']/Count$</Count>
+          <ErrorCount>$Target/Property[Type='Network.File.Share.Share']/ErrorCount$</ErrorCount>
           <Age>$Target/Property[Type='Network.File.Share.Share']/Age$</Age>
           <Recurse>$Target/Property[Type='Network.File.Share.Share']/Recurse$</Recurse>
-          <WarnSizeMB>$Target/Property[Type='Network.File.Share.Share']/WarnSizeMB$</WarnSizeMB>
           <ErrorSizeMB>$Target/Property[Type='Network.File.Share.Share']/ErrorSizeMB$</ErrorSizeMB>
           <LoggingLevel>$Target/Host/Property[Type='Network.File.Share.WatcherNode']/LoggingLevel$</LoggingLevel>
         </Configuration>

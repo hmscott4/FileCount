@@ -6,14 +6,6 @@
           <Name>Network File Share Enable Watcher Node Task</Name>
           <Description>Enable a Network File Share Watcher Node.  This task adds registry keys and creates a template configuration file for monitoring UNC Network Shares.</Description>
         </DisplayString>
-        <DisplayString ElementID="Network.File.Share.Share" SubElementID="WarnSizeMB">
-          <Name>WarnSizeMB</Name>
-          <Description>Threshold value for Warning alert in MB</Description>
-        </DisplayString>
-        <DisplayString ElementID="Network.File.Share.Share" SubElementID="ErrorSizeMB">
-          <Name>ErrorSizeMB</Name>
-          <Description>Threshold Value for Error Alert in MB</Description>
-        </DisplayString>
         <DisplayString ElementID="Network.File.Share.WatcherNode.LoggingLevel.Update.Task.WA">
           <Name>Network File Share Update Logging Level</Name>
           <Description>Network File Share Update Logging Level (0=None;1=Error;2=Verbose)</Description>
@@ -66,9 +58,9 @@
           <Name>TimeoutSeconds</Name>
           <Description>TimeoutSeconds</Description>
         </DisplayString>
-        <DisplayString ElementID="Network.File.Share.Accessible.Monitor.MonitorType" SubElementID="Share">
-          <Name>Share</Name>
-          <Description>UNC Path to Network File Share</Description>
+        <DisplayString ElementID="Network.File.Share.Accessible.Monitor.MonitorType" SubElementID="LoggingLevel">
+          <Name>Logging Level</Name>
+          <Description>Logging Level (0=None,1=Error,2=Verbose)</Description>
         </DisplayString>
         <DisplayString ElementID="Network.File.Share.WatcherNode.Accessible.Monitor.MonitorType" SubElementID="IntervalSeconds">
           <Name>IntervalSeconds</Name>

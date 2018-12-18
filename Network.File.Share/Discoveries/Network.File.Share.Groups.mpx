@@ -1,0 +1,129 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <EntityTypes>
+      <ClassTypes>
+        <ClassType ID="Network.File.Share.FileCount.Group" Accessibility="Public" Abstract="false" Base="MSIL!Microsoft.SystemCenter.InstanceGroup" Hosted="false" Singleton="true" Extension="false" />
+        <ClassType ID="Network.File.Share.FileSize.Group" Accessibility="Public" Abstract="false" Base="MSIL!Microsoft.SystemCenter.InstanceGroup" Hosted="false" Singleton="true" Extension="false" />
+      </ClassTypes>
+    </EntityTypes>
+  </TypeDefinitions>
+  <Monitoring>
+    <Discoveries>
+      <Discovery ID="Network.File.Share.FileCount.Group.DiscoveryRule" Enabled="true" Target="Network.File.Share.FileCount.Group" ConfirmDelivery="false" Remotable="true" Priority="Normal">
+        <Category>Discovery</Category>
+        <DiscoveryTypes>
+          <DiscoveryRelationship TypeID="MSIL!Microsoft.SystemCenter.InstanceGroupContainsEntities" />
+        </DiscoveryTypes>
+        <DataSource ID="DS" TypeID="SC!Microsoft.SystemCenter.GroupPopulator">
+          <RuleId>$MPElement$</RuleId>
+          <GroupInstanceId>$MPElement[Name="Network.File.Share.FileCount.Group"]$</GroupInstanceId>
+          <MembershipRules>
+            <MembershipRule>
+              <MonitoringClass>$MPElement[Name="Network.File.Share.Share"]$</MonitoringClass>
+              <RelationshipClass>$MPElement[Name="MSIL!Microsoft.SystemCenter.InstanceGroupContainsEntities"]$</RelationshipClass>
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <Property>$MPElement[Name="Network.File.Share.Share"]/ErrorCount$</Property>
+                  </ValueExpression>
+                  <Operator>Greater</Operator>
+                  <ValueExpression>
+                    <Value>0</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </MembershipRule>
+          </MembershipRules>
+        </DataSource>
+      </Discovery>
+      <Discovery ID="Network.File.Share.FileSize.Group.DiscoveryRule" Enabled="true" Target="Network.File.Share.FileSize.Group" ConfirmDelivery="false" Remotable="true" Priority="Normal">
+        <Category>Discovery</Category>
+        <DiscoveryTypes>
+          <DiscoveryRelationship TypeID="MSIL!Microsoft.SystemCenter.InstanceGroupContainsEntities" />
+        </DiscoveryTypes>
+        <DataSource ID="DS" TypeID="SC!Microsoft.SystemCenter.GroupPopulator">
+          <RuleId>$MPElement$</RuleId>
+          <GroupInstanceId>$MPElement[Name="Network.File.Share.FileSize.Group"]$</GroupInstanceId>
+          <MembershipRules>
+            <MembershipRule>
+              <MonitoringClass>$MPElement[Name="Network.File.Share.Share"]$</MonitoringClass>
+              <RelationshipClass>$MPElement[Name="MSIL!Microsoft.SystemCenter.InstanceGroupContainsEntities"]$</RelationshipClass>
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <Property>$MPElement[Name="Network.File.Share.Share"]/ErrorSizeMB$</Property>
+                  </ValueExpression>
+                  <Operator>Greater</Operator>
+                  <ValueExpression>
+                    <Value>0</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </MembershipRule>
+          </MembershipRules>
+        </DataSource>
+      </Discovery>      
+    </Discoveries>
+  </Monitoring>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <DisplayString ElementID="Network.File.Share.FileCount.Group">
+          <Name>Network File Shares Monitored for File Count</Name>
+          <Description>Group of Network File Shares With Error Count value greater than 0.</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.File.Share.FileSize.Group">
+          <Name>Network File Shares Monitored for Aggregate Size (MB)</Name>
+          <Description>Group of Network Files Shares Where ErrorSize MB is greater than 0.</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.File.Share.FileCount.Group.DiscoveryRule">
+          <Name>Network File Share File Count Group Discovery Rule</Name>
+          <Description>Discovery Rule for Network File Shares with Error Count greater than 0.</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.File.Share.FileSize.Group.DiscoveryRule">
+          <Name>Network File Share File Size Group</Name>
+          <Description>Discovery rule for Network File Shares where ErrorSizeMB is greater than 0.</Description>
+        </DisplayString>
+      </DisplayStrings>
+      <KnowledgeArticles>
+        <KnowledgeArticle ElementID="Network.File.Share.FileCount.Group" Visible="true">
+          <MamlContent>
+            <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+              <maml:title>Summary</maml:title>
+              <maml:para>This dynamic group contains Network File Share objects where the configuration file value ErrorCount is greater than zero.</maml:para>
+              <maml:para>The Network File Share objects in this group will be monitored for the count of files in the share that matches the criteria in the configuration file.  In addition, the Collection rule for File Count will automatically be enabled for this group.</maml:para>
+              <maml:para>To remove a Network File Share from this group, set the ErrorCount value in the configuration file to 0.</maml:para>
+            </maml:section>
+          </MamlContent>
+        </KnowledgeArticle>
+        <KnowledgeArticle ElementID="Network.File.Share.FileSize.Group" Visible="true">
+          <MamlContent>
+            <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+              <maml:title>Summary</maml:title>
+              <maml:para>This dynamic group contains Network File Share objects where the configuration file value ErrorSizeMB is greater than zero.</maml:para>
+              <maml:para>The Network File Shares objects in this group will be monitored for the aggregate size of files in the share that match the criteria in the configuration file.  In addition, the Collection rule for File Size Aggregate (MB) will automatically be enabled for this group.</maml:para>
+              <maml:para>To remove a Network File Share from this group, set the ErrorSizeMB value in the configuration file to 0.</maml:para>
+            </maml:section>
+          </MamlContent>
+        </KnowledgeArticle>
+        <KnowledgeArticle ElementID="Network.File.Share.FileCount.Group.DiscoveryRule" Visible="true">
+          <MamlContent>
+            <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+              <maml:title>Summary</maml:title>
+              <maml:para>This Discovery Rule finds Network File Share objects where the configuration file value ErrorCount is greater than zero.</maml:para>
+            </maml:section>
+          </MamlContent>
+        </KnowledgeArticle>
+        <KnowledgeArticle ElementID="Network.File.Share.FileSize.Group.DiscoveryRule" Visible="true">
+          <MamlContent>
+            <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+              <maml:title>Summary</maml:title>
+              <maml:para>This Discovery Rule finds Network File Share objects where the configuration file value ErrorSizeMB is greater than zero.</maml:para>
+            </maml:section>
+          </MamlContent>
+        </KnowledgeArticle>
+      </KnowledgeArticles>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

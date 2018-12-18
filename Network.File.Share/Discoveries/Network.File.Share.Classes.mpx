@@ -7,15 +7,15 @@
           <Property ID="LoggingLevel" Type="int" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
         </ClassType>
         <ClassType ID="Network.File.Share.Share" Accessibility="Public" Abstract="false" Base="Windows!Microsoft.Windows.ApplicationComponent" Hosted="true" Singleton="false" Extension="false">
-          <Property ID="ID" Type="int" AutoIncrement="false" Key="true" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
+          <Property ID="ID" Type="int" AutoIncrement="true" Key="true" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
           <Property ID="Share" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="1024" MinLength="0" Required="false" Scale="0" />
           <Property ID="Extension" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
-          <Property ID="Count" Type="int" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
+          <Property ID="ErrorCount" Type="int" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
           <Property ID="Age" Type="int" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
           <Property ID="Recurse" Type="int" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
-          <Property ID="WarnSizeMB" Type="int" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
           <Property ID="ErrorSizeMB" Type="int" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="256" MinLength="0" Required="false" Scale="0" />
         </ClassType>
+
       </ClassTypes>
       <RelationshipTypes>
         <RelationshipType ID="NetworkFileShareWatcherNodeContainsFileShare" Accessibility="Public" Abstract="false" Base="System!System.Hosting">
@@ -64,14 +64,18 @@
         <DisplayString ElementID="Network.File.Share.Share" SubElementID="Extension">
           <Name>Extension</Name>
         </DisplayString>
-        <DisplayString ElementID="Network.File.Share.Share" SubElementID="Count">
-          <Name>Count</Name>
+        <DisplayString ElementID="Network.File.Share.Share" SubElementID="ErrorCount">
+          <Name>ErrorCount</Name>
         </DisplayString>
         <DisplayString ElementID="Network.File.Share.Share" SubElementID="Age">
           <Name>Age</Name>
         </DisplayString>
         <DisplayString ElementID="Network.File.Share.Share" SubElementID="Recurse">
           <Name>Recurse</Name>
+        </DisplayString>
+        <DisplayString ElementID="Network.File.Share.Share" SubElementID="ErrorSizeMB">
+          <Name>ErrorSizeMB</Name>
+          <Description>Threshold Value for Error Alert in MB</Description>
         </DisplayString>
       </DisplayStrings>
       <KnowledgeArticles>

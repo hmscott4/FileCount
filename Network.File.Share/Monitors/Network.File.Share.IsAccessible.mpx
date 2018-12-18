@@ -34,11 +34,13 @@ This fragment depends on references:
             <xsd:element minOccurs="0" type="xsd:string" name="SyncTime" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
             <xsd:element minOccurs="1" type="xsd:integer" name="TimeoutSeconds" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
             <xsd:element minOccurs="1" type="xsd:string" name="Share" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+            <xsd:element minOccurs="1" type="xsd:int" name="LoggingLevel" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
           </Configuration>
           <OverrideableParameters>
             <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int" />
             <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string" />
             <OverrideableParameter ID="TimeoutSeconds" Selector="$Config/TimeoutSeconds$" ParameterType="int" />
+            <OverrideableParameter ID="LoggingLevel" Selector="$Config/LoggingLevel$" ParameterType="int" />
           </OverrideableParameters>
           <ModuleImplementation Isolation="Any">
             <Composite>
@@ -53,9 +55,9 @@ This fragment depends on references:
                   </Scheduler>
                 </DataSource>
                 <ProbeAction ID="PA" TypeID="Windows!Microsoft.Windows.PowerShellPropertyBagTriggerOnlyProbe">
-                  <ScriptName>FileCount.Accessible.Monitor.DataSource.ps1</ScriptName>
+                  <ScriptName>Network.File.Share.IsAccessible.Monitor.DataSource.ps1</ScriptName>
                   <ScriptBody>
-                    param([string]$Share)
+                    param([string]$Share,[int]$LoggingLevel)
                     #=================================================================================
                     #  Describe Script Here
                     #
@@ -67,7 +69,7 @@ This fragment depends on references:
                     # Constants section - modify stuff here:
                     #=================================================================================
                     # Assign script name variable for use in event logging.
-                    $ScriptName = "Network.File.Share.Accessible.Monitor.DataSource.ps1"
+                    $ScriptName = "Network.File.Share.IsAccessible.Monitor.DataSource.ps1"
                     $EventID = "3522"
                     #=================================================================================
 
@@ -157,12 +159,13 @@ This fragment depends on references:
             <xsd:element minOccurs="0" type="xsd:string" name="SyncTime" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
             <xsd:element minOccurs="1" type="xsd:integer" name="TimeoutSeconds" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
             <xsd:element minOccurs="1" type="xsd:string" name="Share" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+            <xsd:element minOccurs="1" type="xsd:integer" name="LoggingLevel" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
           </Configuration>
           <OverrideableParameters>
             <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int" />
             <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string" />
             <OverrideableParameter ID="TimeoutSeconds" Selector="$Config/TimeoutSeconds$" ParameterType="int" />
-            <OverrideableParameter ID="Share" Selector="$Config/Share$" ParameterType="string" />
+            <OverrideableParameter ID="LoggingLevel" Selector="$Config/LoggingLevel$" ParameterType="int" />
           </OverrideableParameters>
           <MonitorImplementation>
             <MemberModules>
@@ -171,6 +174,7 @@ This fragment depends on references:
                 <SyncTime>$Config/SyncTime$</SyncTime>
                 <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
                 <Share>$Config/Share$</Share>
+                <LoggingLevel>$Config/LoggingLevel$</LoggingLevel>
               </DataSource>
               <ConditionDetection ID="GoodConditionFilter" TypeID="System!System.ExpressionFilter">
                 <Expression>
@@ -249,6 +253,7 @@ This fragment depends on references:
             <SyncTime></SyncTime>
             <TimeoutSeconds>300</TimeoutSeconds>
             <Share>$Target/Property[Type='Network.File.Share.Share']/Share$</Share>
+            <LoggingLevel>$Target/Host/Property[Type='Network.File.Share.WatcherNode']/LoggingLevel$</LoggingLevel>
           </Configuration>
         </UnitMonitor>
       </Monitors>
@@ -286,6 +291,10 @@ This fragment depends on references:
           <DisplayString ElementID="Network.File.Share.Accessible.Monitor.DataSource" SubElementID="TimeoutSeconds">
             <Name>TimeoutSeconds</Name>
             <Description>TimeoutSeconds</Description>
+          </DisplayString>
+          <DisplayString ElementID="Network.File.Share.Accessible.Monitor.DataSource" SubElementID="LoggingLevel">
+            <Name>Logging Level</Name>
+            <Description>Logging Level (0=None, 1=Error, 2=Verbose)</Description>
           </DisplayString>
         </DisplayStrings>
         <KnowledgeArticles>

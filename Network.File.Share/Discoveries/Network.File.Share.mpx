@@ -42,20 +42,19 @@
             #Loop through all listed shares and create appropriate SCOM objects
             foreach ($share in $shares)
             {
-            #Create Class Instance
+            # Create Class Instance
             $instance = $discoveryData.CreateClassInstance("$MPElement[Name='Network.File.Share.Share']$")
 
-            #Fill up properties of class
-            $instance.AddProperty("$MPElement[Name='Network.File.Share.Share']/ID$", $share.ID)
+            # Fill up properties of class
+            # $instance.AddProperty("$MPElement[Name='Network.File.Share.Share']/ID$", $share.ID)
             $instance.AddProperty("$MPElement[Name='Network.File.Share.Share']/Share$", $share.Share)
             if($share.Extension){$instance.AddProperty("$MPElement[Name='Network.File.Share.Share']/Extension$", $Share.extension)} else {instance.AddProperty("$MPElement[Name='Network.File.Share.Share']/Extension$", "*")}
-            if($share.Count){$instance.AddProperty("$MPElement[Name='Network.File.Share.Share']/Count$", $share.Count)} else {$instance.AddProperty("$MPElement[Name='Network.File.Share.Share']/Count$", 0)}
+            if($share.ErrorCount){$instance.AddProperty("$MPElement[Name='Network.File.Share.Share']/ErrorCount$", $share.ErrorCount)} else {$instance.AddProperty("$MPElement[Name='Network.File.Share.Share']/ErrorCount$", 0)}
             if($share.Age){$instance.AddProperty("$MPElement[Name='Network.File.Share.Share']/Age$", $share.Age)} else {$instance.AddProperty("$MPElement[Name='Network.File.Share.Share']/Age$", 0)}
             if($share.Recurse){$instance.AddProperty("$MPElement[Name='Network.File.Share.Share']/Recurse$", $Share.Recurse)} else {$instance.AddProperty("$MPElement[Name='Network.File.Share.Share']/Recurse$", 0)}
-            if($share.WarnSizeMB){$instance.AddProperty("$MPElement[Name='Network.File.Share.Share']/WarnSizeMB$", $Share.WarnSizeMB)} else {$instance.AddProperty("$MPElement[Name='Network.File.Share.Share']/WarnSizeMB$", 0)}
             if($share.ErrorSizeMB){$instance.AddProperty("$MPElement[Name='Network.File.Share.Share']/ErrorSizeMB$", $Share.ErrorSizeMB)} else {$instance.AddProperty("$MPElement[Name='Network.File.Share.Share']/ErrorSizeMB$", 0)}
 
-            #Add the displayname, path of the server and key property of the parent class. (always recurring)
+            # Add the displayname, path of the server and key property of the parent class. (always recurring)
             $instance.AddProperty("$MPElement[Name='System!System.Entity']/DisplayName$", $share.Share)
             $instance.AddProperty("$MPElement[Name='Network.File.Share.WatcherNode']/CSV$", $csv)
             $instance.AddProperty("$MPElement[Name='Windows!Microsoft.Windows.Computer']/PrincipalName$", $computerName)

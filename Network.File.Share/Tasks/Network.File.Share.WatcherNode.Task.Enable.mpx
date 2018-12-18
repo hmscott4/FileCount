@@ -74,7 +74,7 @@
                   Else
                   {
                   New-Item -Path $ConfigFileName -Force
-                  Add-Content -Path $ConfigFileName -Value "Id, Share, Extension, Count, Age, Recurse, WarnSizeMB, ErrorSizeMB"
+                  Add-Content -Path $ConfigFileName -Value "Id, Share, Extension, ErrorCount, Age, Recurse, ErrorSizeMB"
                   }
 
 
