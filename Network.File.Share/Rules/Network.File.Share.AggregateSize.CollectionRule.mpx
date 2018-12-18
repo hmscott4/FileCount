@@ -7,6 +7,7 @@
           <DataSource ID="DataSource" TypeID="Network.File.Share.FileCount.DataSource" RunAs="Network.File.Share.RunasProfile">
             <IntervalSeconds>900</IntervalSeconds>
             <SyncTime></SyncTime>
+            <TimeoutSeconds>300</TimeoutSeconds>
             <Share>$Target/Property[Type='Network.File.Share.Share']/Share$</Share>
             <Extension>$Target/Property[Type='Network.File.Share.Share']/Extension$</Extension>
             <ErrorCount>$Target/Property[Type='Network.File.Share.Share']/ErrorCount$</ErrorCount>
@@ -28,5 +29,10 @@
         </WriteActions>
       </Rule>
     </Rules>
+    <Overrides>
+      <RulePropertyOverride ID="Network.File.Share.Monitoring.PSScript.Rule.CollectAggregateSize.Enabled.Override" Context="Network.File.Share.FileSize.Group" Enforced="false" Rule="Network.File.Share.Monitoring.PSScript.Rule.CollectAggregateSize" Property="Enabled">
+        <Value>true</Value>
+      </RulePropertyOverride>      
+    </Overrides>
   </Monitoring>
 </ManagementPackFragment>

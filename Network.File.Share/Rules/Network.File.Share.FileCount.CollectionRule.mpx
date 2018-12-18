@@ -1,12 +1,13 @@
 ﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Monitoring>
     <Rules>
-      <Rule ID="Network.File.Share.Monitoring.PSScript.Rule.CollectFileCount" Enabled="true" Target="Network.File.Share.Share" ConfirmDelivery="true" Remotable="false" Priority="Normal" DiscardLevel="100">
+      <Rule ID="Network.File.Share.Monitoring.PSScript.Rule.CollectFileCount" Enabled="false" Target="Network.File.Share.Share" ConfirmDelivery="true" Remotable="false" Priority="Normal" DiscardLevel="100">
         <Category>PerformanceCollection</Category>
         <DataSources>
           <DataSource ID="DataSource" TypeID="Network.File.Share.FileCount.DataSource" RunAs="Network.File.Share.RunasProfile">
             <IntervalSeconds>900</IntervalSeconds>
             <SyncTime></SyncTime>
+            <TimeoutSeconds>300</TimeoutSeconds>
             <Share>$Target/Property[Type='Network.File.Share.Share']/Share$</Share>
             <Extension>$Target/Property[Type='Network.File.Share.Share']/Extension$</Extension>
             <ErrorCount>$Target/Property[Type='Network.File.Share.Share']/ErrorCount$</ErrorCount>
@@ -27,6 +28,12 @@
           <WriteAction ID="PublishFileCount" TypeID="MSDL!Microsoft.SystemCenter.DataWarehouse.PublishPerformanceData" />
         </WriteActions>
       </Rule>
-    </Rules>    
+    </Rules>
+
+    <Overrides>
+      <RulePropertyOverride ID="Network.File.Share.Monitoring.PSScript.Rule.CollectFileCount.Enabled.Override" Context="Network.File.Share.FileCount.Group" Enforced="false" Rule="Network.File.Share.Monitoring.PSScript.Rule.CollectFileCount" Property="Enabled">
+        <Value>true</Value>
+      </RulePropertyOverride>
+    </Overrides>    
   </Monitoring>
 </ManagementPackFragment>

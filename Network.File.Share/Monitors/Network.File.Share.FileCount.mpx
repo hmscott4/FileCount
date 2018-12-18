@@ -6,6 +6,7 @@
           <Configuration>
             <xsd:element minOccurs="1" name="IntervalSeconds" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
             <xsd:element minOccurs="0" name="SyncTime" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+            <xsd:element minOccurs="0" name="TimeoutSeconds" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
             <xsd:element minOccurs="1" name="Share" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
             <xsd:element minOccurs="1" name="Extension" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
             <xsd:element minOccurs="1" name="ErrorCount" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
@@ -15,8 +16,9 @@
             <xsd:element minOccurs="1" name="LoggingLevel" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
           </Configuration>
           <OverrideableParameters>
-            <OverrideableParameter ID="Interval" Selector="$Config/IntervalSeconds$" ParameterType="int" />
+            <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int" />
             <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string" />
+            <OverrideableParameter ID="TimeoutSeconds" Selector="$Config/TimeoutSeconds$" ParameterType="string" />
             <OverrideableParameter ID="LoggingLevel" Selector="$Config/LoggingLevel$" ParameterType="int" />
           </OverrideableParameters>
           <ModuleImplementation Isolation="Any">
@@ -53,7 +55,7 @@
                 <ProbeAction ID="PSScript" TypeID="Windows!Microsoft.Windows.PowerShellPropertyBagTriggerOnlyProbe">
                   <ScriptName>GetFileCount.ps1</ScriptName>
                   <ScriptBody>
-                    # Paramters
+                    # Parameters
                     # ================================================================================
                     param([string]$Share, [string]$Extension, [int]$ErrorCount, [int]$Age, [int]$Recurse, [int]$ErrorSizeMB, [int]$LoggingLevel)
 
@@ -119,20 +121,31 @@
                     $fileSize = ($allFiles | Measure-Object -Sum Length).Sum / 1MB
                     $fileSize = [Math]::Round($fileSize, 2)
 
-                    if ($fileCount -le $iErrorCount)
+                    if (($iErrorCount -gt 0) -and ($fileCount -le $iErrorCount))
                     {
                     $strStatus = 1
                     $strMessage="Number of Files ($fileCount) with extension $sExtension in $sShare is under threshold $iErrorCount."
+                    
                     If($LoggingLevel -ge 2) {
                     $momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Found $fileCount file(s) totaling $fileSize MB with extension $sExtension in $sShare. `n Under threshold $iErrorCount for number of files found.")
                     }
                     }
+                    elseif (($iErrorSizeMB -gt 0) -and ($fileSize -le $iErrorSizeMB))
+                    {
+                    $strStatus = 1
+                    $strMessage="Aggregate size of Files ($fileSize) with extension $sExtension in $sShare is under threshold $iErrorSizeMB."
+                    
+                    If($LoggingLevel -ge 2) {
+                    $momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Found $fileCount file(s) totaling $fileSize MB with extension $sExtension in $sShare. `n Under threshold $iErrorSizeMB for aggregate size of files found.")
+                    }                    
+                    }
                     else
                     {
                     $strStatus = 0
-                    $strMessage="Number of Files ($fileCount) in $sShare with extension $sExtension exceeds threshold $iErrorCount."
+                    $strMessage="Number of Files ($fileCount) or aggregate file size ($fileSize MB) in $sShare with extension $sExtension exceeds file count threshold $iErrorCount or file size threshold $iErrorSizeMB."
+                    
                     If($LoggingLevel -ge 1){
-                    $momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Found $fileCount file(s) totaling $fileSize MB with extension $sExtension in $sShare.`n Exceeds threshold $iErrorCount for number of files found.")
+                    $momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Found $fileCount file(s) totaling $fileSize MB with extension $sExtension in $sShare.`n Exceeds threshold $iErrorCount for number of files found or $iErrorSizeMB MB threshold for aggregate size.")
                     }
                     }
 
@@ -217,6 +230,7 @@
         <Configuration>
           <xsd:element name="IntervalSeconds" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
           <xsd:element name="SyncTime" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element name="TimeoutSeconds" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
           <xsd:element name="Share" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
           <xsd:element name="Extension" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
           <xsd:element name="ErrorCount" type="xsd:integer" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
@@ -228,6 +242,7 @@
         <OverrideableParameters>
           <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int" />
           <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string" />
+          <OverrideableParameter ID="TimeoutSeconds" Selector="$Config/TimeoutSeconds$" ParameterType="int" />
           <OverrideableParameter ID="LoggingLevel" Selector="$Config/LoggingLevel$" ParameterType="int" />
         </OverrideableParameters>
         <MonitorImplementation>
@@ -235,6 +250,7 @@
             <DataSource ID="DS" TypeID="Network.File.Share.FileCount.DataSource">
               <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
               <SyncTime>$Config/SyncTime$</SyncTime>
+              <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
               <Share>$Config/Share$</Share>
               <Extension>$Config/Extension$</Extension>
               <ErrorCount>$Config/ErrorCount$</ErrorCount>
@@ -321,6 +337,7 @@
         <Configuration>
           <IntervalSeconds>900</IntervalSeconds>
           <SyncTime></SyncTime>
+          <TimeoutSeconds>300</TimeoutSeconds>
           <Share>$Target/Property[Type='Network.File.Share.Share']/Share$</Share>
           <Extension>$Target/Property[Type='Network.File.Share.Share']/Extension$</Extension>
           <ErrorCount>$Target/Property[Type='Network.File.Share.Share']/ErrorCount$</ErrorCount>
@@ -347,6 +364,10 @@
           <Name>SyncTime</Name>
           <Description>SyncTime</Description>
         </DisplayString>
+        <DisplayString ElementID="Network.File.Share.Status.MonitorType" SubElementID="TimeoutSeconds">
+          <Name>Timeout Seconds</Name>
+          <Description>Timeout Seconds</Description>
+        </DisplayString>
         <DisplayString ElementID="Network.File.Share.Status.MonitorType" SubElementID="LoggingLevel">
           <Name>LoggingLevel</Name>
           <Description>LoggingLevel (0=None, 1=Error, 2=Verbose)</Description>
@@ -355,13 +376,17 @@
           <Name>Network File Share File Count Data Source</Name>
           <Description>Script to enumerate UNC paths and count files.</Description>
         </DisplayString>
-        <DisplayString ElementID="Network.File.Share.FileCount.DataSource" SubElementID="Interval">
-          <Name>Interval</Name>
+        <DisplayString ElementID="Network.File.Share.FileCount.DataSource" SubElementID="IntervalSeconds">
+          <Name>Interval Seconds</Name>
           <Description>Interval (seconds)</Description>
         </DisplayString>
         <DisplayString ElementID="Network.File.Share.FileCount.DataSource" SubElementID="SyncTime">
           <Name>SyncTime</Name>
           <Description>Sync Time</Description>
+        </DisplayString>
+        <DisplayString ElementID="Network.File.Share.FileCount.DataSource" SubElementID="TimeoutSeconds">
+          <Name>Timeout Seconds</Name>
+          <Description>Timeout Seconds</Description>
         </DisplayString>
         <DisplayString ElementID="Network.File.Share.FileCount.DataSource" SubElementID="LoggingLevel">
           <Name>LoggingLevel</Name>
