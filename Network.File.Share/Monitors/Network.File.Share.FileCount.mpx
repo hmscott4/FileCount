@@ -161,7 +161,8 @@
                     $EndTime = Get-Date
                     $ScriptTime = ($EndTime - $StartTime).TotalSeconds
                     If($LoggingLevel -ge 2) {
-                    $momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Script Completed. `n Script Runtime: ($ScriptTime) seconds.")
+                      $momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Script Completed. `n Script Runtime: ($ScriptTime) seconds.")
+                    }
                     #=================================================================================
 
                   </ScriptBody>
