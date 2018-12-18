@@ -53,7 +53,8 @@
                 <ProbeAction ID="PSScript" TypeID="Windows!Microsoft.Windows.PowerShellPropertyBagTriggerOnlyProbe">
                   <ScriptName>GetFileCount.ps1</ScriptName>
                   <ScriptBody>
-
+                    # Paramters
+                    # ================================================================================
                     param([string]$Share, [string]$Extension, [int]$ErrorCount, [int]$Age, [int]$Recurse, [int]$ErrorSizeMB, [int]$LoggingLevel)
 
                     $ScriptName = "GetFileCount.ps1"
@@ -134,13 +135,20 @@
                     $momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Found $fileCount file(s) totaling $fileSize MB with extension $sExtension in $sShare.`n Exceeds threshold $iErrorCount for number of files found.")
                     }
                     }
+
+                    # Return property bag values
+                    #=================================================================================
+                    #add the values to the bag
+                    $bag.AddValue('Message', $strMessage)
+                    $bag.AddValue('Status', $strStatus)
+                    $bag.AddValue('Files',$fileCount)
+                    $bag.AddValue('SizeMB',$fileSize)
+                    $bag
+
+
                     } else {
                     # Unable to access File Share
                     $strMessage="Unable to access $sShare as $whoami"
-
-                    $strStatus = 0
-                    $fileCount = 0
-                    $fileSize = 0
 
                     If($LoggingLevel -ge 1) {
                     $momapi.LogScriptEvent($ScriptName,$EventID,2,"`n Unable to access $sShare as $whoami.")
@@ -154,15 +162,8 @@
                     $ScriptTime = ($EndTime - $StartTime).TotalSeconds
                     If($LoggingLevel -ge 2) {
                     $momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Script Completed. `n Script Runtime: ($ScriptTime) seconds.")
-                    }
+                    #=================================================================================
 
-
-                    #add the values to the bag
-                    $bag.AddValue('Message', $strMessage)
-                    $bag.AddValue('Status', $strStatus)
-                    $bag.AddValue('Files',$fileCount)
-                    $bag.AddValue('SizeMB',$fileSize)
-                    $bag
                   </ScriptBody>
                   <Parameters>
                     <Parameter>
@@ -298,8 +299,8 @@
   </TypeDefinitions>
   <Monitoring>
     <Monitors>
-      <UnitMonitor ID="Network.File.Share.FileCount.Monitor" Accessibility="Public" Enabled="true" Target="Network.File.Share.Share" ParentMonitorID="Health!System.Health.AvailabilityState" Remotable="false" Priority="Normal" RunAs="Network.File.Share.RunasProfile" TypeID="Network.File.Share.Status.MonitorType" ConfirmDelivery="false">
-        <Category>AvailabilityHealth</Category>
+      <UnitMonitor ID="Network.File.Share.FileCount.Monitor" Accessibility="Public" Enabled="true" Target="Network.File.Share.Share" ParentMonitorID="Health!System.Health.PerformanceState" Remotable="false" Priority="Normal" RunAs="Network.File.Share.RunasProfile" TypeID="Network.File.Share.Status.MonitorType" ConfirmDelivery="false">
+        <Category>PerformanceHealth</Category>
         <AlertSettings AlertMessage="Network.File.Share.File.Count.Monitor.AlertMessage">
           <AlertOnState>Error</AlertOnState>
           <AutoResolve>true</AutoResolve>
